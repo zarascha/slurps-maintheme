@@ -20,11 +20,13 @@ Supported parameters
 
       {%- paginate article.comments by comments_pagination -%}
         <div class="divide-y v-stack gap-4 sm:gap-8">
-          {%- for comment in article.comments -%}
-            <article class="comment">
-              {%- if show_gravatar -%}
-                <img class="comment__gravatar rounded-full" loading="lazy" width="32" height="32" src="//www.gravatar.com/avatar/{{ comment.email | md5 }}" alt="{{ comment.author }}">
-              {%- endif -%}
+	          {%- for comment in article.comments -%}
+	            <article class="comment">
+	              {%- if show_gravatar -%}
+	                {%- comment -%} CANPAN QoL PRE-LAUNCH – Bug-Fixing: ersetzt den externen Gravatar-Request durch ein lokales Initialen-Badge {%- endcomment -%}
+	                {%- assign comment_author_initial = comment.author | strip | slice: 0, 1 | upcase | default: '?' -%}
+	                <span class="comment__gravatar rounded-full shrink-0 inline-flex items-center justify-center text-xs bold" style="background: rgb(var(--text-color) / 0.08); color: rgb(var(--text-color));" aria-hidden="true">{{- comment_author_initial -}}</span>
+	              {%- endif -%}
 
               <div class="v-stack gap-2 sm:gap-3">
                 <div class="v-stack gap-1">

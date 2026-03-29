@@ -8,11 +8,14 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
 {%- endcomment -%}
 
 <!doctype html>
+<!--CANPAN QoL-VERSION: PRE-LAUNCH –->
 
 <html lang="{{ request.locale.iso_code }}" dir="{% render 'direction' %}">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="google-site-verification" content="CJ3E0fOtl3EyDUQDhjT2Zfl8CkVP-QN6g_NJUt8ZNmE"/>
+    {%- comment -%} CANPAN QoL PRE-LAUNCH – Barrierefreiheit Lighthouse Fix {%- endcomment -%}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="{{ settings.header_background }}">
 
     <title>{% if page_title == blank %}{{ shop.name }}{% else %}{{ page_title }}{% if current_page != 1 %} &ndash; {{ 'general.page' | t: page: current_page }}{% endif %}{% endif %}</title>
@@ -28,23 +31,23 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
       <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180 }}">
     {%- endif -%}
 
-    {%- comment -%}Few prefetch to increase performance on commonly used third-parties{%- endcomment -%}
-    <link rel="preconnect" href="https://cdn.shopify.com">
-    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+	    {%- comment -%}Few prefetch to increase performance on commonly used third-parties{%- endcomment -%}
+	    <link rel="preconnect" href="https://cdn.shopify.com">
+	    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
 
-    {%- unless settings.heading_font.system? -%}
-      <link rel="preload" href="{{ settings.heading_font | font_url }}" as="font" type="font/woff2" crossorigin>
-    {%- endunless -%}
+	    {%- unless settings.heading_font.system? -%}
+	      {%- comment -%} CANPAN QoL PRE-LAUNCH – Bug-Fixing: ersetzt manuelle Font-Preloads durch Shopify preload_tag und entfernt den unnoetigen Remote-Hinweis {%- endcomment -%}
+	      {{- settings.heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' -}}
+	    {%- endunless -%}
 
-    {%- unless settings.text_font.system? -%}
-      <link rel="preload" href="{{ settings.text_font | font_url }}" as="font" type="font/woff2" crossorigin>
-    {%- endunless -%}
+	    {%- unless settings.text_font.system? -%}
+	      {{- settings.text_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' -}}
+	    {%- endunless -%}
 
     {%- render 'social-meta-tags' -%}
     {%- render 'microdata-schema' -%}
     {%- render 'css-variables' -%}
-    {%- render 'js-variables' -%}
+{%- render 'js-variables' -%}
 
     <script type="importmap">
       {%- comment -%}On Safari 16.3 and lower, a polyfill is used to load importmap{%- endcomment -%}
@@ -63,9 +66,13 @@ NOTE TO DEVELOPERS: welcome to Impact theme! We hope that you will enjoy editing
     {{ content_for_header }}
 
     {{- 'theme.css' | asset_url | stylesheet_tag: preload: true -}}
+    {{- 'canpan-theme.css' | asset_url | stylesheet_tag: preload: true -}}
   </head>
 
   <body class="{% if settings.zoom_image_on_hover %}zoom-image--enabled{% endif %}">
+    <script>
+      console.log("%c CANPAN OPTIMIZED %c", "background: #72b5ff; color: #0a2540; font-weight: bold; padding: 4px;");
+    </script>
     {%- render 'shadow-dom-templates' -%}
 
     <a href="#main" class="skip-to-content sr-only">{{ 'general.accessibility.skip_to_content' | t }}</a>

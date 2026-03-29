@@ -1,0 +1,122 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+CANPAN PRICE BUBBLE
+----------------------------------------------------------------------------------------------------------------------
+
+Shared price bubble for PDP and quick buy.
+
+Supported variables
+* product: current product
+* variant: optional variant override, defaults to product.selected_or_first_available_variant
+* metafield_source: optional, "variant" (default) or "product"
+* unit_label: optional, defaults to "Filter"
+* unit_postfix: optional suffix appended to the unit message
+* comparison_postfix: optional suffix appended to the comparison message
+* exclusive_mode: optional, render only when exactly one message is available
+* wrapper_class: optional additional classes for the wrapper element
+{%- endcomment -%}
+
+{%- liquid
+  assign canpan_bubble_product = product
+  assign canpan_bubble_variant = variant | default: product.selected_or_first_available_variant
+  assign canpan_bubble_metafield_source = metafield_source | default: 'variant'
+  assign canpan_bubble_unit_label = unit_label | default: 'Filter'
+  assign canpan_bubble_unit_postfix = unit_postfix | default: ''
+  assign canpan_bubble_comparison_postfix = comparison_postfix | default: ''
+  assign canpan_bubble_wrapper_class = wrapper_class | default: ''
+  assign canpan_bubble_exclusive_mode = exclusive_mode | default: false
+-%}
+
+{%- if canpan_bubble_variant != blank -%}
+  {%- liquid
+    assign is_on_sale = false
+
+    if canpan_bubble_variant.compare_at_price > canpan_bubble_variant.price
+      assign is_on_sale = true
+    endif
+  -%}
+
+  {%- if is_on_sale == false -%}
+    {%- liquid
+      assign division = 0
+      assign raw_comparison = blank
+
+      if canpan_bubble_metafield_source == 'product' and canpan_bubble_product != blank
+        assign division_raw = canpan_bubble_product.metafields['custom-product']['bubble_division'].value | default: '' | strip
+        assign raw_comparison = canpan_bubble_product.metafields['custom-product']['bubble_comparison_price'].value | default: '' | strip
+        assign division = division_raw | replace: ',', '.' | plus: 0
+      else
+        assign division = canpan_bubble_variant.metafields.custom_variant.bubble_division.value | default: 0 | plus: 0
+        assign raw_comparison = canpan_bubble_variant.metafields.custom_variant.bubble_comparison_price.value
+      endif
+
+      assign bubble_primary_color = '#078A00'
+      assign bubble_text_color = '#078A00'
+
+      if request.page_type == 'product' and canpan_bubble_variant.metafields.custom_variant.page_appearance != blank
+        assign canpan_bubble_page_appearance = canpan_bubble_variant.metafields.custom_variant.page_appearance.value
+        assign canpan_bubble_custom_color = canpan_bubble_page_appearance.price_bubble_color.value | default: '' | strip
+
+        if canpan_bubble_custom_color != blank
+          assign bubble_primary_color = canpan_bubble_custom_color
+          assign bubble_text_color = canpan_bubble_custom_color
+        endif
+      endif
+
+      assign bubble_primary_color_alpha = bubble_primary_color | color_modify: 'alpha', 0.15 | default: 'rgba(7,138,0,0.15)'
+
+      assign comparison_eur = 0
+
+      if raw_comparison != blank
+        assign comparison_eur = raw_comparison | append: '' | replace: ',', '.' | plus: 0
+      endif
+
+      assign product_price_cents = canpan_bubble_variant.price
+      assign comparison_cents = comparison_eur | times: 100 | round
+      assign has_division = false
+      assign has_comparison = false
+
+      if division > 0
+        assign has_division = true
+      endif
+
+      if comparison_eur > 0 and comparison_cents > product_price_cents
+        assign has_comparison = true
+      endif
+
+      if canpan_bubble_exclusive_mode and has_division == has_comparison
+        assign has_division = false
+        assign has_comparison = false
+      endif
+    -%}
+
+    {%- if has_division or has_comparison -%}
+      {%- capture canpan_bubble_style -%}
+        --canpan-price-bubble-bg: {{ bubble_primary_color_alpha }};
+        --canpan-price-bubble-color: {{ bubble_text_color }};
+      {%- endcapture -%}
+
+      <div class="canpan-price-bubble{% if canpan_bubble_wrapper_class != blank %} {{ canpan_bubble_wrapper_class }}{% endif %}" style="{{ canpan_bubble_style | strip }}">
+        <div class="canpan-price-bubble__inner">
+          <p class="canpan-price-bubble__text">
+            {%- if has_division -%}
+              {%- assign division_float = division | times: 1.0 -%}
+              {%- assign unit_price_cents = product_price_cents | divided_by: division_float | round -%}
+              Nur {{ unit_price_cents | money_without_currency }} € pro {{ canpan_bubble_unit_label }}{{ canpan_bubble_unit_postfix }}
+            {%- endif -%}
+
+            {%- if has_division and has_comparison -%}
+              <span class="canpan-price-bubble__separator" aria-hidden="true"> / </span>
+            {%- endif -%}
+
+            {%- if has_comparison -%}
+              {%- assign diff_cents = comparison_cents | minus: product_price_cents -%}
+              {%- assign percent = diff_cents | times: 100.0 | divided_by: comparison_cents | round -%}
+              {%- if percent < 10 -%}0{{ percent }}{%- else -%}{{ percent }}{%- endif %} % insgesamt gespart{{ canpan_bubble_comparison_postfix }}
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,329 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "80ch"
+      }
+    },
+    "slideshow_43MGDi": {
+      "type": "slideshow",
+      "blocks": {
+        "image_C89gbi": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/vvnn.jpg",
+            "mobile_image": "shopify://shop_images/about_us.jpg",
+            "content_max_width": 780,
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "subheading": "",
+            "title": "",
+            "heading_tag": "h0",
+            "button_text": "",
+            "button_link": "",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "background": "",
+            "background_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_C89gbi"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": true,
+        "show_initial_transition": false,
+        "image_size": "auto",
+        "controls_type": "dots",
+        "transition_type": "fade_with_text",
+        "autoplay": false,
+        "cycle_speed": 6,
+        "background": "#f2f2f2",
+        "background_gradient": ""
+      }
+    },
+    "multiple_images_with_text_e4BcpL": {
+      "type": "multiple-images-with-text",
+      "blocks": {
+        "item_ea73fk": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/about_us.jpg",
+            "image_rotation_degrees": -2,
+            "subheading": "",
+            "title": "Wir sind CANPAN™",
+            "content": "<p>From the Culture, for the Culture. CANPAN™ ist deine Brand für hochwertiges Raucherbedarf und -zubehör mit klarer Linie. Wir verbinden Culture, Design und Qualität, von Aktivkohlefiltern und Longpapers bis zu Aschenbechern, Rolling Trays, Feuerzeugen und Grindern. Statt Masse kuratieren wir bewusst, damit jedes Produkt seinen Platz verdient und dein Setup stimmig bleibt.</p><p>Wir achten auf Details, die man merkt: sauberer Zug, gute Haptik, saubere Verarbeitung und ein Look, der nicht beliebig wirkt. So bekommst du Zubehör, das im Alltag funktioniert und sich einfach richtig anfühlt.</p>",
+            "button_url": "",
+            "button_text": ""
+          }
+        },
+        "item_p9tmX4": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/about_us.jpg",
+            "image_rotation_degrees": 1.5,
+            "subheading": "",
+            "title": "Unser Versprechen",
+            "content": "<p>Unser Versprechen ist einfach: Was du bei uns kaufst, ist bewusst ausgewählt und sauber umgesetzt. Wir achten auf Verarbeitung, Haptik und Alltagstauglichkeit, damit du dich auf jedes Teil verlassen kannst. Nur Produkte, die wir feiern, kommen ins Sortiment.</p><p>Wir kommunizieren klar, handeln fair und lösen Probleme schnell, wenn etwas nicht passt. Gleichzeitig verbessern wir Verpackung, Versand und Abläufe kontinuierlich, damit Qualität, Service und Verantwortung zusammenpassen.</p>",
+            "button_url": "",
+            "button_text": ""
+          }
+        },
+        "item_3pzX7E": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/about_us.jpg",
+            "image_rotation_degrees": 0,
+            "subheading": "",
+            "title": "Mission und Vision",
+            "content": "<p>Unser Ziel ist cooles Zeug zu machen. Also Zubehör, das zuverlässig funktioniert, gut aussieht und den Moment leichter macht. Wir setzen Standards ohne großes Gerede und bleiben nah an der Szene, damit Entscheidungen nicht am Bedarf vorbeigehen. Qualität und Culture gehören für uns zusammen, jeden Tag.</p><p>Unsere Vision ist eine Brand, der man vertraut, weil Auswahl, Design und Umsetzung konstant passen. Wir wollen langfristig, durch klare Haltung, saubere Prozesse und Produkte, die man gern weiterempfiehlt, in Deutschland und darüber hinaus wachsen.</p>",
+            "button_url": "",
+            "button_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_ea73fk",
+        "item_p9tmX4",
+        "item_3pzX7E"
+      ],
+      "name": "Multiple images with text",
+      "settings": {
+        "full_width": true,
+        "images_layout": "stacked",
+        "collage_images_alignment": "shifted",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "button_background": "",
+        "button_text_color": ""
+      }
+    },
+    "blog_posts_t9tGP4": {
+      "type": "blog-posts",
+      "blocks": {
+        "blog_WenThY": {
+          "type": "blog",
+          "settings": {
+            "blog": "unternehmensblog",
+            "posts_count": 3,
+            "stack_items": false
+          }
+        }
+      },
+      "block_order": [
+        "blog_WenThY"
+      ],
+      "name": "Blog posts",
+      "settings": {
+        "full_width": true,
+        "show_excerpt": true,
+        "show_date": false,
+        "show_author": false,
+        "show_comments_count": false,
+        "show_category": true,
+        "subheading": "",
+        "title": "Unternehmensblog",
+        "content": "",
+        "link_url": "",
+        "link_text": "Alle Blogartikel",
+        "background": "#f5f5f5",
+        "background_gradient": "",
+        "text_color": "rgba(0,0,0,0)",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "multi_column_4UU6jA": {
+      "type": "multi-column",
+      "blocks": {
+        "item_Uj3XEM": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/1.jpg",
+            "show_controls": false,
+            "column_size": "2",
+            "title": "",
+            "heading_tag": "h4",
+            "content": "<p>Bei CANPAN™ steht Qualität im Fokus. Wir achten auf saubere Verarbeitung, stimmige Farben und klare Details, damit das Ergebnis nicht nur gut aussieht, sondern sich auch richtig gut anfühlt. Dafür arbeiten wir mit robusten Materialien, sauberen Druck und festen Standards in der Umsetzung und Produktion.</p><p>Verlässlichkeit heißt für uns: gleichbleibende Ergebnisse. Egal ob du einmal bestellst oder regelmäßig. Wir prüfen Outputs, halten unsere Anforderungen hoch und korrigieren, wenn etwas nicht passt. Lieber ein Schritt extra, als ein Kompromiss, den man später bereut.</p><p>Und wenn doch mal etwas schiefläuft, lösen wir es schnell und fair. Versprochen.</p>",
+            "link_url": "",
+            "link_text": "",
+            "link_style": "link"
+          }
+        },
+        "item_CReFUE": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/2.jpg",
+            "show_controls": false,
+            "column_size": "2",
+            "title": "",
+            "heading_tag": "h4",
+            "content": "<p>CANPAN™ steht für Motive mit Charakter. Uns geht es nicht um Deko, sondern um Gestaltung, die etwas auslöst. Designs, die eine Stimmung tragen, Details haben und nicht austauschbar sind. Kurz: Dinge, die man wiedererkennt und Atmosphäre schaffen.</p><p>Unsere Designs entstehen bewusst durch menschliche Arbeit. Wir verzichten auf KI-Gestaltung, weil wir Handwerk und Intuition wichtig finden. Gerade die kleinen Entscheidungen machen am Ende den Unterschied, ob etwas nur okay ist oder wirklich den Vibe catcht.</p><p>So entsteht eine Bildsprache, die zu CANPAN™ passt und sich nicht einfach nach Vorlage anfühlt.  Und das wichtigste: Gemacht von Menschen, für Menschen.</p>",
+            "link_url": "",
+            "link_text": "",
+            "link_style": "link"
+          }
+        },
+        "item_fTqXY4": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/3.jpg",
+            "show_controls": false,
+            "column_size": "2",
+            "title": "",
+            "heading_tag": "h4",
+            "content": "<p>CANPAN™ lebt von Austausch, Szene und Kultur. Ohne die Leute, die mitreden, mitfühlen und mitbauen, wäre das hier einfach nur eine Marke. Deshalb bleiben wir nah dran. Wir hören zu, nehmen Feedback ernst und lassen es in Entscheidungen einfließen.</p><p>Ideen entstehen bei uns nicht im stillen Kämmerlein, sondern im Gespräch. In Kommentaren, in DMs, auf Events und überall da, wo die Culture lebt. Dieser direkte Kontakt ist Teil unseres Alltags und genau das prägt CANPAN™.</p><p>Und weil Community kein one way ist, geben wir auch etwas zurück. Wir supporten Projekte, Artists und Aktionen, die unsere Culture voranbringen und die Szene stärken. Nich für ein gutes Image, sondern weil wir daran glauben.</p>",
+            "link_url": "",
+            "link_text": "",
+            "link_style": "link"
+          }
+        },
+        "item_4bT4aa": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/4.jpg",
+            "show_controls": false,
+            "column_size": "2",
+            "title": "",
+            "heading_tag": "h4",
+            "content": "<p>Wir wissen, dass Produkte immer Auswirkungen haben. Deshalb übernehmen wir Verantwortung für Material, Produktion, Verpackung und Versand. Unser Anspruch ist, Emissionen zu reduzieren, Ressourcen zu schonen und Abfall zu vermeiden, wo es möglich und sinnvoll ist.</p><p>Das passiert nicht mit großen Worten, sondern mit konkreten Entscheidungen. Wir prüfen Prozesse, reduzieren Überflüssiges und verbessern Abläufe Schritt für Schritt. Dazu gehören auch Versand und Verpackung, weil genau dort oft viel Potenzial liegt.</p><p>Wir kommunizieren transparent, was wir bereits umsetzen und wo wir noch besser werden müssen. Nachhaltigkeit ist für uns ein Prozess, der langfristig gedacht werden muss.</p><p><br/></p>",
+            "link_url": "",
+            "link_text": "",
+            "link_style": "link"
+          }
+        },
+        "item_DCAieT": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/5.jpg",
+            "show_controls": false,
+            "column_size": "2",
+            "title": "",
+            "heading_tag": "h4",
+            "content": "<p>CANPAN™ steht für Respekt und gleiche Chancen. Unabhängig von Herkunft, Geschlecht, Identität, Religion oder sozialem Hintergrund. Das ist für uns keine Zusatzbotschaft, sondern Grundlage dafür, wie wir arbeiten und wie wir auftreten.</p><p>Ausgrenzung, Diskriminierung, Hass und Gewalt haben bei uns keinen Platz. Wir wollen ein Umfeld, in dem Vielfalt selbstverständlich ist und Menschen sich sicher und ernst genommen fühlen.</p><p>Ganz praktisch heißt das: bewusste Sprache, fairer Umgang und Zusammenarbeit auf Augenhöhe. Intern wie in der Community.</p>",
+            "link_url": "",
+            "link_text": "",
+            "link_style": "link"
+          }
+        },
+        "item_M6WGmC": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/6.jpg",
+            "show_controls": false,
+            "column_size": "2",
+            "title": "",
+            "heading_tag": "h4",
+            "content": "<p>CANPAN™ ist ein Projekt, das wächst. Wir treffen Entscheidungen nach bestem Wissen, lernen dazu und entwickeln uns weiter. Nicht, weil wir ständig alles neu erfinden wollen, sondern weil Verbesserung dazugehört.</p><p>Wir hören hin, wenn die Community Kritik hat. Wir schauen uns das an und reagieren, wenn etwas nicht passt. Manchmal reicht eine kleine Anpassung, manchmal braucht es eine größere Korrektur. Wichtig ist, Verantwortung zu übernehmen und transparent zu bleiben.</p><p>Uns geht es nicht um Perfektion, sondern um Haltung. Offenheit, Lernbereitschaft und ein professioneller Umgang gehören für uns genauso dazu wie Produkt und Design. Schritt für Schritt und nachvollziehbar.</p>",
+            "link_url": "",
+            "link_text": "",
+            "link_style": "link"
+          }
+        }
+      },
+      "block_order": [
+        "item_Uj3XEM",
+        "item_CReFUE",
+        "item_fTqXY4",
+        "item_4bT4aa",
+        "item_DCAieT",
+        "item_M6WGmC"
+      ],
+      "custom_css": [],
+      "name": "Multi-column",
+      "settings": {
+        "full_width": true,
+        "stack_on_mobile": false,
+        "gap": "medium",
+        "text_alignment": "start",
+        "subheading": "",
+        "title": "Unsere Werte",
+        "content": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "press_yjUH4e": {
+      "type": "press",
+      "blocks": {
+        "quote_mg9zM7": {
+          "type": "quote",
+          "settings": {
+            "logo": "shopify://shop_images/Unbenanntes_Projekt_0edf2324-d999-40ea-a89f-0b5809c11a44.png",
+            "logo_width": 70,
+            "author": "Maximilian Peters, Founder CEO",
+            "content": "Cooles Zeug machen. Darum geht es eigentlich.",
+            "show_rating": false,
+            "rating": 4
+          }
+        },
+        "quote_4NQicQ": {
+          "type": "quote",
+          "settings": {
+            "logo": "shopify://shop_images/Unbenanntes_Projekt_0edf2324-d999-40ea-a89f-0b5809c11a44.png",
+            "logo_width": 70,
+            "author": "Martin Leleta, Founder CEO",
+            "content": "Ähm ja das fehlt.",
+            "show_rating": false,
+            "rating": 4
+          }
+        },
+        "quote_AXCWep": {
+          "type": "quote",
+          "settings": {
+            "logo": "shopify://shop_images/Unbenanntes_Projekt_0edf2324-d999-40ea-a89f-0b5809c11a44.png",
+            "logo_width": 70,
+            "author": "Canny, The mascot",
+            "content": "Hier ist es so... erwachsen...",
+            "show_rating": false,
+            "rating": 4
+          }
+        }
+      },
+      "block_order": [
+        "quote_mg9zM7",
+        "quote_4NQicQ",
+        "quote_AXCWep"
+      ],
+      "name": "Press",
+      "settings": {
+        "full_width": true,
+        "content_size": "large",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "logo_item_background": "",
+        "logo_item_border": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "slideshow_43MGDi",
+    "multiple_images_with_text_e4BcpL",
+    "blog_posts_t9tGP4",
+    "multi_column_4UU6jA",
+    "press_yjUH4e"
+  ]
+}

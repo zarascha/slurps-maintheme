@@ -13,27 +13,52 @@
   "sections": {
     "newsletter-popup": {
       "type": "newsletter-popup",
-      "settings": {}
+      "custom_css": [],
+      "settings": {
+        "apparition_delay": 7,
+        "show_only_on_index": true,
+        "show_only_for_visitors": true,
+        "show_only_once": true,
+        "image": "shopify://shop_images/newsletter_00c84de5-98c6-4f39-ae18-0e39b3f31254.png",
+        "title": "10 % Rabatt & nichts mehr verpassen!",
+        "button_text": "Trag mich ein!",
+        "subtext": "Werde Teil von Cannys Freundesliste und erhalte regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops!"
+      }
     },
     "privacy-banner": {
       "type": "privacy-banner",
       "disabled": true,
-      "settings": {}
+      "settings": {
+        "privacy_bar_title": "Cookies! 🍪",
+        "privacy_bar_content": "<p>Zwar keine Hashcookies, aber ähnlich gut. Wir verwenden Cookies und ähnliche Technologien, um dir die bestmögliche Erfahrung zu bieten. Mehr dazu findest du in unserer Datenschutzerklärung.</p>"
+      }
     },
     "cart-drawer": {
       "type": "cart-drawer",
+      "custom_css": [],
       "settings": {
-        "show_cart_note": true,
-        "show_shipping_text": true,
+        "show_cart_note": false,
+        "show_shipping_text": false,
+        "allow_discount_application": false,
+        "show_view_cart_button": false,
         "show_checkout_button": true,
-        "product_card_background": "#f2f2f2"
+        "recommendations_title": "Passende Empfehlungen:",
+        "products": [
+          "aktivkohlefilter-testline",
+          "kolor-aktivkohlefilter-organic",
+          "twisted-glasfilter-8mm-heated-eidtion"
+        ],
+        "product_card_background": "#f2f2f2",
+        "product_card_text_color": "#1a1a1a"
       }
     },
     "search-drawer": {
       "type": "search-drawer",
       "settings": {
         "full_width": false,
-        "show_article_category": true
+        "show_article_category": true,
+        "search_menu": "search-menu",
+        "search_menu_show_title": false
       }
     }
   },

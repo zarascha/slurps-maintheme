@@ -8,8 +8,103 @@
  * ------------------------------------------------------------
  */
 {
-  "current": "Impact",
-  "installed_preset_name": "Impact",
+  "current": {
+    "page_width": 1500,
+    "section_vertical_spacing": "medium",
+    "section_boxed_horizontal_spacing": "medium",
+    "button_border_radius": 10,
+    "input_border_radius": 10,
+    "block_border_radius": 24,
+    "block_shadow_opacity": 10,
+    "block_shadow_vertical_offset": 18,
+    "icon_stroke_width": 2,
+    "icon_style": "mono",
+    "button_style": "fill",
+    "button_hover_effect": "fade",
+    "background": "#ffffff",
+    "text_color": "#1a1a1a",
+    "success_color": "#078a00",
+    "warning_color": "#ffb74a",
+    "error_color": "#e60722",
+    "header_background": "#ffffff",
+    "header_text_color": "#1a1a1a",
+    "footer_background": "#f2f2f2",
+    "footer_text_color": "#1a1a1a",
+    "dialog_background": "#ffffff",
+    "primary_button_background": "#1a1a1a",
+    "primary_button_text_color": "#ffffff",
+    "secondary_button_background": "#f2f2f2",
+    "secondary_button_text_color": "#1a1a1a",
+    "product_card_background": "#ffffff",
+    "product_card_text_color": "#1a1a1a",
+    "product_on_sale_accent": "#e60722",
+    "product_sold_out_badge_background": "#f2f2f2",
+    "product_primary_badge_background": "#ffffff",
+    "heading_font": "outfit_n7",
+    "heading_font_size": "small",
+    "heading_text_transform": "normal",
+    "heading_letter_spacing": -1,
+    "text_font": "outfit_n4",
+    "text_font_size_mobile": 16,
+    "text_font_size_desktop": 16,
+    "zoom_image_on_hover": false,
+    "stagger_products_apparition": true,
+    "reduce_drawer_animation": false,
+    "reduce_menu_animation": false,
+    "heading_apparition": "split_fade",
+    "color_swatch_config": "pinky promises: #FF90C0\norganic: #CB6D28",
+    "show_vendor": false,
+    "show_secondary_image": true,
+    "show_quick_buy": true,
+    "show_product_rating": false,
+    "show_discount": true,
+    "discount_mode": "percentage",
+    "product_color_display": "swatch",
+    "product_image_aspect_ratio": "square_crop",
+    "product_info_alignment": "start",
+    "cart_type": "popover",
+    "cart_icon": "tote_bag",
+    "cart_show_free_shipping_threshold": true,
+    "cart_free_shipping_threshold": "49",
+    "social_facebook": "https://facebook.com/canpangermany",
+    "social_twitter": "",
+    "social_threads": "",
+    "social_pinterest": "",
+    "social_instagram": "https://instagram.com/canpangermany",
+    "social_whatsapp": "https://whatsapp.com/channel/0029Vb5PxsiF1YlXf7LA243X",
+    "social_tiktok": "https://tiktok.com/@canpangermany",
+    "favicon": "shopify://shop_images/canny_baby.png",
+    "checkout_accent_color": "#f0c417",
+    "checkout_button_color": "#1a1a1a",
+    "sections": {
+      "main-gift-card": {
+        "type": "main-gift-card",
+        "settings": {
+          "show_qr_code": true,
+          "amount_background": "",
+          "amount_text_color": ""
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": true,
+        "settings": {}
+      },
+      "9365423049038898845": {
+        "type": "shopify://apps/tawk-to-live-chat/blocks/widget-embed-code/91169e75-f163-40ce-90e0-9059f3c9b772",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  },
   "presets": {
     "Impact": {
       "section_vertical_spacing": "medium",
@@ -106,5 +201,8 @@
       "product_color_display": "swatch",
       "product_info_alignment": "center"
     }
+  },
+  "platform_customizations": {
+    "custom_css": []
   }
 }

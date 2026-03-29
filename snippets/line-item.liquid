@@ -4,7 +4,6 @@ LINE ITEM
 ----------------------------------------------------------------------------------------------------------------------
 
 This component renders a single line item product information, and is used on order and cart page.
-
 ********************************************
 Supported variables
 ********************************************
@@ -14,11 +13,23 @@ Supported variables
 {%- endcomment -%}
 
 {% liquid
+  # CANPAN QoL PRE-LAUNCH – Warenkorb-Titel (Line Item) primär aus dem Varianten-Metafield auflösen, mit Fallback auf den Produkttitel
+
   assign max_quantity = nil
+  assign canpan_line_item_title = line_item.product.title | default: line_item.title
 
   if line_item.variant.quantity_rule.max != nil
     assign max_quantity = max_quantity | default: 999999 | at_most: line_item.variant.quantity_rule.max
   endif
+
+  if line_item.variant != blank and line_item.variant.metafields.custom_variant.title.value != blank
+    assign canpan_line_item_title = line_item.variant.metafields.custom_variant.title.value
+  endif
+
+  assign has_variant = false
+  unless line_item.product.has_only_default_variant or line_item.gift_card
+    assign has_variant = true
+  endunless
 %}
 
 <line-item class="line-item">
@@ -30,22 +41,34 @@ Supported variables
     </div>
   {%- endif -%}
 
-  <div class="line-item__info">
-    <div class="v-stack gap-0.5">
+  <div class="line-item__info canpan-line-item-info-wrapper">
+    <div class="v-stack gap-0.5 canpan-line-item-info-wrapper">
       {%- if line_item.url != blank -%}
-        <a href="{{ line_item.url }}" class="bold">
-          <span class="reversed-link hover:show">{{ line_item.product.title | default: line_item.title }}</span>
+        <a href="{{ line_item.url }}" class="bold {% if has_variant %}canpan-line-item-title-truncate{% endif %}">
+          <span class="reversed-link hover:show">{{ canpan_line_item_title }}</span>
         </a>
       {%- else -%}
-        <p class="bold">{{ line_item.product.title | default: line_item.title }}</p>
+        <p class="bold {% if has_variant %}canpan-line-item-title-truncate{% endif %}">{{ canpan_line_item_title }}</p>
       {%- endif -%}
 
-      {%- render 'price-list', line_item: line_item -%}
-    </div>
+      {%- if has_variant -%}
+        <p class="text-sm text-subdued">{{ line_item.variant.title }}</p>
+      {%- endif -%}
 
-    {%- unless line_item.product.has_only_default_variant or line_item.gift_card -%}
-      <p class="text-sm text-subdued">{{ line_item.variant.title }}</p>
-    {%- endunless -%}
+      <div class="h-stack align-end gap-3 canpan-price-remove-row">
+        {%- render 'price-list', line_item: line_item -%}
+        
+        {%- if line_item.url_to_remove -%}
+          <div class="sm:hidden">
+            <line-item-quantity class="canpan-mobile-remove-btn">
+              <a href="{{ line_item.url_to_remove }}" class="link text-xs text-subdued" aria-label="{{ 'cart.order.remove_with_title' | t: title: canpan_line_item_title | escape }}">
+                {{- 'cart.order.remove' | t -}}
+              </a>
+            </line-item-quantity>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
 
     {%- if line_item.selling_plan_allocation -%}
       <p class="text-sm text-subdued">{{ line_item.selling_plan_allocation.selling_plan.name }}</p>
@@ -71,22 +94,6 @@ Supported variables
       </ul>
     {%- endunless -%}
 
-    <div class="text-sm text-subdued sm:hidden">
-      {%- if line_item.url_to_remove -%}
-        <line-item-quantity class="h-stack justify-center gap-3">
-          <input class="quantity-input" type="number" is="quantity-input" inputmode="numeric" min="{{ line_item.variant.quantity_rule.min }}" step="{{ line_item.variant.quantity_rule.increment }}" {% if max_quantity != nil %}max="{{ max_quantity }}"{% endif %} data-line-key="{{ line_item.key }}" aria-label="{{ 'cart.order.change_quantity' | t | escape }}" value="{{ line_item.quantity }}">
-
-          <span class="text-xs">
-            <a href="{{ line_item.url_to_remove }}" class="link" aria-label="{{ 'cart.order.remove_with_title' | t: title: line_item.title | escape }}">
-              {{- 'cart.order.remove' | t -}}
-            </a>
-          </span>
-        </line-item-quantity>
-      {%- else -%}
-        {{- 'customer.order.quantity' | t }}: {{ line_item.quantity -}}
-      {%- endif -%}
-    </div>
-
     {%- if line_item.line_level_discount_allocations != blank -%}
       <ul class="contents" role="list">
         {%- for discount_allocation in line_item.line_level_discount_allocations -%}
@@ -104,17 +111,21 @@ Supported variables
     {%- endif -%}
   </div>
 
-  {%- if show_desktop_quantity -%}
-    <div class="line-item__actions text-subdued hidden sm:block">
+  <div class="line-item__actions text-subdued">
+    {%- if show_desktop_quantity -%}
       <line-item-quantity class="v-stack gap-2">
         <input class="quantity-input" type="number" is="quantity-input" inputmode="numeric" min="{{ line_item.variant.quantity_rule.min }}" step="{{ line_item.variant.quantity_rule.increment }}" {% if max_quantity != nil %}max="{{ max_quantity }}"{% endif %} data-line-key="{{ line_item.key }}" aria-label="{{ 'cart.order.change_quantity' | t | escape }}" value="{{ line_item.quantity }}">
 
-        <span class="text-xs text-center">
-          <a href="{{ line_item.url_to_remove }}" class="link" aria-label="{{ 'cart.order.remove_with_title' | t: title: line_item.title | escape }}">
+        <span class="text-xs text-center hidden sm:block">
+          <a href="{{ line_item.url_to_remove }}" class="link" aria-label="{{ 'cart.order.remove_with_title' | t: title: canpan_line_item_title | escape }}">
             {{- 'cart.order.remove' | t -}}
           </a>
         </span>
       </line-item-quantity>
-    </div>
-  {%- endif -%}
+    {%- else -%}
+      <div class="text-sm sm:hidden">
+        {{- 'customer.order.quantity' | t }}: {{ line_item.quantity -}}
+      </div>
+    {%- endif -%}
+  </div>
 </line-item>

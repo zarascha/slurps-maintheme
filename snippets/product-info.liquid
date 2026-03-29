@@ -16,15 +16,47 @@ Supported variables
 {%- endcomment -%}
 
 <safe-sticky class="product-info">
-  {%- assign inside_block_group_context = false -%}
-  {%- assign current_block_group_name = '' -%}
-
   {%- for block in section.blocks -%}
+    {%- comment -%} CANPAN QoL PRE-LAUNCH – Bug-Fixing: stabilisiert die Blockgruppen-Logik fuer Offer- und Accordion-Kombinationen {%- endcomment -%}
     {%- liquid
       assign previous_block_index = forloop.index0 | minus: 1
       assign next_block_index = forloop.index0 | plus: 1
-      assign previous_block = section.blocks[previous_block_index]
-      assign next_block = section.blocks[next_block_index]
+      assign previous_block = blank
+      assign next_block = blank
+      assign current_block_has_canpan_price_bubble = false
+      assign previous_block_has_canpan_price_bubble = false
+      assign block_liquid = ''
+      assign previous_block_liquid = ''
+      assign previous_block_group_name = ''
+      assign next_block_group_name = ''
+      assign block_group_name = ''
+      assign block_group_class = ''
+      assign opens_block_group = false
+      assign closes_block_group = false
+
+      if forloop.index0 > 0
+        assign previous_block = section.blocks[previous_block_index]
+      endif
+
+      if forloop.last == false
+        assign next_block = section.blocks[next_block_index]
+      endif
+
+      if block.type == 'liquid'
+        assign block_liquid = block.settings.liquid | default: ''
+      endif
+
+      if previous_block != blank and previous_block.type == 'liquid'
+        assign previous_block_liquid = previous_block.settings.liquid | default: ''
+      endif
+
+      if block_liquid contains 'canpan-bubble-width' or block_liquid contains 'canpan-price-bubble'
+        assign current_block_has_canpan_price_bubble = true
+      endif
+
+      if previous_block_liquid contains 'canpan-bubble-width' or previous_block_liquid contains 'canpan-price-bubble'
+        assign previous_block_has_canpan_price_bubble = true
+      endif
 
       comment
       You can use your own condition to create smart grouping. When two or more blocks match the condition, they are
@@ -36,34 +68,40 @@ Supported variables
       stays the same, then another group will not be created as long as the conditions match.
       endcomment
 
-      assign allow_block_group = true
-
-      if block.type == 'offer' and next_block.type == 'offer'
-        assign block_group_class = 'product-info__offer-list'
-        assign block_group_name = 'product-info__offer-list'
-      elsif block.type == 'collapsible_text' and next_block.type == 'collapsible_text'
-        assign block_group_class = 'accordion-group'
-        assign block_group_name = 'accordion-group'
-      elsif block.type == 'collapsible_text' and next_block.type == 'description' and product.description != blank and next_block.settings.collapse_content
-        assign block_group_class = 'accordion-group'
-        assign block_group_name = 'accordion-group'
-      elsif block.type == 'description' and product.description != blank and block.settings.collapse_content and next_block.type == 'collapsible_text'
-        assign block_group_class = 'accordion-group'
-        assign block_group_name = 'accordion-group'
-      else
-        assign allow_block_group = false
-        assign block_group_class = ''
-        assign current_block_group_name = ''
+      if block.type == 'offer' and previous_block.type == 'offer'
+        assign previous_block_group_name = 'product-info__offer-list'
+      elsif block.type == 'collapsible_text' and previous_block.type == 'collapsible_text'
+        assign previous_block_group_name = 'accordion-group'
+      elsif previous_block.type == 'collapsible_text' and block.type == 'description' and product.description != blank and block.settings.collapse_content
+        assign previous_block_group_name = 'accordion-group'
+      elsif previous_block.type == 'description' and product.description != blank and previous_block.settings.collapse_content and block.type == 'collapsible_text'
+        assign previous_block_group_name = 'accordion-group'
       endif
 
-      if allow_block_group
-        assign new_block_group_name = block_group_name
+      if block.type == 'offer' and next_block.type == 'offer'
+        assign next_block_group_name = 'product-info__offer-list'
+        assign block_group_class = 'product-info__offer-list'
+      elsif block.type == 'collapsible_text' and next_block.type == 'collapsible_text'
+        assign next_block_group_name = 'accordion-group'
+        assign block_group_class = 'accordion-group'
+      elsif block.type == 'collapsible_text' and next_block.type == 'description' and product.description != blank and next_block.settings.collapse_content
+        assign next_block_group_name = 'accordion-group'
+        assign block_group_class = 'accordion-group'
+      elsif block.type == 'description' and product.description != blank and block.settings.collapse_content and next_block.type == 'collapsible_text'
+        assign next_block_group_name = 'accordion-group'
+        assign block_group_class = 'accordion-group'
+      endif
 
-        if inside_block_group_context == true and new_block_group_name != current_block_group_name
-          assign allow_block_group = false
-        else
-          assign current_block_group_name = new_block_group_name
+      if next_block_group_name != blank
+        assign block_group_name = next_block_group_name
+
+        if previous_block_group_name != next_block_group_name
+          assign opens_block_group = true
         endif
+      endif
+
+      if previous_block_group_name != blank and previous_block_group_name != next_block_group_name
+        assign closes_block_group = true
       endif
     -%}
 
@@ -80,13 +118,21 @@ Supported variables
           {%- endif -%}
 
         {%- when 'title' -%}
+          {%- comment -%} CANPAN QoL PRE-LAUNCH – Priorisiere den benutzerdefinierten Titel der ausgewählten Variante mit dem Produkttitel als Fallback {%- endcomment -%}
+          {%- assign canpan_current_variant = product.selected_or_first_available_variant -%}
+          {%- assign canpan_product_title = product.title -%}
+
+          {%- if canpan_current_variant != blank and canpan_current_variant.metafields.custom_variant.title.value != blank -%}
+            {%- assign canpan_product_title = canpan_current_variant.metafields.custom_variant.title.value -%}
+          {%- endif -%}
+
           {%- if request.page_type == 'product' -%}
             <h1 class="product-info__title {{ block.settings.heading_tag }}">
-              {{- product.title -}}
+              {{- canpan_product_title -}}
             </h1>
           {%- else -%}
             <h2 class="product-info__title {{ block.settings.heading_tag }}">
-              <a href="{{ product.url }}">{{ product.title }}</a>
+              <a href="{{ product.url }}">{{ canpan_product_title }}</a>
             </h2>
           {%- endif -%}
 
@@ -102,9 +148,28 @@ Supported variables
 
         {%- when 'price' -%}
           {%- if product.selected_or_first_available_variant != nil -%}
-            <div class="product-info__price">
+            {%- capture canpan_inline_price_bubble_markup -%}
+              {%- if previous_block_has_canpan_price_bubble -%}
+                <div class="canpan-inline-price-bubble">
+                  {{- previous_block.settings.liquid -}}
+                </div>
+              {%- endif -%}
+            {%- endcapture -%}
+
+            <div class="product-info__price{% if canpan_inline_price_bubble_markup != blank %} canpan-price-has-bubble{% endif %}">
               <div class="rating-with-text">
-                {%- render 'price-list', variant: product.selected_or_first_available_variant, size: 'lg' -%}
+                <div class="canpan-price-primary-row">
+                  <div class="canpan-price-main">
+                    {%- comment -%} CANPAN QoL PRE-LAUNCH – Split-Preis nur auf der Haupt-Produktseite. Wir prüfen den 'context'. Impact übergibt 'main_product' auf der PDP {%- endcomment -%}
+                    {%- assign show_split_price = false -%}
+                    {%- if context == 'main_product' -%}
+                      {%- assign show_split_price = true -%}
+                    {%- endif -%}
+
+                    {%- render 'price-list', variant: product.selected_or_first_available_variant, size: 'lg', canpan_split_price: show_split_price, canpan_inline_bubble_markup: canpan_inline_price_bubble_markup -%}
+                  </div>
+                </div>
+
                 {%- render 'product-badges', types: 'sold_out, discount', product: product, context: 'product', class: 'product-info__badge-list' -%}
 
                 {%- comment -%}If the next block is a rating block, then we add it as part of this one to have it inline{%- endcomment -%}
@@ -330,6 +395,10 @@ Supported variables
             </div>
           {%- endif -%}
 
+        {%- when 'canpan_feature_cards' -%}
+          {%- comment -%} CANPAN QoL PRE-LAUNCH – Rendering der CANPAN-Feature-Cards in ein eigenes Snippet mit explizitem Produkt- und Varianten-Kontext ausgelagert {%- endcomment -%}
+          {%- render 'canpan-feature-cards', block: block, product: product, variant: product.selected_or_first_available_variant -%}
+
         {%- when 'collapsible_text' -%}
           {%- if block.settings.title != blank and block.settings.content != blank or block.settings.page.content != blank -%}
             {%- capture accordion_content -%}<div class="prose">{{ block.settings.page.content | default: block.settings.content }}</div>{%- endcapture -%}
@@ -357,9 +426,11 @@ Supported variables
 
         {%- when 'liquid' -%}
           {%- if block.settings.liquid != blank -%}
-            <div class="product-info__liquid">
-              {{ block.settings.liquid }}
-            </div>
+            {%- unless current_block_has_canpan_price_bubble and next_block.type == 'price' -%}
+              <div class="product-info__liquid">
+                {{ block.settings.liquid }}
+              </div>
+            {%- endunless -%}
           {%- endif -%}
 
         {%- when 'associated_products' -%}
@@ -438,19 +509,22 @@ Supported variables
       {%- endcase -%}
     {%- endcapture -%}
 
-    {%- if allow_block_group and inside_block_group_context == false -%}
-      {%- assign inside_block_group_context = true -%}
-      <div class="product-info__block-group {{ block_group_class }}" data-group-type="{{ block_group_name }}">
-    {%- endif -%}
+    {%- comment -%} CANPAN QoL PRE-LAUNCH – Bug-Fixing: oeffnet Wrapper nur an echten Gruppenstarts und schliesst sie nur an echten Gruppenenden {%- endcomment -%}
+    {%- liquid
+      if opens_block_group
+        echo '<div class="product-info__block-group ' | append: block_group_class | append: '" data-group-type="' | append: block_group_name | append: '">'
+      endif
+    -%}
 
     <div class="product-info__block-item" data-block-id="{{ block.id }}" data-block-type="{{ block.type | replace: '_', '-' }}" {% unless block.type == '@app' or block.type == 'accordion' %}{{ block.shopify_attributes }}{% endunless %}>
       {{- block_content -}}
     </div>
 
-    {%- if inside_block_group_context and allow_block_group == false -%}
-      {%- assign inside_block_group_context = false -%}
-      </div>
-    {%- endif -%}
+    {%- liquid
+      if closes_block_group
+        echo '</div>'
+      endif
+    -%}
   {%- endfor -%}
 
   {%- comment -%}

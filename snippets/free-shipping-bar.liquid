@@ -34,10 +34,15 @@ Supported variables
 -%}
 
 {%- if cart.requires_shipping -%}
-  <free-shipping-bar class="free-shipping-bar" threshold="{{ settings.cart_free_shipping_threshold | times: 100.0 }}" total-price="{{ calculated_total_price }}" reached-message="{{ 'cart.free_shipping_bar.limit_reached_html' | t | escape }}" unreached-message="{{ 'cart.free_shipping_bar.limit_unreached_html' | t | escape }}">
+  {%- comment -%} CANPAN QoL PRE-LAUNCH – Inline-SVG-Checkmark vor dem Reached-Text (ersetzt CSS Data-URL, bleibt im HTML-Cache) {%- endcomment -%}
+  {%- assign canpan_shipping_reached_icon = '<svg class="canpan-shipping-reached-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#078A00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>' -%}
+  {%- assign canpan_reached_text = 'cart.free_shipping_bar.limit_reached_html' | t -%}
+  {%- assign canpan_reached_message = canpan_shipping_reached_icon | append: canpan_reached_text -%}
+  <free-shipping-bar class="free-shipping-bar" threshold="{{ settings.cart_free_shipping_threshold | times: 100.0 }}" total-price="{{ calculated_total_price }}" reached-message="{{ canpan_reached_message | escape }}" unreached-message="{{ 'cart.free_shipping_bar.limit_unreached_html' | t | escape }}">
     {%- comment -%}The span below is the placeholder where the content will be inserted in JS{%- endcomment -%}
     <span>&nbsp;</span>
 
     <progress-bar class="progress-bar" role="progressbar" aria-valuemin="0" style="--progress: 0"></progress-bar>
   </free-shipping-bar>
+
 {%- endif -%}

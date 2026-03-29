@@ -13,6 +13,36 @@ Supported variables
 * product_form_id: the product form id
 {%- endcomment -%}
 
+{% comment %}
+----------------------------------------------------------------------------------------------------------------------
+CANPAN QoL PRE-LAUNCH – ALT-TAG-GESTEUERTE SICHTBARKEIT VON PRODUKTBILDERN
+----------------------------------------------------------------------------------------------------------------------
+
+BESCHREIBUNG:
+Steuerung von Produktbildern hinsichtlich Endgeräten, Varianten und 
+Vorschaubildern über Shopify-Alt-Tags. Serverseitiges Parsing und gezielte 
+CSS-Media-Queries sorgen für eine verzögerungsfreie Darstellung ohne 
+Cumulative Layout Shifts (CLS) für optimale Core Web Vitals.
+
+VERFÜGBARE TAGS (im Shopify-Alt-Text hinterlegen, case-insensitive):
+
+- #mobile            : Anzeige nur auf mobilen Endgeräten (max-width: 740px). 
+                       Injiziert CSS-Klasse: 'canpan-hide-desktop'
+- #desktop           : Anzeige nur auf Desktop-Screens (min-width: 741px). 
+                       Injiziert CSS-Klasse: 'canpan-hide-mobile'
+- #vorschaubild      : Schließt das Bild von der Hauptgalerie aus.
+- #[Option]_[Wert]   : Verknüpft Bild mit Variante (z.B. #Farbe_Rot oder #Color_Blue). 
+                       Blendet andere Variantenbilder bei Auswahl aus.
+
+TECHNISCHE FUNKTIONSWEISE:
+Das Liquid-Skript parst den Alt-Text. Werden Device-Tags (#mobile/#desktop) 
+gefunden, wird serverseitig die korrespondierende Sichtbarkeits-Klasse 
+in den Container injiziert. Das globale CSS blendet die Elemente per 
+`display: none !important` aus. Bilder bleiben im DOM, belasten den Render-Tree 
+auf dem irrelevanten Endgerät visuell jedoch nicht.
+----------------------------------------------------------------------------------------------------------------------
+{% endcomment %}
+
 {%- assign default_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
 {%- capture product_gallery_id -%}product-gallery-{{ product.id }}-{{ section.id }}{%- endcapture -%}
 
@@ -27,31 +57,61 @@ only way to do it on Shopify right now.
 {%- liquid
   assign filtered_indexes = null | sort
 
-  if product.variants.size > 1
-    for media in product.media
-      if media.alt contains '#' and media.alt != product.title
-        assign alt_parts = media.alt | split: '#'
+  for media in product.media
+    assign canpan_should_hide = false
+    assign canpan_alt_downcase = media.alt | downcase
 
-        assign media_group_parts = alt_parts.last | split: '_'
-        assign option = product.options_by_name[media_group_parts.first]
-        assign option_value = option.selected_value | downcase
+    if canpan_alt_downcase contains '#vorschaubild'
+      assign canpan_should_hide = true
+    elsif product.variants.size > 1 and media.alt contains '#' and media.alt != product.title
+      assign canpan_alt_parts = media.alt | split: '#'
 
-        assign downcase_group_value = media_group_parts.last | strip | downcase
-
-        if option_value != downcase_group_value and media != default_media
-          assign media_position = media.position | sort
-          assign filtered_indexes = filtered_indexes | concat: media_position
+      for canpan_alt_part in canpan_alt_parts
+        if forloop.first
+          continue
         endif
+
+        assign canpan_media_group_parts = canpan_alt_part | split: '_'
+        if canpan_media_group_parts.size >= 2
+          assign canpan_option_name = canpan_media_group_parts.first | strip
+          assign canpan_option = product.options_by_name[canpan_option_name]
+
+          if canpan_option
+            assign canpan_option_value = canpan_option.selected_value | downcase
+            assign canpan_prefix = canpan_media_group_parts.first | append: '_'
+            assign canpan_downcase_group_value = canpan_alt_part | replace_first: canpan_prefix, '' | strip | downcase
+
+            if canpan_option_value != canpan_downcase_group_value
+              assign canpan_should_hide = true
+              break
+            endif
+          endif
+        endif
+      endfor
+    endif
+
+    if canpan_should_hide
+      if canpan_alt_downcase contains '#vorschaubild' or media != default_media
+        assign media_position = media.position | sort
+        assign filtered_indexes = filtered_indexes | concat: media_position
       endif
-    endfor
-  endif
+    endif
+  endfor
 -%}
 
 <product-gallery form="{{ product_form_id }}" filtered-indexes="{{ filtered_indexes | json }}" {%- if section.settings.enable_image_zoom -%}allow-zoom="{{ section.settings.max_image_zoom_level }}"{% endif %} class="product-gallery {% if section.settings.mobile_carousel_control contains 'dots' %}product-gallery--mobile-dots{% endif %} {% if section.settings.desktop_media_layout contains 'grid' %}product-gallery--desktop-grid{% else %}product-gallery--desktop-carousel{% endif %} {% if section.settings.desktop_media_layout == 'carousel_thumbnails_left' %}product-gallery--desktop-thumbnails-left{% endif %} {% if section.settings.mobile_media_size == 'expanded' %}product-gallery--mobile-expanded{% endif %}">
   {%- capture page_dots -%}
     <page-dots class="page-dots {% if section.settings.mobile_carousel_control == 'floating_dots' %}page-dots--blurred{% endif %} md:hidden" aria-controls="{{ product_gallery_id }}">
       {%- for media in product.media -%}
-        <button type="button" class="tap-area" {% if filtered_indexes contains media.position %}hidden{% endif %} aria-current="{% if media == default_media %}true{% else %}false{% endif %}">
+        {%- assign canpan_device_class = '' -%}
+        {%- assign canpan_alt_check = media.alt | downcase -%}
+        {%- if canpan_alt_check contains '#mobile' -%}
+          {%- assign canpan_device_class = ' canpan-hide-desktop' -%}
+        {%- elsif canpan_alt_check contains '#desktop' -%}
+          {%- assign canpan_device_class = ' canpan-hide-mobile' -%}
+        {%- endif -%}
+
+        <button type="button" class="tap-area{{ canpan_device_class }}" {% if filtered_indexes contains media.position %}hidden{% endif %} aria-current="{% if media == default_media %}true{% else %}false{% endif %}">
           <span class="sr-only">{{ 'general.accessibility.go_to_item' | t: index: media.position }}</span>
         </button>
       {%- endfor -%}
@@ -77,6 +137,14 @@ only way to do it on Shopify right now.
         {%- assign media_attached_to_variant = product.images | where: 'attached_to_variant?', true | map: 'src' -%}
 
         {%- for media in product.media -%}
+          {%- assign canpan_device_class = '' -%}
+          {%- assign canpan_alt_check = media.alt | downcase -%}
+          {%- if canpan_alt_check contains '#mobile' -%}
+            {%- assign canpan_device_class = ' canpan-hide-desktop' -%}
+          {%- elsif canpan_alt_check contains '#desktop' -%}
+            {%- assign canpan_device_class = ' canpan-hide-mobile' -%}
+          {%- endif -%}
+
           {%- case section.settings.desktop_media_layout -%}
             {%- when 'carousel_thumbnails_bottom' -%}
               {%- capture sizes -%}(max-width: 740px) calc(100vw - 40px), (max-width: 999px) calc(100vw - 64px), min(760px, 42vw){%- endcapture -%}
@@ -94,11 +162,14 @@ only way to do it on Shopify right now.
               {%- capture sizes -%}(max-width: 740px) calc(100vw - 40px), (max-width: 999px) calc(100vw - 64px), {% if forloop.first or media_attached_to_variant contains media.src %}min(1200px, 60vw){% else %}min(580px, 30vw){% endif %}{%- endcapture -%}
           {%- endcase -%}
 
-          <div class="product-gallery__media {% if media.alt contains '@expand' %}product-gallery__media--expand{% endif %} {% if section.settings.mobile_carousel_control != 'free_scroll' %}snap-center{% endif %}" data-media-type="{{ media.media_type }}" data-media-id="{{ media.id }}" {% if filtered_indexes contains media.position %}hidden{% endif %}>
+          <div class="product-gallery__media{{ canpan_device_class }} {% if media.alt contains '@expand' %}product-gallery__media--expand{% endif %} {% if section.settings.mobile_carousel_control != 'free_scroll' %}snap-center{% endif %}" data-media-type="{{ media.media_type }}" data-media-id="{{ media.id }}" {% if filtered_indexes contains media.position %}hidden{% endif %}>
+            
+            {%- comment -%} CANPAN QoL PRE-LAUNCH – Lädt die ersten zwei Bilder im Grid-Layout eagerly, um FCP-Verzögerungen zu verhindern {%- endcomment -%}
+            {%- assign preload = false -%}
             {%- if default_media == media -%}
               {%- assign preload = true -%}
-            {%- else -%}
-              {%- assign preload = false -%}
+            {%- elsif section.settings.desktop_media_layout contains 'grid' and forloop.index0 < 2 -%}
+              {%- assign preload = true -%}
             {%- endif -%}
 
             {%- render 'media', media: media, sizes: sizes, preload: preload, autoplay: section.settings.enable_video_autoplay, loop: section.settings.enable_video_looping, group: 'product' -%}
@@ -164,7 +235,15 @@ only way to do it on Shopify right now.
       <scroll-shadow class="product-gallery__thumbnail-list-wrapper">
         <page-dots align-selected class="product-gallery__thumbnail-list scroll-area bleed md:unbleed" aria-controls="{{ product_gallery_id }}">
           {%- for media in product.media -%}
-            <button type="button" class="product-gallery__thumbnail" {% if filtered_indexes contains media.position %}hidden{% endif %} aria-current="{% if media == default_media %}true{% else %}false{% endif %}" aria-label="{{ 'general.accessibility.go_to_item' | t: index: forloop.index | escape }}">
+            {%- assign canpan_device_class = '' -%}
+            {%- assign canpan_alt_check = media.alt | downcase -%}
+            {%- if canpan_alt_check contains '#mobile' -%}
+              {%- assign canpan_device_class = ' canpan-hide-desktop' -%}
+            {%- elsif canpan_alt_check contains '#desktop' -%}
+              {%- assign canpan_device_class = ' canpan-hide-mobile' -%}
+            {%- endif -%}
+
+            <button type="button" class="product-gallery__thumbnail{{ canpan_device_class }}" {% if filtered_indexes contains media.position %}hidden{% endif %} aria-current="{% if media == default_media %}true{% else %}false{% endif %}" aria-label="{{ 'general.accessibility.go_to_item' | t: index: forloop.index | escape }}">
               {{- media | image_url: width: media.preview_image.width | image_tag: loading: 'lazy', sizes: '(max-width: 699px) 56px, 64px', widths: '56,64,112,128,168,192', class: 'object-contain rounded-sm' -}}
 
               {%- unless media.media_type == 'image' -%}

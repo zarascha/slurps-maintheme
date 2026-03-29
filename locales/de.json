@@ -39,10 +39,10 @@
       "info": "{{ rating_value }} von {{ rating_max }} Sternen"
     },
     "newsletter": {
-      "email": "E-Mail",
+      "email": "E-Mail-Adresse",
       "subscribe": "Abonnieren",
       "notify_me": "Benachrichtige mich",
-      "subscribed_successfully": "Du hast den Newsletter abonniert."
+      "subscribed_successfully": "Danke für deine Anmeldung! Wir schicken dir gleich eine Bestätigungs-E-Mail. Falls nichts ankommt, wirf bitte einen Blick in deinen SPAM-Ordner."
     },
     "localization": {
       "country": "Land",
@@ -69,7 +69,7 @@
   },
   "header": {
     "general": {
-      "account": "Konto",
+      "account": "Anmelden",
       "login": "Anmelden",
       "menu": "Menü",
       "search": "Suche",
@@ -80,7 +80,7 @@
     "general": {
       "description": "Beschreibung",
       "view_product": "Produkt ansehen",
-      "quick_add": "+ In den Warenkorb",
+      "quick_add": "+ Hinzufügen",
       "add_to_cart_short": "+ Hinzufügen",
       "add_to_cart_button": "In den Warenkorb",
       "pre_order_button": "Vorbestellen",
@@ -89,14 +89,14 @@
       "added_to_cart": "Zum Warenkorb hinzugefügt!",
       "added_to_cart_with_title": "{{ product_title }} wurde dem Warenkorb hinzugefügt.",
       "sold_out_badge": "Ausverkauft",
-      "on_sale_badge": "Sale",
-      "discount_badge_html": "Spare {{ savings }}",
+      "on_sale_badge": "Jetzt sparen!",
+      "discount_badge_html": "Spare {{ savings }} ",
       "sku": "SKU:",
       "variant": "Variante",
       "view_in_space": "In deinem Bereich ansehen",
       "taxes_included": "inkl. MwSt.",
       "taxes_excluded": "zzgl. MwSt.",
-      "shipping_policy_html": "<a href=\"{{ link }}\" class=\"link\">Versandkosten<\/a> werden an der Kasse berechnet",
+      "shipping_policy_html": "<a href=\"{{ link }}\" class=\"link\">Versandkosten</a> werden an der Kasse berechnet",
       "size_chart": "Größentabelle",
       "available_colors_count": {
         "one": "{{ count }} Farbe verfügbar",
@@ -194,7 +194,7 @@
       "leave_comment": "Hinterlasse einen Kommentar",
       "moderated": "Alle Kommentare werden vor der Veröffentlichung geprüft.",
       "name": "Name",
-      "email": "E-Mail",
+      "email": "E-Mail-Adresse",
       "message": "Kommentar",
       "submit": "Absenden",
       "comment_sent": "Dein Kommentar wurde abgesendet. Er wird nach der Prüfung durch den Shopinhaber veröffentlicht!",
@@ -209,7 +209,7 @@
   "contact": {
     "form": {
       "name": "Name",
-      "email": "E-Mail",
+      "email": "E-Mail-Adresse",
       "message": "Nachricht",
       "submit": "Nachricht senden",
       "success_message": "Deine Nachricht wurde gesendet."
@@ -227,7 +227,7 @@
     },
     "login": {
       "title": "Anmelden",
-      "email": "E-Mail",
+      "email": "E-Mail-Adresse",
       "password": "Passwort",
       "submit": "Anmelden",
       "forgot_password": "Passwort vergessen?",
@@ -235,7 +235,7 @@
     },
     "recover_password": {
       "title": "Passwort zurücksetzen",
-      "email": "E-Mail",
+      "email": "E-Mail-Adresse",
       "submit": "Zurücksetzen",
       "back_to_login": "Zurück zur Anmeldung",
       "success_message": "Eine E-Mail mit Informationen zum Zurücksetzen des Passworts wurde an deine Adresse gesendet."
@@ -244,7 +244,7 @@
       "title": "Registrieren",
       "first_name": "Vorname",
       "last_name": "Nachname",
-      "email": "E-Mail",
+      "email": "E-Mail-Adresse",
       "password": "Passwort",
       "accepts_marketing": "Newsletter abonnieren",
       "submit": "Kundenkonto erstellen",
@@ -302,14 +302,14 @@
       "fill_form": "Fülle bitte folgende Felder aus:",
       "first_name": "Vorname",
       "last_name": "Nachname",
-      "company": "Firma",
-      "phone": "Telefon",
+      "company": "Firma/Unternehmen",
+      "phone": "Mobilfunknummer",
       "address1": "Adresszeile 1",
       "address2": "Adresszeile 2",
       "city": "Ort",
       "zip": "PLZ",
       "country": "Land",
-      "province": "Bundesland/Kanton",
+      "province": "Bundesland",
       "set_default": "Als Standardadresse festlegen"
     }
   },
@@ -319,12 +319,13 @@
       "empty": "Dein Warenkorb ist leer",
       "item_count": {
         "one": "{{ count }} Artikel",
-        "other": "{{ count }} Artikel"
+        "other": "{{ count }} Insgesamt",
+        "zero": "{{ count }} Artikel"
       },
       "continue_shopping": "Weiter einkaufen",
       "weight": "Gewicht",
       "subtotal": "Zwischensumme",
-      "total": "Gesamtbetrag",
+      "total": "Gesamt",
       "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\" class=\"link\">Versand</a> werden beim Checkout berechnet",
       "taxes_included_but_shipping_at_checkout": "Inklusive Steuern, Versand wird beim Checkout berechnet",
       "taxes_included_and_shipping_policy_html": "Inklusive Steuern. <a href=\"{{ link }}\" class=\"link\">Versand </a> wird beim Checkout berechnet",
@@ -333,8 +334,8 @@
       "edit_order_note": "Bestellhinweis bearbeiten",
       "order_note": "Bestellhinweis",
       "save_note": "Speichern",
-      "view_cart": "Warenkorb ansehen",
-      "checkout": "Zur Kasse",
+      "view_cart": "Warenkorb",
+      "checkout": "Checkout",
       "we_accept": "Wir akzeptieren"
     },
     "order": {
@@ -348,8 +349,8 @@
       "remove_with_title": "Entfernen {{ title }}"
     },
     "free_shipping_bar": {
-      "limit_unreached_html": "Füge deiner Bestellung Artikel im Wert von {{ remaining_amount }} hinzu und erhalte kostenlosen Versand!",
-      "limit_reached_html": "Deine Bestellung ist für kostenlosen Versand qualizifiert."
+      "limit_unreached_html": "Es fehlen {{ remaining_amount }} für kostenlosen Versand",
+      "limit_reached_html": "Dein Versand ist jetzt kostenlos!"
     },
     "shipping_estimator": {
       "estimate_shipping": "Versandkosten berechnen",
@@ -377,7 +378,7 @@
     "general": {
       "title": "Suchen",
       "terms": "Treffer für \"{{ terms }}\"",
-      "search_placeholder": "Gib etwas ein...",
+      "search_placeholder": "Suche beginnen...",
       "products": "Produkte",
       "suggestions": "Anregungen",
       "collections": "Kategorien",
@@ -413,7 +414,7 @@
     },
     "recipient": {
       "checkbox": "Ich möchte dies als Geschenk senden",
-      "email_label": "Empfänger E-Mail",
+      "email_label": "Empfänger E-Mail-Adresse",
       "name_label": "Name des Empfängers (optional)",
       "send_on_label": "Senden am (optional)",
       "message_label": "Nachricht (optional)"

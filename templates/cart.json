@@ -14,11 +14,16 @@
       "blocks": {
         "totals": {
           "type": "totals",
-          "settings": {}
+          "settings": {
+            "show_order_weight": false,
+            "show_shipping_text": true
+          }
         },
         "cart_note": {
           "type": "cart_note",
-          "settings": {}
+          "settings": {
+            "max_length": 100
+          }
         },
         "checkout_button": {
           "type": "checkout_button",
@@ -30,10 +35,44 @@
         "cart_note",
         "checkout_button"
       ],
-      "settings": {}
+      "custom_css": [],
+      "settings": {
+        "allow_discount_application": false,
+        "show_shipping_estimator": false,
+        "show_payment_icons": true
+      }
+    },
+    "featured_collection_FWfnVc": {
+      "type": "featured-collection",
+      "custom_css": [
+        ".accordion__content {color: #4a4a4a;}"
+      ],
+      "settings": {
+        "collection": "bestseller",
+        "products": [],
+        "full_width": true,
+        "stack_products": true,
+        "show_progress_bar": false,
+        "products_count": 5,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 5,
+        "subheading": "",
+        "title": "Eure Favorites",
+        "content": "<p>Entdecke unsere beliebtesten Produkte!</p>",
+        "link_url": "shopify://collections/bestseller",
+        "link_text": "Anzeigen",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "featured_collection_FWfnVc"
   ]
 }

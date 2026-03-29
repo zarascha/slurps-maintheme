@@ -26,6 +26,63 @@ Supported variables
           </button>
         {%- endif -%}
 
+        {%- unless is_mega_menu -%}
+          <style>
+            .canpan-nav-search-form:has(input[type="search"]:placeholder-shown) predictive-search {
+              display: none;
+            }
+          </style>
+          <form action="{{ routes.search_url }}" method="get" class="v-stack gap-5 sm:gap-8 canpan-nav-search-form" role="search">
+            <div class="search-input search-input--nav-panel">
+              <button type="button" is="close-button">
+                <span class="sr-only">{{ 'general.accessibility.close' | t }}</span>
+                {%- render 'icon' with 'close' -%}
+              </button>
+              <input type="search" name="q" placeholder="{{ 'search.general.search_placeholder' | t }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="{{ 'search.general.title' | t | escape }}">
+              <button type="reset" class="text-subdued">{{ 'search.general.clear' | t }}</button>
+            </div>
+
+            <predictive-search class="predictive-search" section-id="">
+              <div slot="results"></div>
+              <div slot="loading">
+                <div class="v-stack gap-5 sm:gap-6">
+                  <div class="h-stack gap-4 sm:gap-5">
+                    {%- for i in (1..3) -%}
+                      <span class="skeleton skeleton--tab"></span>
+                    {%- endfor -%}
+                  </div>
+                  <div class="v-stack gap-4 sm:gap-6">
+                    {%- for i in (1..4) -%}
+                      <div class="h-stack align-center gap-5 sm:gap-6">
+                        <span class="skeleton skeleton--thumbnail"></span>
+                        <div class="v-stack gap-3 w-full">
+                          <span class="skeleton skeleton--text" style="--skeleton-text-width: 20%"></span>
+                          <span class="skeleton skeleton--text" style="--skeleton-text-width: 80%"></span>
+                          <span class="skeleton skeleton--text" style="--skeleton-text-width: 40%"></span>
+                        </div>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </div>
+            </predictive-search>
+          </form>
+
+          <script type="module">
+            document.addEventListener('DOMContentLoaded', () => {
+              const srcEl = document.querySelector('search-drawer predictive-search');
+              const destEl = document.querySelector('.navigation-drawer predictive-search');
+              if (srcEl && destEl && srcEl.getAttribute('section-id')) {
+                destEl.setAttribute('section-id', srcEl.getAttribute('section-id'));
+              }
+            });
+          </script>
+        {%- endunless -%}
+
+        {%- unless is_mega_menu -%}
+          <p class="canpan-featured-heading canpan-section-heading">Entdecken</p>
+        {%- endunless -%}
+
         <ul class="v-stack gap-4">
           {%- for link in main_menu.links -%}
             {%- unless is_mega_menu -%}
@@ -48,14 +105,11 @@ Supported variables
                     break
                   endif
                 endfor %}
-
             {%- else -%}
               {%- assign is_image_shown = false -%}
-
               {%- if mega_menu_block.settings.drawer_link_image == 'show' -%}
                 {%- assign is_image_shown = true -%}
               {%- endif -%}
-
             {%- endunless -%}
 
             <li class="h3 sm:h4">
@@ -99,13 +153,10 @@ Supported variables
                                 {%- case sub_link.type -%}
                                   {%- when 'collection_link' -%}
                                     {%- assign sub_link_image = sub_link.object.products.first.featured_media -%}
-
                                   {%- when 'product_link' -%}
                                     {%- assign sub_link_image = sub_link.object.featured_media -%}
-
                                   {%- when 'blog_link' -%}
                                     {%- assign sub_link_image = sub_link.object.articles.first.image -%}
-
                                   {%- when 'article_link' -%}
                                     {%- assign sub_link_image = sub_link.object.image -%}
                                 {%- endcase -%}
@@ -134,21 +185,17 @@ Supported variables
 
                                 {%- for sub_sub_link in sub_link.links -%}
                                   <li class="{% if mobile_opening == 'left' %}h3{% else %}h5{% endif %} sm:h5">
-                                    <a class="group {% if is_image_shown %}h-stack gap-4{% else %}block w-full{% endif %}"
-                                       href="{{ sub_sub_link.url }}">
+                                    <a class="group {% if is_image_shown %}h-stack gap-4{% else %}block w-full{% endif %}" href="{{ sub_sub_link.url }}">
                                       {%- if is_image_shown and sub_sub_link.object != blank -%}
                                         {%- assign sub_sub_link_image = '' -%}
 
                                         {%- case sub_sub_link.type -%}
                                           {%- when 'collection_link' -%}
                                             {%- assign sub_sub_link_image = sub_sub_link.object.products.first.featured_media -%}
-
                                           {%- when 'product_link' -%}
                                             {%- assign sub_sub_link_image = sub_sub_link.object.featured_media -%}
-
                                           {%- when 'blog_link' -%}
                                             {%- assign sub_sub_link_image = sub_sub_link.object.articles.first.image -%}
-
                                           {%- when 'article_link' -%}
                                             {%- assign sub_sub_link_image = sub_sub_link.object.image -%}
                                         {%- endcase -%}
@@ -181,7 +228,42 @@ Supported variables
           {%- endfor -%}
         </ul>
 
+        {%- unless is_mega_menu -%}
+          {%- assign canpan_featured_count = 0 -%}
+          {%- capture canpan_featured_items_html -%}
+            {%- for block in featured_blocks -%}
+              {%- if block.type == 'canpan_featured' and block.settings.image != blank -%}
+                {%- assign canpan_featured_count = canpan_featured_count | plus: 1 -%}
+                <a href="{{ block.settings.link | default: '#' }}" class="canpan-slide-item" {{ block.shopify_attributes }}>
+                  {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '75vw', widths: '300,400,500,600', class: 'canpan-slide-image' }}
+                  {%- if block.settings.title != blank -%}
+                    <p class="canpan-slide-title">{{ block.settings.title }}</p>
+                  {%- endif -%}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+
+          {%- if canpan_featured_count > 0 -%}
+            <div class="canpan-featured-slider">
+              <p class="canpan-featured-heading">Featured</p>
+              <div class="scrollable-with-controls">
+                {%- assign canpan_scroll_id = 'canpan-featured-scroll-' | append: 'nav' -%}
+                <scroll-carousel selector=".canpan-slide-item" id="{{ canpan_scroll_id }}" class="scroll-area canpan-featured-scroll">
+                  {{ canpan_featured_items_html }}
+                </scroll-carousel>
+
+                {%- assign canpan_default_progress = 1.0 | divided_by: canpan_featured_count -%}
+                {%- render 'scrollbar', observes: canpan_scroll_id, default_progress: canpan_default_progress, show_buttons: true -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endunless -%}
+
         {%- if secondary_menu != blank -%}
+          {%- unless is_mega_menu -%}
+            <p class="canpan-featured-heading canpan-section-heading">Erfahre mehr</p>
+          {%- endunless -%}
           <ul class="v-stack gap-3">
             {%- for link in secondary_menu.links -%}
               <li>
@@ -215,10 +297,8 @@ Supported variables
 
         {%- if social_media != blank or country_selector or locale_selector or shop.customer_accounts_enabled -%}
           <div class="panel-footer v-stack gap-5">
-            {{- social_media -}}
-
-            {%- if country_selector or locale_selector or shop.customer_accounts_enabled -%}
-              <div class="panel-footer__localization-wrapper h-stack gap-6 border-t md:hidden">
+            {%- if country_selector or locale_selector or shop.customer_accounts_enabled or social_media != blank -%}
+              <div class="panel-footer__localization-wrapper h-stack align-center gap-6 border-t">
                 {%- if country_selector -%}
                   {%- render 'localization-selector', type: 'country', show_country_name: show_country_name, show_country_flag: show_country_flag -%}
                 {%- endif -%}
@@ -228,11 +308,17 @@ Supported variables
                 {%- endif -%}
 
                 {%- if shop.customer_accounts_enabled -%}
-                  <shopify-account menu="{{ section.settings.customer_account_menu }}">
+                  <shopify-account menu="customer-account-little-menu">
                     <div slot="signed-out-avatar" class="tap-area">
-                      <span class="panel-footer__account-link bold text-sm">{{- 'header.general.account' | t -}}</span>
+                      <span class="panel-footer__account-link bold text-sm" style="font-family: var(--text-font-family);">{{- 'header.general.account' | t -}}</span>
                     </div>
                   </shopify-account>
+                {%- endif -%}
+
+                {%- if social_media != blank -%}
+                  <div class="panel-footer__social-icons-bottom">
+                    {{- social_media -}}
+                  </div>
                 {%- endif -%}
               </div>
             {%- endif -%}

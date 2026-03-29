@@ -111,6 +111,17 @@
         "default": 0
       },
       {
+        "type": "range",
+        "id": "canpan_drawer_modal_border_radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "(canpan) drawer & modal corner radius",
+        "default": 0,
+        "info": "Steuert den Eckenradius aller Drawer und Modals (CANPAN-Einstellung)"
+      },
+      {
         "type": "header",
         "content": "Shadow"
       },
@@ -394,7 +405,7 @@
         "id": "heading_font",
         "label": "Font",
         "info": "Selecting different fonts can affect the speed of your online store. Learn more about [system fonts.](https://help.shopify.com/en/manual/online-store/os/store-speed/improving-speed#fonts)",
-        "default": "helvetica_n4"
+        "default": "assistant_n4"
       },
       {
         "type": "select",
@@ -455,7 +466,7 @@
         "id": "text_font",
         "label": "Font",
         "info": "Selecting different fonts can affect the speed of your online store. Learn more about [system fonts.](https://help.shopify.com/en/manual/online-store/os/store-speed/improving-speed#fonts)",
-        "default": "helvetica_n4"
+        "default": "assistant_n4"
       },
       {
         "type": "range",

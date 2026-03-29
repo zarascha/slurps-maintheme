@@ -16,6 +16,8 @@ Supported variables
 * hide_unit_price: if set to true, unit pricing are hidden (this is useful for elements that are very size constrained)
 * size: can be either "sm" or "lg". If none is passed it will use the standard size
 * alignment: can be "center" to align the prices
+* canpan_split_price: (canpan-) if set to true, renders the price with visually separated euro and cent parts
+* canpan_inline_bubble_markup: (canpan-) optional pre-rendered bubble markup to inject as a sibling price item
 {%- endcomment -%}
 
 {%- liquid
@@ -44,18 +46,47 @@ Supported variables
   {%- if variant != blank -%}
     {%- comment -%}
     --------------------------------------------------------------------------------------------------------------------
-    VARIANT CASE (used on product page, quick view...)
+    CANPAN QoL PRE-LAUNCH – VARIANT CASE (used on product page, quick view...)
     --------------------------------------------------------------------------------------------------------------------
     {%- endcomment -%}
-    <sale-price class="{% if variant.compare_at_price > variant.price %}{{ on_sale_price_classes }}{% else %}{{ regular_price_classes }}{% endif %}">
-      <span class="sr-only">{{ 'product.price.sale_price' | t }}</span>
 
-      {%- if settings.currency_code_enabled -%}
-        {{- variant.price | money_with_currency -}}
-      {%- else -%}
-        {{- variant.price | money -}}
-      {%- endif -%}
-    </sale-price>
+    {%- if canpan_split_price -%}
+      {%- liquid
+        assign formatted_price = variant.price | money_without_currency
+        if formatted_price contains ','
+          assign separator = ','
+        else
+          assign separator = '.'
+        endif
+        assign price_parts = formatted_price | split: separator
+        assign euro_part = price_parts[0]
+        assign cent_part = price_parts[1] | default: '00'
+      -%}
+  
+      <sale-price class="{% if variant.compare_at_price > variant.price %}{{ on_sale_price_classes }}{% else %}{{ regular_price_classes }}{% endif %} canpan-custom-price-split">
+        <span class="sr-only">{{ 'product.price.sale_price' | t }}</span>
+  
+        <span class="canpan-price-euro">{{ euro_part }}</span>
+        <span class="canpan-price-separator">{{ separator }}</span>
+        <span class="canpan-price-cent">{{ cent_part }}</span>
+        <span class="canpan-price-symbol">
+          {{ cart.currency.symbol }}
+          {%- if settings.currency_code_enabled -%}
+            &nbsp;{{ cart.currency.iso_code }}
+        {%- endif -%}
+</span>
+      </sale-price>
+    {%- else -%}
+      <sale-price class="{% if variant.compare_at_price > variant.price %}{{ on_sale_price_classes }}{% else %}{{ regular_price_classes }}{% endif %}">
+        <span class="sr-only">{{ 'product.price.sale_price' | t }}</span>
+  
+        {%- if settings.currency_code_enabled -%}
+          {{- variant.price | money_with_currency -}}
+        {%- else -%}
+          {{- variant.price | money -}}
+        {%- endif -%}
+      </sale-price>
+    {%- endif -%}
 
     {%- if variant.compare_at_price > variant.price -%}
       <compare-at-price class="{{ compare_at_price_classes }}">
@@ -69,36 +100,54 @@ Supported variables
       </compare-at-price>
     {%- endif -%}
   {%- elsif line_item != blank -%}
+    
     {%- comment -%}
     --------------------------------------------------------------------------------------------------------------------
     LINE ITEM CASE (used on cart, order page...)
     --------------------------------------------------------------------------------------------------------------------
     {%- endcomment -%}
-    <sale-price class="{% if line_item.original_line_price > line_item.final_line_price %}{{ on_sale_price_classes }}{% else %}{{ regular_price_classes }}{% endif %}">
+    {%- liquid
+      assign is_on_sale = false
+      if line_item.original_price > line_item.final_price
+        assign is_on_sale = true
+      elsif line_item.variant.compare_at_price > line_item.variant.price
+        assign is_on_sale = true
+      endif
+    -%}
+
+    <sale-price class="{% if is_on_sale %}{{ on_sale_price_classes }}{% else %}{{ regular_price_classes }}{% endif %}">
       <span class="sr-only">{{ 'product.price.sale_price' | t }}</span>
 
       {%- if settings.currency_code_enabled -%}
-        {{- line_item.final_line_price | money_with_currency -}}
+        {{- line_item.final_price | money_with_currency -}}
       {%- else -%}
-        {{- line_item.final_line_price | money -}}
+        {{- line_item.final_price | money -}}
       {%- endif -%}
     </sale-price>
 
-    {%- if line_item.original_line_price > line_item.final_line_price -%}
+    {%- if is_on_sale -%}
       <compare-at-price class="{{ compare_at_price_classes }}">
         <span class="sr-only">{{ 'product.price.regular_price' | t }}</span>
 
-        {%- if settings.currency_code_enabled -%}
-          {{- line_item.original_line_price | money_with_currency -}}
+        {%- if line_item.original_price > line_item.final_price -%}
+          {%- if settings.currency_code_enabled -%}
+            {{- line_item.original_price | money_with_currency -}}
+          {%- else -%}
+            {{- line_item.original_price | money -}}
+          {%- endif -%}
         {%- else -%}
-          {{- line_item.original_line_price | money -}}
+          {%- if settings.currency_code_enabled -%}
+            {{- line_item.variant.compare_at_price | money_with_currency -}}
+          {%- else -%}
+            {{- line_item.variant.compare_at_price | money -}}
+          {%- endif -%}
         {%- endif -%}
       </compare-at-price>
     {%- endif -%}
   {%- else -%}
     {%- comment -%}
     --------------------------------------------------------------------------------------------------------------------
-    PRODUCT CASE (used on card)
+    CANPAN QoL PRE-LAUNCH – PRODUCT CASE (used on card)
     --------------------------------------------------------------------------------------------------------------------
     {%- endcomment -%}
     {%- if product.price_varies and product.compare_at_price -%}
@@ -185,6 +234,10 @@ Supported variables
         {%- endif -%}
       </sale-price>
     {%- endif -%}
+  {%- endif -%}
+
+  {%- if canpan_inline_bubble_markup != blank -%}
+    {{- canpan_inline_bubble_markup -}}
   {%- endif -%}
 
   {%- unless hide_unit_price -%}

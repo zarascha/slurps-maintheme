@@ -28,7 +28,10 @@ Supported variables
         {%- assign custom_badges = product.metafields.custom.badges.value | sort -%}
 
         {%- for custom_badge in custom_badges -%}
-          <span class="badge badge--primary badge--custom badge--{{ custom_badge | handle }}">{{ custom_badge }}</span>
+          {%- comment -%} CANPAN QoL PRE-LAUNCH – Rainbow-Badge {%- endcomment -%}
+          <span class="badge badge--primary canpan-rainbow-badge">
+            <span class="badge badge--primary">{{ custom_badge }}</span>
+          </span>
         {%- endfor -%}
 
       {%- when 'sold_out' -%}
@@ -44,32 +47,36 @@ Supported variables
         {%- if settings.show_discount -%}
           {%- liquid
             assign show_on_sale_badge = false
+            assign discount_variant = variant
 
-            if context == 'product'
-              if variant.compare_at_price > variant.price
-                assign show_on_sale_badge = true
-              endif
-            elsif context == 'card'
-              if product.compare_at_price > product.price
+            if context == 'card' and product.price_varies and product.compare_at_price
+              assign discount_variant = product.variants | sort: 'price' | first
+            endif
+
+            if discount_variant != blank
+              if discount_variant.compare_at_price > discount_variant.price
                 assign show_on_sale_badge = true
               endif
             endif
           -%}
 
-          {%- if product.compare_at_price > product.price -%}
+          {%- if show_on_sale_badge -%}
             {%- if settings.discount_mode == 'percentage' -%}
-              {%- assign savings = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round | append: '%' -%}
+              {%- assign savings = discount_variant.compare_at_price | minus: discount_variant.price | times: 100.0 | divided_by: discount_variant.compare_at_price | round | append: ' %' -%}
             {%- else -%}
-              {%- capture savings -%}{{ variant.compare_at_price | minus: variant.price | money }}{%- endcapture -%}
+              {%- capture savings -%}{{ discount_variant.compare_at_price | minus: discount_variant.price | money }}{%- endcapture -%}
             {%- endif -%}
 
-            {%- if show_on_sale_badge -%}
-              <on-sale-badge class="badge badge--on-sale">
+            {%- comment -%} CANPAN QoL PRE-LAUNCH – Globale Klasse für shopweites Redesign {%- endcomment -%}
+            <on-sale-badge class="badge badge--on-sale canpan-global-sale-badge">
+                {%- comment -%} CANPAN QoL PRE-LAUNCH – Globales Coupon-Icon eingefügt {%- endcomment -%}
+                {%- render 'icon' with 'picto-coupon' -%}
+
                 {%- liquid
                   if context == 'product'
                     echo 'product.general.discount_badge_html' | t: savings: savings
                   elsif context == 'card'
-                    if product.compare_at_price_varies or variant.compare_at_price == blank
+                    if product.compare_at_price_varies or discount_variant.compare_at_price == blank
                       echo 'product.general.on_sale_badge' | t
                     else
                       echo 'product.general.discount_badge_html' | t: savings: savings
@@ -77,7 +84,6 @@ Supported variables
                   endif
                 -%}
               </on-sale-badge>
-            {%- endif -%}
           {%- endif -%}
         {%- endif -%}
     {%- endcase -%}

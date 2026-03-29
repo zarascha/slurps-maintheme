@@ -5,12 +5,215 @@ extremely sensitive code that should (if possible) not be touched unless you hav
 the underlying logic of the menu.
 {%- endcomment -%}
 
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+CANPAN VARIANT THEME ENGINE (HEADER)
+----------------------------------------------------------------------------------------------------------------------
+
+Dieser Block mappt Varianten-Metafelder auf globale Root-Variablen und hält sie bei Variantenwechsel synchron.
+Die Logik ist nur auf Produktseiten aktiv (`request.page_type == 'product'` und `product != blank`).
+
+********************************************
+Metafeld-Quelle
+********************************************
+
+* Variante: `product.selected_or_first_available_variant`
+* Referenz-Metafeld: `variant.metafields.custom_variant.page_appearance.value`
+* Verwendete Schlüssel:
+  - `footer_background_color`
+  - `footer_text_and_icon_color`
+  - `footer_background_color_opacity` (0-100, wird begrenzt)
+  - `cta_button_background_color`
+  - `cta_button_text_color`
+  - `header_background_color`
+  - `header_text_and_icon_color`
+
+********************************************
+Root-CSS-Variablen in `:root`
+********************************************
+
+* `--canpan-footer-background-color`
+* `--canpan-footer-text-color`
+* `--canpan-footer-background-color-soft` (aus Opacity abgeleitet)
+* `--canpan-cta-button-background-color`
+* `--canpan-cta-button-text-color`
+* `--canpan-header-background-color` (optional)
+* `--canpan-header-text-color` (optional)
+
+********************************************
+JS-Sync-Ablauf (`variant:change`)
+********************************************
+
+* Eine Payload-Map pro Variante wird als JSON in Liquid gerendert.
+* `canpan_apply_theme` liest diese Payload und aktualisiert die Root-Variablen oben.
+* Dadurch werden Header-, Footer- und CTA-Styles live ohne Seiten-Reload aktualisiert.
+{%- endcomment -%}
+
 {%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
   {%- assign will_show_country_selector = true -%}
 {%- endif -%}
 
 {%- if section.settings.show_locale_selector and localization.available_languages.size > 1 -%}
   {%- assign will_show_locale_selector = true -%}
+{%- endif -%}
+
+{%- assign canpan_logo_id = 'new_adjusted' -%}
+{%- assign canpan_logo_color = 'currentColor' -%}
+{%- assign canpan_accent_1 = 'currentColor' -%}
+{%- assign canpan_accent_2 = 'currentColor' -%}
+{%- assign canpan_selected_has_custom_header_background = false -%}
+
+{%- if request.page_type == 'product' and product != blank -%}
+  {%- assign canpan_selected_variant = product.selected_or_first_available_variant -%}
+  {%- assign canpan_selected_footer_background_color = settings.footer_background | default: '#F2F2F2' | strip -%}
+  {%- assign canpan_selected_footer_text_color = settings.footer_text_color | default: '#1A1A1A' | strip -%}
+  {%- assign canpan_selected_footer_background_color_opacity = 100 -%}
+  {%- assign canpan_selected_cta_button_background_color = settings.primary_button_background | default: '#1A1A1A' | strip -%}
+  {%- assign canpan_selected_cta_button_text_color = settings.text_color | default: '#1A1A1A' | strip -%}
+  {%- assign canpan_selected_header_background_color = '' -%}
+  {%- assign canpan_selected_header_text_color = '' -%}
+
+  {%- if canpan_selected_variant and canpan_selected_variant.metafields.custom_variant.page_appearance != blank -%}
+    {%- assign canpan_selected_page_appearance = canpan_selected_variant.metafields.custom_variant.page_appearance.value -%}
+    {%- assign canpan_selected_footer_background_color = canpan_selected_page_appearance.footer_background_color.value | default: canpan_selected_footer_background_color | strip -%}
+    {%- assign canpan_selected_footer_text_color = canpan_selected_page_appearance.footer_text_and_icon_color.value | default: canpan_selected_footer_text_color | strip -%}
+    {%- assign canpan_selected_footer_background_color_opacity = canpan_selected_page_appearance.footer_background_color_opacity.value | default: canpan_selected_footer_background_color_opacity | plus: 0 -%}
+    {%- assign canpan_selected_cta_button_background_color = canpan_selected_page_appearance.cta_button_background_color.value | default: canpan_selected_cta_button_background_color | strip -%}
+    {%- assign canpan_selected_cta_button_text_color = canpan_selected_page_appearance.cta_button_text_color.value | default: canpan_selected_cta_button_text_color | strip -%}
+    {%- assign canpan_selected_header_background_color = canpan_selected_page_appearance.header_background_color.value | default: '' | strip -%}
+    {%- assign canpan_selected_header_text_color = canpan_selected_page_appearance.header_text_and_icon_color.value | default: '' | strip -%}
+  {%- endif -%}
+
+  {%- if canpan_selected_footer_background_color_opacity < 0 -%}
+    {%- assign canpan_selected_footer_background_color_opacity = 0 -%}
+  {%- endif -%}
+
+  {%- if canpan_selected_footer_background_color_opacity > 100 -%}
+    {%- assign canpan_selected_footer_background_color_opacity = 100 -%}
+  {%- endif -%}
+
+  {%- assign canpan_selected_footer_background_color_transparency = 100 | minus: canpan_selected_footer_background_color_opacity -%}
+
+  {%- if canpan_selected_header_text_color == 'rgba(0,0,0,0)' -%}
+    {%- assign canpan_selected_header_text_color = '' -%}
+  {%- endif -%}
+
+  {%- if canpan_selected_header_background_color != blank and canpan_selected_header_background_color != 'rgba(0,0,0,0)' -%}
+    {%- assign canpan_selected_has_custom_header_background = true -%}
+  {%- endif -%}
+
+  <style>
+    :root {
+      --canpan-footer-background-color: {{ canpan_selected_footer_background_color }};
+      --canpan-footer-text-color: {{ canpan_selected_footer_text_color }};
+      --canpan-cta-button-background-color: {{ canpan_selected_cta_button_background_color }};
+      --canpan-cta-button-text-color: {{ canpan_selected_cta_button_text_color }};
+      --canpan-footer-background-color-soft: color-mix(in srgb, var(--canpan-footer-background-color), transparent {{ canpan_selected_footer_background_color_transparency }}%);
+      {%- if canpan_selected_header_text_color != blank -%}
+        --canpan-header-text-color: {{ canpan_selected_header_text_color }};
+      {%- endif -%}
+      {%- if canpan_selected_has_custom_header_background -%}
+        --canpan-header-background-color: {{ canpan_selected_header_background_color }};
+      {%- endif -%}
+    }
+
+    .shopify-section--footer,
+    .shopify-section--footer .footer {
+      background: var(--canpan-footer-background-color-soft);
+    }
+
+    #shopify-section-{{ section.id }} .header__wrapper {
+      border-color: color-mix(in srgb, var(--canpan-header-text-color, rgb(var(--text-color))), transparent 85%);
+    }
+
+    #shopify-section-{{ section.id }} .header__wrapper > .header__logo,
+    #shopify-section-{{ section.id }} .header__wrapper > .header__logo a,
+    #shopify-section-{{ section.id }} .header__wrapper > .header__logo .header__logo-image,
+    #shopify-section-{{ section.id }} .header__wrapper > .header__main-nav > .header__icon-list > *,
+    #shopify-section-{{ section.id }} .header__wrapper > .header__main-nav > .header__link-list > .contents > li > a,
+    #shopify-section-{{ section.id }} .header__wrapper > .header__main-nav > .header__link-list > .contents > li > button,
+    #shopify-section-{{ section.id }} .header__wrapper > .header__main-nav > .header__link-list > .contents > li > details > summary,
+    #shopify-section-{{ section.id }} .header__wrapper > .header__secondary-nav > .header__link-list > .contents > li > a,
+    #shopify-section-{{ section.id }} .header__wrapper > .header__secondary-nav > .header__icon-list > li > * {
+      color: var(--canpan-header-text-color, rgb(var(--text-color)));
+    }
+
+    #shopify-section-{{ section.id }} :is(.dropdown-menu, .dropdown-menu a, .mega-menu, .mega-menu a) {
+      color: var(--canpan-header-text-color, rgb(var(--header-text)));
+    }
+
+    .shopify-section--footer .footer :is(a, p, span, strong, small, .prose, .prose *, .link-faded, .link-faded-reverse, .footer__copyright p, .footer__copyright a) {
+      color: var(--canpan-footer-text-color);
+    }
+
+    .shopify-section--footer .footer :is(.text-subdued, .prose .text-subdued) {
+      color: color-mix(in srgb, var(--canpan-footer-text-color), transparent 20%);
+    }
+
+    .shopify-section--footer .footer .footer__policy-links li+li:before {
+      color: var(--canpan-footer-text-color);
+    }
+
+    .shopify-section--footer .footer :is(.input, .textarea, .select) {
+      background: transparent;
+      color: var(--canpan-footer-text-color);
+      border-color: color-mix(in srgb, var(--canpan-footer-text-color), transparent 82%);
+    }
+
+    .shopify-section--footer .footer .floating-label {
+      color: var(--canpan-footer-text-color);
+    }
+
+    .shopify-section--footer .footer :is(.input, .textarea, .select)::placeholder {
+      color: color-mix(in srgb, var(--canpan-footer-text-color), transparent 35%);
+    }
+
+    .shopify-section--footer .footer .self-submit-button .circle-chevron {
+      color: var(--canpan-footer-text-color);
+      background: color-mix(in srgb, var(--canpan-footer-text-color), transparent 88%);
+    }
+
+    .shopify-section--footer .footer button.text-with-icon {
+      color: var(--canpan-footer-text-color);
+    }
+
+    @media screen and (pointer: fine) {
+      .shopify-section--footer .footer .self-submit-button .circle-chevron.hover\:colors:hover:not([disabled]) {
+        background: var(--canpan-footer-text-color);
+        color: var(--canpan-footer-background-color);
+      }
+    }
+
+    #shopify-section-{{ section.id }} .header__wrapper > .header__logo :is(svg, svg path, svg circle, svg rect, svg polygon),
+    #shopify-section-{{ section.id }} .header__wrapper > .header__main-nav > .header__icon-list > * :is(svg, svg path, svg circle, svg rect, svg polygon),
+    #shopify-section-{{ section.id }} .header__wrapper > .header__main-nav > .header__link-list > .contents > li > :is(a, button, details > summary) :is(svg, svg path, svg circle, svg rect, svg polygon),
+    #shopify-section-{{ section.id }} .header__wrapper > .header__secondary-nav > .header__icon-list > li > * :is(svg, svg path, svg circle, svg rect, svg polygon) {
+      color: var(--canpan-header-text-color, rgb(var(--text-color)));
+    }
+
+    #shopify-section-{{ section.id }} :is(.dropdown-menu, .mega-menu) :is(svg, svg path, svg circle, svg rect, svg polygon) {
+      color: var(--canpan-header-text-color, rgb(var(--header-text)));
+    }
+
+    #shopify-section-{{ section.id }} .header.canpan-header-custom-background,
+    #shopify-section-{{ section.id }} .header.canpan-header-custom-background:not(.is-filled),
+    #shopify-section-{{ section.id }} .header.canpan-header-custom-background[allow-transparency]:not(.is-filled) {
+      --header-background-opacity: 1;
+      --header-background-blur-radius: 0px;
+      --header-logo-opacity: 1;
+      --text-color: var(--canpan-header-text-color, rgb(var(--header-text)));
+    }
+
+    #shopify-section-{{ section.id }} .header.canpan-header-custom-background .header__wrapper,
+    #shopify-section-{{ section.id }} .header.canpan-header-custom-background :is(.dropdown-menu, .mega-menu) {
+      background: var(--canpan-header-background-color);
+    }
+
+    #shopify-section-{{ section.id }} .header.canpan-header-custom-background .header__wrapper {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  </style>
 {%- endif -%}
 
 <style>
@@ -73,17 +276,24 @@ the underlying logic of the menu.
       }
     }
   {%- endif -%}
+
+  #shopify-section-{{ section.id }} .canpan-logo-inline svg g { 
+    display: none; 
+  }
+  #shopify-section-{{ section.id }} .canpan-logo-inline svg g#{{ canpan_logo_id }} { 
+    display: inline; 
+  }
+  #shopify-section-{{ section.id }} .canpan-logo-inline svg .logo-accent-1 { 
+    fill: var(--canpan-logo-accent-1); 
+  }
+  #shopify-section-{{ section.id }} .canpan-logo-inline svg .logo-accent-2 { 
+    fill: var(--canpan-logo-accent-2); 
+  }
 </style>
 
 <height-observer variable="header">
-  <store-header class="header" {% if section.settings.hide_on_scroll %}hide-on-scroll="100"{% endif %} {% if section.settings.enable_sticky %}sticky{% endif %}>
-    <div class="header__wrapper">
-      {%- comment -%}
-      --------------------------------------------------------------------------------------------------------------------
-      MAIN NAV AREA
-      --------------------------------------------------------------------------------------------------------------------
-      {%- endcomment -%}
-
+  <store-header class="header{% if canpan_selected_has_custom_header_background %} canpan-header-custom-background{% endif %}" {% if section.settings.hide_on_scroll %}hide-on-scroll="100"{% endif %} {% if section.settings.enable_sticky %}sticky{% endif %}>
+    <div class="header__wrapper canpan-header-spacing">
       <div class="header__main-nav">
         <div class="header__icon-list">
           <button type="button" class="tap-area {% if section.settings.layout != 'drawer' %}lg:hidden{% endif %}" aria-controls="header-sidebar-menu">
@@ -91,14 +301,14 @@ the underlying logic of the menu.
             {%- render 'icon' with 'hamburger' -%}
           </button>
 
-          <a href="{{ routes.search_url }}" class="tap-area sm:hidden" aria-controls="search-drawer">
+          <a href="{{ routes.search_url }}" class="tap-area hidden" aria-controls="search-drawer">
             <span class="sr-only">{{ 'header.general.search' | t }}</span>
             {%- render 'icon' with 'search' -%}
           </a>
 
           {%- if section.settings.layout != 'drawer' and section.settings.menu.links.size > 0 -%}
             <nav class="header__link-list {% if section.settings.layout == 'logo_left_navigation_center' %}justify-center{% endif %} wrap" role="navigation">
-              <ul class="contents" role="list">
+              <ul class="contents" role="list">             
                 {%- for link in section.settings.menu.links -%}
                   {% liquid
                     assign link_title_downcase = link.title | strip | downcase
@@ -111,13 +321,12 @@ the underlying logic of the menu.
                         assign mega_menu_block = block
                         break
                       endif
-
                     endfor
                   %}
 
                   <li>
                     {%- if link.levels == 0 and mega_menu_block == '' -%}
-                      <a href="{{ link.url }}" class="bold link-faded-reverse" {% if link.current %}aria-current="page"{% endif %}>{{- link.title -}}</a>
+                       <a href="{{ link.url }}" class="bold link-faded-reverse" {% if link.current %}aria-current="page"{% endif %}>{{- link.title -}}</a>
                     {%- else -%}
                       {%- if mega_menu_block != '' -%}
                         {%- comment -%}
@@ -132,7 +341,7 @@ the underlying logic of the menu.
                               {{- link.title -}} {%- render 'icon' with 'chevron-bottom' -%}
                             </summary>
 
-                           {%- render 'mega-menu-horizontal', link: link, mega_menu_block: mega_menu_block -%}
+                            {%- render 'mega-menu-horizontal', link: link, mega_menu_block: mega_menu_block -%}
                           </details>
                         {%- else -%}
                           <button aria-controls="navigation-drawer-{{ forloop.index }}" aria-expanded="false" class="text-with-icon gap-2.5 bold link-faded-reverse">
@@ -192,26 +401,22 @@ the underlying logic of the menu.
         </div>
       </div>
 
-      {%- comment -%}
-      --------------------------------------------------------------------------------------------------------------------
-      LOGO AREA
-      --------------------------------------------------------------------------------------------------------------------
-      {%- endcomment -%}
-
       {%- capture logo_content -%}
-        {%- if section.settings.logo -%}
-          {%- capture sizes -%}{{ section.settings.logo_max_width }}px{%- endcapture -%}
-          {%- capture widths -%}{{ section.settings.logo_max_width | times: 2 | at_most: section.settings.logo.width }}, {{ section.settings.logo_max_width | times: 3 | at_most: section.settings.logo.width }}{%- endcapture -%}
-          <span class="sr-only">{{ shop.name }}</span>
-          {%- assign alt_text = section.settings.logo.alt | default: shop.name -%}
-          {{- section.settings.logo | image_url: width: section.settings.logo.width | image_tag: sizes: sizes, alt: alt_text, widths: widths, class: 'header__logo-image' -}}
+        <span class="sr-only">{{ shop.name }}</span>
 
-          {%- if section.settings.transparent_logo -%}
-            {{- section.settings.transparent_logo | image_url: width: section.settings.transparent_logo.width | image_tag: sizes: sizes, widths: widths, class: 'header__logo-image header__logo-image--transparent' -}}
-          {%- endif -%}
-        {%- else -%}
-          <span class="header__logo-text h4">{{ shop.name }}</span>
-        {%- endif -%}
+        <span
+          class="canpan-logo-inline header__logo-image"
+          style="color: {{ canpan_logo_color }}; --canpan-logo-accent-1: {{ canpan_accent_1 }}; --canpan-logo-accent-2: {{ canpan_accent_2 }};"
+        >
+          {% render 'canpan-logo-inline' %}
+        </span>
+
+        <span
+          class="canpan-logo-inline header__logo-image header__logo-image--transparent"
+          style="color: rgb(var(--header-transparent-text-color)); --canpan-logo-accent-1: {{ canpan_accent_1 }}; --canpan-logo-accent-2: {{ canpan_accent_2 }};"
+        >
+          {% render 'canpan-logo-inline' %}
+        </span>
       {%- endcapture -%}
 
       {%- if request.page_type == 'index' -%}
@@ -221,12 +426,6 @@ the underlying logic of the menu.
       {% else %}
         <a href="{{ routes.root_url }}" class="header__logo">{{ logo_content }}</a>
       {% endif %}
-
-      {%- comment -%}
-      --------------------------------------------------------------------------------------------------------------------
-      SECONDARY NAV AREA
-      --------------------------------------------------------------------------------------------------------------------
-      {%- endcomment -%}
 
       <div class="header__secondary-nav">
         {%- if section.settings.layout != 'drawer' and section.settings.secondary_menu.links.size > 0 -%}
@@ -255,7 +454,7 @@ the underlying logic of the menu.
           {%- endif -%}
 
           <li>
-            <a href="{{ routes.search_url }}" class="hidden tap-area sm:block" aria-controls="search-drawer">
+            <a href="{{ routes.search_url }}" class="hidden tap-area" aria-controls="search-drawer">
               <span class="sr-only">{{ 'header.general.search' | t }}</span>
               {%- render 'icon' with 'search' -%}
             </a>
@@ -263,7 +462,7 @@ the underlying logic of the menu.
           
           {%- if shop.customer_accounts_enabled -%}
             <li>
-              <shopify-account class="hidden sm:block" menu="{{ section.settings.customer_account_menu }}">
+              <shopify-account class="hidden" menu="customer-account-little-menu">
                 <div slot="signed-out-avatar" class="tap-area">
                   <span class="sr-only">{{ 'header.general.login' | t }}</span>
                   {%- render 'icon' with 'account' -%}
@@ -291,21 +490,11 @@ the underlying logic of the menu.
   </store-header>
 </height-observer>
 
-{%- comment -%}
-  --------------------------------------------------------------------------------------------------------------------
-  NAVIGATION MENU DRAWER
-  --------------------------------------------------------------------------------------------------------------------
-{%- endcomment -%}
-
 {%- assign main_menu = section.settings.sidebar_menu | default: section.settings.menu -%}
 {%- assign secondary_menu = section.settings.secondary_menu -%}
 
 {%- if main_menu.links.size > 0 or secondary_menu.links.size > 0 -%}
-  <navigation-drawer mobile-opening="{{ section.settings.opening_from }}" open-from="left" id="header-sidebar-menu" class="navigation-drawer drawer {% if section.settings.layout != 'drawer' %}lg:hidden{% endif %}" {% if request.design_mode %}handle-section-events{% endif %}>
-    <button is="close-button" aria-label="{{ 'general.accessibility.close' | t | escape }}" {%- if section.settings.opening_from == 'bottom' -%}class="sm-max:hidden"{%- endif -%}>
-      {%- render 'icon' with 'close', width: 19, height: 19 -%}
-    </button>
-
+  <navigation-drawer mobile-opening="{{ section.settings.opening_from }}" open-from="left" id="header-sidebar-menu" class="navigation-drawer drawer drawer--lg {% if section.settings.layout != 'drawer' %}lg:hidden{% endif %}" {% if request.design_mode %}handle-section-events{% endif %}>
     {%- render 'navigation-panel',
       is_mega_menu: false,
       main_menu: main_menu,
@@ -316,13 +505,122 @@ the underlying logic of the menu.
       show_country_selector: section.settings.show_country_selector,
       show_country_name: section.settings.show_country_name,
       show_country_flag: section.settings.show_country_flag,
-      show_locale_selector: section.settings.show_locale_selector -%}
+      show_locale_selector: section.settings.show_locale_selector,
+      featured_blocks: section.blocks -%}
   </navigation-drawer>
 {%- endif -%}
 
 <script>
   document.documentElement.style.setProperty('--header-height', Math.round(document.getElementById('shopify-section-{{ section.id }}').clientHeight) + 'px');
 </script>
+
+{%- if request.page_type == 'product' and product != blank -%}
+  {%- capture canpan_variant_theme_json -%}
+    {
+      {%- for variant in product.variants -%}
+        {%- assign canpan_variant_footer_background_color = settings.footer_background | default: '#F2F2F2' | strip -%}
+        {%- assign canpan_variant_footer_text_color = settings.footer_text_color | default: '#1A1A1A' | strip -%}
+        {%- assign canpan_variant_footer_background_color_opacity = 100 -%}
+        {%- assign canpan_variant_cta_button_background_color = settings.primary_button_background | default: '#1A1A1A' | strip -%}
+        {%- assign canpan_variant_cta_button_text_color = settings.text_color | default: '#1A1A1A' | strip -%}
+        {%- assign canpan_variant_header_background_color = '' -%}
+        {%- assign canpan_variant_header_text_color = '' -%}
+
+        {%- if variant.metafields.custom_variant.page_appearance != blank -%}
+          {%- assign canpan_variant_page_appearance = variant.metafields.custom_variant.page_appearance.value -%}
+          {%- assign canpan_variant_footer_background_color = canpan_variant_page_appearance.footer_background_color.value | default: canpan_variant_footer_background_color | strip -%}
+          {%- assign canpan_variant_footer_text_color = canpan_variant_page_appearance.footer_text_and_icon_color.value | default: canpan_variant_footer_text_color | strip -%}
+          {%- assign canpan_variant_footer_background_color_opacity = canpan_variant_page_appearance.footer_background_color_opacity.value | default: canpan_variant_footer_background_color_opacity | plus: 0 -%}
+          {%- assign canpan_variant_cta_button_background_color = canpan_variant_page_appearance.cta_button_background_color.value | default: canpan_variant_cta_button_background_color | strip -%}
+          {%- assign canpan_variant_cta_button_text_color = canpan_variant_page_appearance.cta_button_text_color.value | default: canpan_variant_cta_button_text_color | strip -%}
+          {%- assign canpan_variant_header_background_color = canpan_variant_page_appearance.header_background_color.value | default: '' | strip -%}
+          {%- assign canpan_variant_header_text_color = canpan_variant_page_appearance.header_text_and_icon_color.value | default: '' | strip -%}
+        {%- endif -%}
+
+        {%- if canpan_variant_footer_background_color_opacity < 0 -%}
+          {%- assign canpan_variant_footer_background_color_opacity = 0 -%}
+        {%- endif -%}
+
+        {%- if canpan_variant_footer_background_color_opacity > 100 -%}
+          {%- assign canpan_variant_footer_background_color_opacity = 100 -%}
+        {%- endif -%}
+
+        {%- if canpan_variant_header_background_color == 'rgba(0,0,0,0)' -%}
+          {%- assign canpan_variant_header_background_color = '' -%}
+        {%- endif -%}
+
+        {%- if canpan_variant_header_text_color == 'rgba(0,0,0,0)' -%}
+          {%- assign canpan_variant_header_text_color = '' -%}
+        {%- endif -%}
+
+        {{ variant.id | json }}: {
+          "canpan_footer_background_color": {{ canpan_variant_footer_background_color | json }},
+          "canpan_footer_text_color": {{ canpan_variant_footer_text_color | json }},
+          "canpan_footer_background_color_opacity": {{ canpan_variant_footer_background_color_opacity | json }},
+          "canpan_cta_button_background_color": {{ canpan_variant_cta_button_background_color | json }},
+          "canpan_cta_button_text_color": {{ canpan_variant_cta_button_text_color | json }},
+          "canpan_header_background_color": {{ canpan_variant_header_background_color | json }},
+          "canpan_header_text_color": {{ canpan_variant_header_text_color | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    }
+  {%- endcapture -%}
+
+  <script>
+    (() => {
+      const canpan_document_root = document.documentElement;
+      const canpan_variant_theme_map = {{ canpan_variant_theme_json | strip }};
+      const canpan_header_element = document.querySelector('#shopify-section-{{ section.id }} .header');
+
+      const canpan_apply_theme = (canpan_theme_payload) => {
+        if (!canpan_theme_payload) return;
+
+        canpan_document_root.style.setProperty('--canpan-footer-background-color', canpan_theme_payload.canpan_footer_background_color);
+        canpan_document_root.style.setProperty('--canpan-footer-text-color', canpan_theme_payload.canpan_footer_text_color);
+        const canpan_footer_background_color_opacity = Number(canpan_theme_payload.canpan_footer_background_color_opacity);
+        const canpan_footer_background_color_opacity_clamped = Number.isFinite(canpan_footer_background_color_opacity)
+          ? Math.min(100, Math.max(0, canpan_footer_background_color_opacity))
+          : 100;
+        const canpan_footer_background_color_transparency = 100 - canpan_footer_background_color_opacity_clamped;
+        canpan_document_root.style.setProperty('--canpan-footer-background-color-soft', `color-mix(in srgb, var(--canpan-footer-background-color), transparent ${canpan_footer_background_color_transparency}%)`);
+        canpan_document_root.style.setProperty('--canpan-cta-button-background-color', canpan_theme_payload.canpan_cta_button_background_color);
+        canpan_document_root.style.setProperty('--canpan-cta-button-text-color', canpan_theme_payload.canpan_cta_button_text_color);
+
+        if (canpan_theme_payload.canpan_header_text_color) {
+          canpan_document_root.style.setProperty('--canpan-header-text-color', canpan_theme_payload.canpan_header_text_color);
+        } else {
+          canpan_document_root.style.removeProperty('--canpan-header-text-color');
+        }
+
+        if (canpan_theme_payload.canpan_header_background_color) {
+          canpan_document_root.style.setProperty('--canpan-header-background-color', canpan_theme_payload.canpan_header_background_color);
+          canpan_header_element?.classList.add('canpan-header-custom-background');
+        } else {
+          canpan_document_root.style.removeProperty('--canpan-header-background-color');
+          canpan_header_element?.classList.remove('canpan-header-custom-background');
+        }
+      };
+
+      window.canpan_theme_engine = window.canpan_theme_engine || {};
+      window.canpan_theme_engine.canpan_variant_theme_map = canpan_variant_theme_map;
+      window.canpan_theme_engine.canpan_apply_theme = canpan_apply_theme;
+
+      if (window.canpan_theme_engine.canpan_is_bound) return;
+
+      document.addEventListener('variant:change', (canpan_event) => {
+        const canpan_variant = canpan_event.detail && canpan_event.detail.variant;
+        if (!canpan_variant) return;
+
+        const canpan_theme_payload = window.canpan_theme_engine.canpan_variant_theme_map[String(canpan_variant.id)];
+        if (!canpan_theme_payload) return;
+
+        window.canpan_theme_engine.canpan_apply_theme(canpan_theme_payload);
+      });
+
+      window.canpan_theme_engine.canpan_is_bound = true;
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -751,6 +1049,29 @@ the underlying logic of the menu.
             }
           ],
           "default": "hide"
+        }
+      ]
+    },
+    {
+      "type": "canpan_featured",
+      "name": "Featured",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bild"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titel",
+          "default": "Featured"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
         }
       ]
     }

@@ -205,6 +205,8 @@ note that this may have impact on different places.
     --rounded-block: {{ settings.block_border_radius | divided_by: 16.0 }}rem;
     --rounded-button: {{ settings.button_border_radius | divided_by: 16.0 }}rem;
     --rounded-input: {{ settings.input_border_radius | divided_by: 16.0 }}rem;
+    /* CANPAN QoL PRE-LAUNCH – Border Radius für Drawer und Modals aus CANPAN Theme-Einstellungen */
+    --canpan-drawer-modal-border-radius: {{ settings.canpan_drawer_modal_border_radius | divided_by: 16.0 }}rem;
 
     /* Box shadow */
     --shadow-sm: 0 2px 8px rgb(var(--text-primary) / {{ settings.block_shadow_opacity | divided_by: 100.0 }});
@@ -219,10 +221,12 @@ note that this may have impact on different places.
      */
 
     --stagger-products-reveal-opacity: {% if settings.stagger_products_apparition %}0{% else %}1{% endif %};
-    --cursor-close-svg-url: url({{ 'cursor-close.svg' | asset_url }});
-    --cursor-zoom-in-svg-url: url({{ 'cursor-zoom-in.svg' | asset_url }});
-    --cursor-zoom-out-svg-url: url({{ 'cursor-zoom-out.svg' | asset_url }});
-    --checkmark-svg-url: url({{ 'checkmark.svg' | asset_url }});
+    /* CANPAN QoL PRE-LAUNCH – Bug-Fixing: nutzt Data-URIs fuer Cursor- und Checkmark-Assets, damit keine Konflikte mit generierten SVG-Assets entstehen. */
+    {%- assign checkmark_color_encoded = settings.primary_button_text_color | replace: '#', '%23' -%}
+    --cursor-close-svg-url: url("data:image/svg+xml,%3Csvg fill='none' xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Ccircle cx='28' cy='28' r='28' fill='%23252627' fill-opacity='.12' shape-rendering='geometricPrecision'/%3E%3Ccircle cx='28' cy='28' r='27' fill='%23fff' shape-rendering='geometricPrecision'/%3E%3Cpath shape-rendering='geometricPrecision' d='m22.344%2022.343%2011.313%2011.314m-11.313%200%2011.313-11.313' stroke='%23252627' stroke-width='2'/%3E%3C/svg%3E");
+    --cursor-zoom-in-svg-url: url("data:image/svg+xml,%3Csvg fill='none' xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M56%2028C56%2012.536%2043.464%200%2028%200S0%2012.536%200%2028s12.536%2028%2028%2028%2028-12.536%2028-28Z' fill='%23fff'/%3E%3Cpath d='M55.5%2028C55.5%2012.812%2043.188.5%2028%20.5S.5%2012.812.5%2028%2012.812%2055.5%2028%2055.5%2055.5%2043.188%2055.5%2028Z' stroke='%23252627' stroke-opacity='.12'/%3E%3Cpath d='M28.001%2020v16M20%2028.001h16' stroke='%23252627' stroke-width='2'/%3E%3C/svg%3E");
+    --cursor-zoom-out-svg-url: url("data:image/svg+xml,%3Csvg fill='none' xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M56%2028C56%2012.536%2043.464%200%2028%200S0%2012.536%200%2028s12.536%2028%2028%2028%2028-12.536%2028-28Z' fill='%23fff'/%3E%3Cpath d='M55.5%2028C55.5%2012.812%2043.188.5%2028%20.5S.5%2012.812.5%2028%2012.812%2055.5%2028%2055.5%2055.5%2043.188%2055.5%2028Z' stroke='%23252627' stroke-opacity='.12'/%3E%3Cpath d='M20%2028.001h16' stroke='%23252627' stroke-width='2'/%3E%3C/svg%3E");
+    --checkmark-svg-url: url("data:image/svg+xml,%3Csvg fill='none' xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1.5%203.5%203.8%206l4.7-5' stroke='{{ checkmark_color_encoded }}' stroke-width='2'/%3E%3C/svg%3E");
   }
 
   [dir="rtl"]:root {
@@ -359,4 +363,18 @@ note that this may have impact on different places.
       navigation: auto;
     }
   {%- endif -%}
+
+  /* CANPAN QoL PRE-LAUNCH – Abgeleitete Farb-Tokens aus den dynamisch gesetzten Varianten-Farbvariablen */
+  :root {
+    --canpan-cta-button-background-soft-color: color-mix(in srgb, var(--canpan-cta-button-background-color), transparent 75%);
+    --canpan-footer-background-soft-color: color-mix(in srgb, var(--canpan-footer-background-color), transparent 10%);
+    --canpan-footer-background-softer-color: color-mix(in srgb, var(--canpan-footer-background-color), transparent 30%);
+    --canpan-buy-button-text-muted-color: color-mix(in srgb, var(--canpan-cta-button-text-color), transparent 25%);
+    --canpan-buy-button-text-soft-color: color-mix(in srgb, var(--canpan-cta-button-text-color), transparent 45%);
+    --canpan-buy-button-border-soft-color: color-mix(in srgb, var(--canpan-cta-button-text-color), transparent 82%);
+    --canpan-buy-button-shadow-soft-color: color-mix(in srgb, var(--canpan-cta-button-text-color), transparent 80%);
+    --canpan-status-warning-color: #E60722;
+    --canpan-status-success-color: #078A00;
+    --canpan-status-error-color: #1A1A1A;
+  }
 </style>

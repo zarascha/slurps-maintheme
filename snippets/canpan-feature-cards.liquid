@@ -1,0 +1,81 @@
+{%- comment -%}
+  CANPAN QoL PRELAUNCH - INFO:
+  - Rendert die Feature-Cards als horizontales Scroll-Carousel direkt aus der `custom_variant.benefits` Metaobject-Liste der aktiven Variante.
+  - Das Icon wird als CSS-Maske geladen, damit die Benefit-Farbe es einfärben kann.
+  - Im Theme-Editor wird ein Fallback/Hinweis angezeigt, falls keine Metaobjects verknüpft sind oder Bilder fehlen.
+{%- endcomment -%}
+
+{%- liquid
+  assign canpan_feature_cards_variant = variant | default: product.selected_or_first_available_variant
+  assign canpan_feature_cards_benefits = canpan_feature_cards_variant.metafields.custom_variant.benefits.value
+  assign canpan_feature_cards_visible_count = canpan_feature_cards_benefits.size | default: 0
+-%}
+
+{%- if canpan_feature_cards_visible_count > 0 -%}
+  <div class="canpan-feature-cards">
+    <div class="canpan-feature-cards__layout">
+      <div class="canpan-feature-cards__scroller">
+        <scroll-carousel selector=".canpan-feature-cards__item" class="scroll-area canpan-feature-cards__track {% if canpan_feature_cards_visible_count > 1 %}is-scrollable{% endif %}">
+          {%- for canpan_feature_card_benefit in canpan_feature_cards_benefits -%}
+            {%- liquid
+              assign canpan_feature_card_image = canpan_feature_card_benefit.background_image.value
+              assign canpan_feature_card_icon = canpan_feature_card_benefit.icon.value
+              assign canpan_feature_card_text = canpan_feature_card_benefit.text
+              assign canpan_feature_card_color = canpan_feature_card_benefit.text_and_icon_color.value
+              assign canpan_feature_card_image_opacity = canpan_feature_card_benefit.background_image_opacity.value | default: 100 | plus: 0
+              assign canpan_feature_card_has_icon = false
+
+              if canpan_feature_card_image_opacity < 0
+                assign canpan_feature_card_image_opacity = 0
+              endif
+
+              if canpan_feature_card_image_opacity > 100
+                assign canpan_feature_card_image_opacity = 100
+              endif
+
+              assign canpan_feature_card_image_opacity_ratio = canpan_feature_card_image_opacity | divided_by: 100.0
+
+              if canpan_feature_card_icon != blank
+                assign canpan_feature_card_has_icon = true
+              endif
+
+              assign canpan_loading = 'lazy'
+              assign canpan_fetchpriority = 'auto'
+              
+              if forloop.index <= 3
+                assign canpan_loading = 'eager'
+                assign canpan_fetchpriority = 'high'
+              endif
+            -%}
+
+            <div class="canpan-feature-cards__item" style="--canpan-feature-card-icon-space: {% if canpan_feature_card_has_icon %}24px{% else %}0px{% endif %}; --canpan-feature-card-media-opacity: {{ canpan_feature_card_image_opacity_ratio }};{% if canpan_feature_card_color != blank %} --canpan-feature-card-foreground: {{ canpan_feature_card_color }};{% endif %}{% if canpan_feature_card_has_icon %} --canpan-feature-card-icon-url: url('{{ canpan_feature_card_icon | image_url: width: 96 | escape }}');{% endif %}">
+              <div class="canpan-feature-cards__card">
+                {%- if canpan_feature_card_image != blank -%}
+                  {{- canpan_feature_card_image | image_url: width: 400 | image_tag: loading: canpan_loading, fetchpriority: canpan_fetchpriority, class: 'canpan-feature-cards__media', sizes: '(max-width: 740px) 80vw, 400px' -}}
+                {%- else -%}
+                  <div class="canpan-feature-cards__placeholder">
+                    {{- 'image' | placeholder_svg_tag -}}
+                  </div>
+                {%- endif -%}
+
+                {%- if canpan_feature_card_has_icon -%}
+                  <div class="canpan-feature-cards__icon" aria-hidden="true"></div>
+                {%- endif -%}
+
+                {%- if canpan_feature_card_text != blank -%}
+                  <div class="canpan-feature-cards__body">
+                    <div class="canpan-feature-cards__text">
+                      {{- canpan_feature_card_text | metafield_tag -}}
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </scroll-carousel>
+      </div>
+    </div>
+  </div>
+{%- elsif request.design_mode -%}
+  <p class="canpan-feature-cards__empty">Füge der aktiven Variante mindestens einen `custom_variant.benefits` Eintrag mit dem Metaobjekt `product_benefit` hinzu.</p>
+{%- endif -%}

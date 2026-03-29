@@ -1,0 +1,60 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_with_text_overlay_HpNLdw": {
+      "type": "image-with-text-overlay",
+      "name": "Image with text overlay",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": true,
+        "enable_parallax": false,
+        "image_size": "auto",
+        "image": "shopify://shop_images/transparent_header_newsletter.jpg",
+        "mobile_image": "shopify://shop_images/transparent_header_newsletter_mobile.jpg",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "newsletter_NRbrrh": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "full_width": true,
+        "image": "shopify://shop_images/Unbenanntes_Projekt_0edf2324-d999-40ea-a89f-0b5809c11a44.png",
+        "show_icon": false,
+        "title": "Werde Teil von Cannys Freundesliste!",
+        "content": "<p>Erhalte von Canny regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops. Für deine erste Anmeldung erhältst du außerdem 10 % Rabatt auf deine nächste Bestellung!</p>",
+        "button_text": "Trag mich ein",
+        "subtext": "Du erhältst eine Bestätigungs-E-Mail. Mit deiner anschließenden Bestätigung erklärst du dich mit unserer Datenschutzerklärung und den AGB einverstanden. Du kannst dich jederzeit bei unserem Newsletter abmelden.",
+        "background": "#122127",
+        "background_gradient": "",
+        "text_color": "#ffffff",
+        "button_background": "#79b2ee",
+        "button_text_color": "#ffffff"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "80ch"
+      }
+    }
+  },
+  "order": [
+    "image_with_text_overlay_HpNLdw",
+    "newsletter_NRbrrh",
+    "main"
+  ]
+}

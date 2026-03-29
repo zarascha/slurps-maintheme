@@ -17,41 +17,94 @@
         "message": {
           "type": "message",
           "settings": {
-            "text": "Announce something here"
+            "text": "{{ metaobjects.announcement_bar[\"kostenfreier-versand-ab-49\"].text.value }}",
+            "url": "{{ metaobjects.announcement_bar[\"kostenfreier-versand-ab-49\"].url.value }}"
           }
         }
       },
       "block_order": [
         "message"
       ],
+      "disabled": true,
+      "custom_css": [],
       "settings": {
         "enable_sticky": false,
-        "text_size": "text-xs",
+        "show_on_homepage_only": false,
         "navigation_mode": "scrolling",
-        "scrolling_speed": 10,
-        "background": "#1a1a1a",
-        "text_color": "#ffffff"
+        "autoplay": false,
+        "cycle_speed": 5,
+        "scrolling_speed": 30,
+        "text_size": "text-xs",
+        "background": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "text_color": "rgba(0,0,0,0)"
       }
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "canpan_featured_PP9tNd": {
+          "type": "canpan_featured",
+          "settings": {
+            "image": "shopify://shop_images/5_228f6fbc-836e-4795-8185-f09d1b351dbf.jpg",
+            "title": "Hallo Martin",
+            "link": "shopify://collections"
+          }
+        },
+        "canpan_featured_e6yCdK": {
+          "type": "canpan_featured",
+          "settings": {
+            "image": "shopify://shop_images/Medusafilters_Header_Flow_Launch_2800x1000_1.png",
+            "title": "Featured",
+            "link": ""
+          }
+        },
+        "canpan_featured_DwB8yh": {
+          "type": "canpan_featured",
+          "settings": {
+            "title": "Featured",
+            "link": ""
+          }
+        },
+        "canpan_featured_GVXxjh": {
+          "type": "canpan_featured",
+          "settings": {
+            "image": "shopify://shop_images/Papers_c3a8d8c4-0c12-46ed-9db1-b33b74ad1218.jpg",
+            "title": "Featured",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "canpan_featured_PP9tNd",
+        "canpan_featured_e6yCdK",
+        "canpan_featured_DwB8yh",
+        "canpan_featured_GVXxjh"
+      ],
+      "custom_css": [],
       "settings": {
         "enable_sticky": true,
-        "hide_on_scroll": false,
+        "hide_on_scroll": true,
         "logo": "{{shop.brand.logo}}",
-        "logo_max_width": 120,
-        "logo_mobile_max_width": 100,
+        "logo_max_width": 45,
+        "logo_mobile_max_width": 35,
         "menu": "main-menu",
-        "menu_open_trigger": "click",
-        "opening_from": "bottom",
-        "layout": "logo_left_navigation_center",
+        "sidebar_menu": "",
+        "secondary_menu": "secondary-menu",
+        "customer_account_menu": "customer-account-main-menu",
+        "menu_open_trigger": "hover",
+        "opening_from": "left",
+        "layout": "drawer",
         "show_social_media": true,
-        "show_country_flag": true,
+        "show_locale_selector": false,
+        "show_country_selector": false,
+        "show_country_flag": false,
         "show_country_name": false,
         "transparent_header_text_color": "#ffffff",
-        "reduce_padding": false,
-        "background_opacity": 100,
-        "background_blur_radius": 0
+        "transparent_logo": "shopify://shop_images/download_1.png",
+        "reduce_padding": true,
+        "background_opacity": 0,
+        "background_blur_radius": 2
       }
     }
   },

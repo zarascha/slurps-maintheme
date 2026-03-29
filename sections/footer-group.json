@@ -11,65 +11,18 @@
   "type": "footer",
   "name": "Footer group",
   "sections": {
-    "text-with-icons": {
-      "type": "text-with-icons",
-      "blocks": {
-        "free-shipping": {
-          "type": "item",
-          "settings": {
-            "icon": "picto-box",
-            "mobile_icon_width": 24,
-            "icon_width": 24,
-            "icon_background_type": "none",
-            "title": "Free shipping",
-            "content": "<p>Tell your customers about your shipping offer.</p>"
-          }
-        },
-        "customer-support": {
-          "type": "item",
-          "settings": {
-            "icon": "picto-customer-support",
-            "mobile_icon_width": 24,
-            "icon_width": 24,
-            "icon_background_type": "none",
-            "title": "Customer service",
-            "content": "<p>Tell your customers how they can reach you.</p>"
-          }
-        },
-        "discount": {
-          "type": "item",
-          "settings": {
-            "icon": "picto-coupon",
-            "mobile_icon_width": 24,
-            "icon_width": 24,
-            "icon_background_type": "none",
-            "title": "Refer a friend",
-            "content": "<p>Tell your customers about your promotional offers.</p>"
-          }
-        },
-        "payment": {
-          "type": "item",
-          "settings": {
-            "icon": "picto-lock",
-            "mobile_icon_width": 24,
-            "icon_width": 24,
-            "icon_background_type": "none",
-            "title": "Secure payment",
-            "content": "<p>Tel your customers about your payment methods.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "free-shipping",
-        "customer-support",
-        "discount",
-        "payment"
-      ],
+    "custom_liquid_GrR3Gj": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "name": "Partnerpromotion",
       "settings": {
         "full_width": true,
-        "heading_tag": "h6",
-        "text_alignment": "center",
-        "icon_spacing": "small"
+        "remove_vertical_spacing": true,
+        "remove_horizontal_spacing": false,
+        "liquid": "{% assign partners = shop.metafields.custom_shop.featured_partners.value %}\n\n<div class=\"canpan-partner-strip\">\n  <div class=\"canpan-partner-strip__inner\">\n    <div class=\"canpan-partner-list\">\n\n      {% for partner in partners %}\n        {% assign logo = partner.logo.value %}\n        {% assign url = partner.url | strip %}\n        {% assign alt_text = partner.alt_text | strip %}\n\n        <div class=\"canpan-partner-list__item\">\n          <a href=\"{{ url }}\" target=\"_blank\" rel=\"nofollow noopener\">\n            <img src=\"{{ logo | image_url: width: 600 }}\" alt=\"{{ alt_text }}\" loading=\"lazy\">\n          </a>\n        </div>\n      {% endfor %}\n\n    </div>\n  </div>\n</div>\n\n<style>\n  .canpan-partner-strip{\n    padding: 50px 0 0 0;\n  }\n\n  .canpan-partner-list{\n    display: flex;\n    align-items: center;\n    justify-content: start;\n    gap: 13px;\n  }\n\n  .canpan-partner-list__item{\n    flex: 0 0 auto;\n    display: flex;\n    align-items: center;\n  }\n\n  .canpan-partner-list__item img{\n    height: 44px;\n    width: auto;\n    object-fit: contain;\n    display: block;\n  }\n  \n  @media (max-width: 768px){\n    .canpan-partner-list{\n      flex-wrap: nowrap;\n      justify-content: center;\n      gap: 12px;\n    }\n\n    .canpan-partner-list__item img{\n      height: 34px;\n      max-width: 100%;\n    }\n  }\n</style>",
+        "background": "#f9f9f9",
+        "background_gradient": "",
+        "text_color": ""
       }
     },
     "footer": {
@@ -78,34 +31,49 @@
         "newsletter": {
           "type": "newsletter",
           "settings": {
-            "image_width": 150,
+            "image_width": 300,
             "heading_size": "h3",
-            "title": "Sign up for new stories and personal offers"
+            "title": "10 % Rabatt & nichts mehr verpassen!",
+            "content": "<p>Werde Teil von Cannys Freundesliste und erhalte regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops.</p>"
           }
         },
-        "links": {
+        "links_hT37YY": {
           "type": "links",
           "settings": {
             "menu": "footer",
-            "show_menu_title": true
+            "show_menu_title": true,
+            "menu_title": ""
           }
         },
-        "text": {
+        "links_UzPWiP": {
+          "type": "links",
+          "settings": {
+            "menu": "other-menu",
+            "show_menu_title": true,
+            "menu_title": ""
+          }
+        },
+        "text_6mNcUX": {
           "type": "text",
           "settings": {
-            "title": "About",
-            "content": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme editor.</p>"
+            "title": "Hier unten nochmal",
+            "content": "<p>Willkommen bei uns! Wir setzen alles daran, unsere Produkte und unseren Online-Shop stetig zu verbessern, damit du die bestmögliche Erfahrung genießen kannst. Du möchtest mehr über uns Erfahren? <a href=\"/pages/ueber-uns\" target=\"_blank\" title=\"Über uns\">Hier klicken.</a></p>",
+            "enable_follow_on_shop": false
           }
         }
       },
       "block_order": [
         "newsletter",
-        "links",
-        "text"
+        "links_hT37YY",
+        "links_UzPWiP",
+        "text_6mNcUX"
       ],
+      "custom_css": [],
       "settings": {
         "show_social_media": true,
-        "show_payment_icons": true,
+        "show_payment_icons": false,
+        "show_powered_by_shopify": false,
+        "show_policy_links": true,
         "show_country_selector": true,
         "show_country_flag": true,
         "show_country_name": true,
@@ -114,7 +82,7 @@
     }
   },
   "order": [
-    "text-with-icons",
+    "custom_liquid_GrR3Gj",
     "footer"
   ]
 }

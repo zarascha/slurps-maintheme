@@ -1878,6 +1878,33 @@ var CartNotificationDrawer = class extends Drawer {
     const tempContent = document.createElement("div");
     tempContent.innerHTML = event.detail.cart["sections"]["variant-added"];
     this.replaceChildren(...tempContent.querySelector(".shopify-section").children);
+    // =====================================================================================
+    // CANPAN QoL PRE-LAUNCH – Anzahl & Preis des AKTUELL hinzugefügten Items (variant-added.liquid)
+    // =====================================================================================
+    const addedItems = event.detail.items;
+    const addedQuantity = parseInt(event.detail.addedQuantity || 1, 10); 
+    
+    if (addedItems && addedItems.length > 0) {
+      const justAddedItem = addedItems[0];
+      
+      const quantityElement = this.querySelector('[data-added-quantity]');
+      if (quantityElement) {
+        quantityElement.textContent = addedQuantity;
+      }
+
+      const priceElement = this.querySelector('sale-price');
+      if (priceElement) {
+        const exactPriceForAdded = justAddedItem.final_price * addedQuantity;
+        
+        const formatter = new Intl.NumberFormat(Shopify.locale, { 
+          style: 'currency', 
+          currency: Shopify.currency.active 
+        });
+        
+        priceElement.textContent = formatter.format(exactPriceForAdded / 100);
+      }
+    }
+    // ==================================================================================END===
     this.show();
   }
 };
@@ -2173,7 +2200,7 @@ var FacetApplyButton = class extends HTMLButtonElement {
   }
   _updateCount() {
     const form = new FormData(this.form);
-    let nonEmptyValuesCount = Array.from(form.values()).filter((item) => item !== "").length;
+        let nonEmptyValuesCount = Array.from(form.values()).filter((item) => item !== "").length;
     if (form.has("sort_by")) {
       nonEmptyValuesCount -= 1;
     }
@@ -2851,7 +2878,9 @@ var ProductForm = class extends HTMLFormElement {
         bubbles: true,
         detail: {
           items: responseJson.hasOwnProperty("items") ? responseJson["items"] : [responseJson],
-          cart: cartContent
+          // CANPAN QoL PRE-LAUNCH – Anzahltracker (variant-added.liquid)
+          cart: cartContent,
+          addedQuantity: formData.get('quantity') || '1'
         }
       }));
       document.documentElement.dispatchEvent(new CustomEvent("cart:change", {
@@ -3237,7 +3266,8 @@ onRerender_fn = function(event) {
   if (!this.hasAttribute("allow-partial-rerender") || event.detail.productChange) {
     this.replaceWith(matchingElement);
   } else {
-    const blockTypes = ["sku", "badges", "price", "payment-terms", "variant-picker", "quantity-selector", "volume-pricing", "inventory", "buy-buttons", "pickup-availability", "liquid"];
+    // CANPAN QoL PRE-LAUNCH – Titelblöcke und variantengesteuerte CANPAN-Feature-Karten bei partiellen Produkt-Neu-Renderings synchron halten.
+    const blockTypes = ["title", "sku", "badges", "price", "payment-terms", "variant-picker", "quantity-selector", "volume-pricing", "inventory", "buy-buttons", "pickup-availability", "liquid", "canpan-feature-cards"];
     blockTypes.forEach((blockType) => {
       this.querySelectorAll(`[data-block-type="${blockType}"]`).forEach((element) => {
         const matchingBlock = matchingElement.querySelector(`[data-block-type="${blockType}"][data-block-id="${element.getAttribute("data-block-id")}"]`);
@@ -3304,6 +3334,33 @@ var QuickBuyDrawer = class extends Drawer {
     const contentShadow = this.shadowRoot.querySelector('[part="content"]'), fromHeight = contentShadow.clientHeight;
     animate7(contentShadow.children, { opacity: 0, visibility: "hidden" }, { duration: 0.15 });
     this.replaceChildren(...new DOMParser().parseFromString(event.detail.cart["sections"]["variant-added"], "text/html").querySelector(".shopify-section").children);
+    // =====================================================================================
+    // CANPAN QoL PRE-LAUNCH – Anzahl & Preis des AKTUELL hinzugefügten Items (variant-added.liquid)
+    // =====================================================================================
+    const addedItems = event.detail.items;
+    const addedQuantity = parseInt(event.detail.addedQuantity || 1, 10); 
+    
+    if (addedItems && addedItems.length > 0) {
+      const justAddedItem = addedItems[0];
+      
+      const quantityElement = this.querySelector('[data-added-quantity]');
+      if (quantityElement) {
+        quantityElement.textContent = addedQuantity;
+      }
+
+      const priceElement = this.querySelector('sale-price');
+      if (priceElement) {
+        const exactPriceForAdded = justAddedItem.final_price * addedQuantity;
+        
+        const formatter = new Intl.NumberFormat(Shopify.locale, { 
+          style: 'currency', 
+          currency: Shopify.currency.active 
+        });
+        
+        priceElement.textContent = formatter.format(exactPriceForAdded / 100);
+      }
+    }
+    // ==================================================================================END===
     requestAnimationFrame(async () => {
       await timeline5([
         [contentShadow, { height: [`${fromHeight}px`, `${contentShadow.clientHeight}px`] }, { duration: 0.35, easing: [0.86, 0, 0.07, 1] }],
@@ -3321,7 +3378,7 @@ if (!window.customElements.get("quick-buy-drawer")) {
 // js/common/product/variant-picker.js
 import { Delegate as Delegate4 } from "vendor";
 var CACHE_EVICTION_TIME = 1e3 * 60 * 5;
-var _preloadedHtml, _delegate, _intersectionObserver, _form, _selectedVariant, _VariantPicker_instances, getActiveOptionValues_fn, getOptionValuesFromOption_fn, onOptionChanged_fn, onOptionPreload_fn, onIntersection_fn, renderForCombination_fn, createHashKeyForHtml_fn;
+var _preloadedHtml, _delegate, _intersectionObserver, _form, _selectedVariant, _VariantPicker_instances, getActiveOptionValues_fn, getOptionValuesFromOption_fn, slugifyOptionParamSegment_fn, getOptionParamDefinitions_fn, getReadableOptionParams_fn, updateUrlWithReadableOptionParams_fn, syncSelectionFromUrl_fn, onOptionChanged_fn, onOptionPreload_fn, onIntersection_fn, renderForCombination_fn, createHashKeyForHtml_fn;
 var _VariantPicker = class _VariantPicker extends HTMLElement {
   constructor() {
     super(...arguments);
@@ -3338,6 +3395,7 @@ var _VariantPicker = class _VariantPicker extends HTMLElement {
     __privateGet(this, _delegate).on("pointerenter", `input[data-option-position][form="${this.getAttribute("form-id")}"]:not(:checked) + label`, __privateMethod(this, _VariantPicker_instances, onOptionPreload_fn).bind(this), true);
     __privateGet(this, _delegate).on("touchstart", `input[data-option-position][form="${this.getAttribute("form-id")}"]:not(:checked) + label`, __privateMethod(this, _VariantPicker_instances, onOptionPreload_fn).bind(this), true);
     __privateGet(this, _intersectionObserver).observe(this);
+    await __privateMethod(this, _VariantPicker_instances, syncSelectionFromUrl_fn).call(this);
   }
   disconnectedCallback() {
     __privateGet(this, _delegate).off();
@@ -3365,10 +3423,8 @@ var _VariantPicker = class _VariantPicker extends HTMLElement {
       __privateSet(this, _selectedVariant, newVariant);
       __privateGet(this, _form).id.value = __privateGet(this, _selectedVariant)?.id;
       __privateGet(this, _form).id.dispatchEvent(new Event("change", { bubbles: true }));
-      if (this.updateUrl && __privateGet(this, _selectedVariant)?.id) {
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set("variant", __privateGet(this, _selectedVariant).id);
-        window.history.replaceState({ path: newUrl.toString() }, "", newUrl.toString());
+      if (this.updateUrl && optionValues.length > 0) {
+        __privateMethod(this, _VariantPicker_instances, updateUrlWithReadableOptionParams_fn).call(this, optionValues);
       }
     }
     __privateGet(this, _form).dispatchEvent(new CustomEvent("product:rerender", {
@@ -3408,6 +3464,112 @@ getActiveOptionValues_fn = function() {
 getOptionValuesFromOption_fn = function(input) {
   const optionValues = [input, ...Array.from(__privateGet(this, _form).elements).filter((item) => item.matches(`input[data-option-position]:not([name="${input.name}"]):checked`))].sort((a, b) => parseInt(a.getAttribute("data-option-position")) - parseInt(b.getAttribute("data-option-position"))).map((input2) => input2.value);
   return optionValues;
+};
+// CANPAN QoL PRE-LAUNCH – Lesbare Variantenparameter in der URL statt Variant-ID
+slugifyOptionParamSegment_fn = function(value) {
+  if (!value) {
+    return "";
+  }
+  return value.toString().trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ß/g, "ss").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+};
+getOptionParamDefinitions_fn = function() {
+  const definitions = new Map();
+  const usedParamNames = new Set();
+  Array.from(__privateGet(this, _form).elements).filter((item) => item.matches("input[data-option-position]")).sort((a, b) => parseInt(a.getAttribute("data-option-position")) - parseInt(b.getAttribute("data-option-position"))).forEach((input) => {
+    const position = parseInt(input.getAttribute("data-option-position"));
+    if (definitions.has(position)) {
+      return;
+    }
+    const optionName = input.closest(".variant-picker__option")?.querySelector("legend")?.textContent?.replace(/:\s*$/, "").trim();
+    let paramName = __privateMethod(this, _VariantPicker_instances, slugifyOptionParamSegment_fn).call(this, optionName || `option-${position}`);
+    if (!paramName) {
+      paramName = `option-${position}`;
+    }
+    if (usedParamNames.has(paramName)) {
+      paramName = `${paramName}-${position}`;
+    }
+    usedParamNames.add(paramName);
+    definitions.set(position, { position, name: paramName });
+  });
+  return Array.from(definitions.values()).sort((a, b) => a.position - b.position);
+};
+getReadableOptionParams_fn = function(optionValues) {
+  const definitions = __privateMethod(this, _VariantPicker_instances, getOptionParamDefinitions_fn).call(this);
+  const optionInputs = Array.from(__privateGet(this, _form).elements).filter((item) => item.matches("input[data-option-position]"));
+  return definitions.map((definition) => {
+    const selectedOptionValue = optionValues[definition.position - 1];
+    let selectedInput = null;
+    if (selectedOptionValue) {
+      selectedInput = optionInputs.find((item) => item.matches(`input[data-option-position="${definition.position}"][value="${selectedOptionValue}"]`));
+    }
+    if (!selectedInput) {
+      selectedInput = optionInputs.find((item) => item.matches(`input[data-option-position="${definition.position}"]:checked`));
+    }
+    if (!selectedInput) {
+      return null;
+    }
+    const optionValueLabel = selectedInput.dataset.optionValueLabel || selectedInput.labels?.[0]?.textContent || selectedInput.value;
+    const optionValueParam = __privateMethod(this, _VariantPicker_instances, slugifyOptionParamSegment_fn).call(this, optionValueLabel) || selectedInput.value;
+    return { name: definition.name, value: optionValueParam };
+  }).filter(Boolean);
+};
+updateUrlWithReadableOptionParams_fn = function(optionValues) {
+  const newUrl = new URL(window.location.href);
+  const definitions = __privateMethod(this, _VariantPicker_instances, getOptionParamDefinitions_fn).call(this);
+  newUrl.searchParams.delete("variant");
+  newUrl.searchParams.delete("option_values");
+  definitions.forEach((definition) => newUrl.searchParams.delete(definition.name));
+  __privateMethod(this, _VariantPicker_instances, getReadableOptionParams_fn).call(this, optionValues).forEach((optionParam) => newUrl.searchParams.set(optionParam.name, optionParam.value));
+  window.history.replaceState({ path: newUrl.toString() }, "", newUrl.toString());
+};
+syncSelectionFromUrl_fn = async function() {
+  if (!this.updateUrl) {
+    return;
+  }
+  const currentOptionValues = __privateMethod(this, _VariantPicker_instances, getActiveOptionValues_fn).call(this);
+  if (currentOptionValues.length === 0) {
+    return;
+  }
+  const currentUrl = new URL(window.location.href);
+  const definitions = __privateMethod(this, _VariantPicker_instances, getOptionParamDefinitions_fn).call(this);
+  if (definitions.length === 0) {
+    return;
+  }
+  const optionInputs = Array.from(__privateGet(this, _form).elements).filter((item) => item.matches("input[data-option-position]"));
+  const nextOptionValues = [];
+  let hasReadableParams = false;
+  for (const definition of definitions) {
+    const requestedParam = currentUrl.searchParams.get(definition.name);
+    const inputsForPosition = optionInputs.filter((input) => parseInt(input.getAttribute("data-option-position")) === definition.position);
+    if (inputsForPosition.length === 0) {
+      continue;
+    }
+    let selectedInput = inputsForPosition.find((input) => input.checked) || inputsForPosition[0];
+    if (requestedParam) {
+      hasReadableParams = true;
+      const requestedParamSlug = __privateMethod(this, _VariantPicker_instances, slugifyOptionParamSegment_fn).call(this, requestedParam);
+      const matchedInput = inputsForPosition.find((input) => {
+        const optionValueLabel = input.dataset.optionValueLabel || input.labels?.[0]?.textContent || input.value;
+        return __privateMethod(this, _VariantPicker_instances, slugifyOptionParamSegment_fn).call(this, optionValueLabel) === requestedParamSlug;
+      });
+      if (matchedInput) {
+        selectedInput = matchedInput;
+      }
+    }
+    if (selectedInput) {
+      nextOptionValues.push(selectedInput.value);
+    }
+  }
+  if (!hasReadableParams || nextOptionValues.length === 0) {
+    return;
+  }
+  const selectionChanged = nextOptionValues.some((optionValue, index) => optionValue !== currentOptionValues[index]);
+  if (selectionChanged) {
+    await this.selectCombination({
+      optionValues: nextOptionValues,
+      productChange: false
+    });
+  }
 };
 onOptionChanged_fn = async function(event) {
   if (!event.target.name.includes("option")) {
@@ -5461,3 +5623,119 @@ export {
   throttle,
   waitForEvent
 };
+
+// CANPAN QoL PRE-LAUNCH – JS OPTIMIERUNGEN
+
+// 1. BUNDLE MOVER (Performant & Debounced)
+(function() {
+  let placeholder = null;
+
+  // Debounce-Funktion: Verhindert, dass das Resize-Event die CPU überansprucht
+  const debounce = (fn, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => fn(...args), delay);
+    };
+  };
+
+  const ensurePlaceholder = (bundleBlock) => {
+    if (!placeholder) {
+      placeholder = document.createComment('canpan-bundle-placeholder');
+      bundleBlock.parentNode.insertBefore(placeholder, bundleBlock);
+    }
+  };
+
+  const moveBundle = () => {
+    const bundleBlock = document.querySelector('.product-info__complementary-products');
+    const gallery = document.querySelector('product-gallery') || document.querySelector('.product-gallery'); 
+    if (!bundleBlock || !gallery) return;
+
+    if (bundleBlock.parentNode) ensurePlaceholder(bundleBlock);
+
+    if (window.innerWidth >= 1000) {
+      if (bundleBlock.parentNode !== gallery) {
+        gallery.appendChild(bundleBlock);
+      }
+      bundleBlock.classList.add('canpan-bundle-desktop');
+    } else {
+      if (placeholder && placeholder.parentNode && bundleBlock.previousSibling !== placeholder) {
+        placeholder.parentNode.insertBefore(bundleBlock, placeholder.nextSibling);
+      }
+      bundleBlock.classList.remove('canpan-bundle-desktop');
+    }
+
+    if (!bundleBlock.classList.contains('is-ready')) {
+      requestAnimationFrame(() => bundleBlock.classList.add('is-ready'));
+    }
+  };
+
+  // Nativer DOMContentLoaded
+  window.addEventListener('DOMContentLoaded', moveBundle);
+  
+  // Resize mit Debounce
+  window.addEventListener('resize', debounce(moveBundle, 250));
+
+  // Shopify Theme Event Hook (falls das Element per AJAX nachgeladen wird)
+  document.addEventListener('shopify:section:load', moveBundle);
+  
+  // Fallback für späte Renderings
+  setTimeout(moveBundle, 1000);
+})();
+
+
+// 2. TAWK.TO INTEGRATION (Clean & Global)
+window.Tawk_API = window.Tawk_API || {};
+
+function setTawkZIndex(zIndexValue) {
+  const tawkIframes = document.querySelectorAll('iframe[title*="chat"]');
+  let found = false;
+
+  tawkIframes.forEach(function(iframe) {
+    iframe.style.setProperty("z-index", zIndexValue, "important");
+    if (iframe.parentElement) {
+      iframe.parentElement.style.setProperty("z-index", zIndexValue, "important");
+    }
+    found = true;
+  });
+  
+  return found;
+}
+
+window.Tawk_API.onLoad = function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('help-center-widget') === 'open') {
+    if (typeof window.Tawk_API.maximize === 'function') {
+      window.Tawk_API.maximize();
+    }
+  }
+
+  // Polling für das iFrame
+  let attempts = 0;
+  const zIndexInterval = setInterval(function() {
+    if (setTawkZIndex("1") || attempts > 20) { 
+      clearInterval(zIndexInterval);
+    }
+    attempts++;
+  }, 100);
+};
+
+window.Tawk_API.onChatMinimized = function() {
+  setTawkZIndex("1");
+};
+
+window.Tawk_API.onChatMaximized = function() {
+  setTawkZIndex("20000"); 
+};
+
+// Globaler Klick-Listener für Custom Chat-Links (mit Event Delegation)
+document.addEventListener('click', function (event) {
+  const targetLink = event.target.closest('a[href*="#help-center-widget"]');
+  
+  if (targetLink) {
+    event.preventDefault();
+    if (typeof window.Tawk_API.isChatMaximized === 'function') {
+      window.Tawk_API.isChatMaximized() ? window.Tawk_API.minimize() : window.Tawk_API.maximize();
+    }
+  }
+}, false);

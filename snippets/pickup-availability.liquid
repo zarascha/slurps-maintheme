@@ -13,6 +13,16 @@ Supported variables
 {%- endcomment -%}
 
 {%- assign pick_up_availabilities = product_variant.store_availabilities | where: 'pick_up_enabled', true -%}
+{%- comment -%} CANPAN QoL PRE-LAUNCH – Titel der Abholverfügbarkeit an den Custom-Titel der gewählten Variante anpassen {%- endcomment -%}
+{%- assign canpan_pickup_title = '' -%}
+
+{%- if product_variant != blank -%}
+  {%- assign canpan_pickup_title = product_variant.product.title -%}
+
+  {%- if product_variant.metafields.custom_variant.title.value != blank -%}
+    {%- assign canpan_pickup_title = product_variant.metafields.custom_variant.title.value -%}
+  {%- endif -%}
+{%- endif -%}
 
 {%- if product_variant != nil -%}
   <pickup-availability class="pickup-availability">
@@ -61,7 +71,7 @@ Supported variables
           {{- image | image_url: width: image.width | image_tag: loading: 'lazy', sizes: '(max-width: 740px) 64px, 80px', widths: '64,80,128,160', class: 'pickup-availability__media' -}}
 
           <div class="v-stack gap-1">
-            <p class="h6">{{ product_variant.product.title }}</p>
+            <p class="h6">{{ canpan_pickup_title }}</p>
 
             {%- unless product_variant.product.has_only_default_variant -%}
               <p class="text-sm text-subdued">{{ product_variant.title }}</p>

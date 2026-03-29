@@ -12,77 +12,254 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "vendor",
+        "badges_XJNV4k": {
+          "type": "badges",
           "settings": {}
         },
         "title": {
           "type": "title",
+          "settings": {
+            "heading_tag": "h4"
+          }
+        },
+        "liquid_FVXzcL": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{%- assign canpan_variant = product.selected_or_first_available_variant -%}\n\n{%- if canpan_variant != blank and canpan_variant.metafields.custom_variant.little_text.value != blank -%}\n  <div class=\"product-info__text\">\n    <div class=\"prose\">\n      {{- canpan_variant.metafields.custom_variant.little_text.value -}}\n    </div>\n  </div>\n{%- endif -%}"
+          }
+        },
+        "judge_me_reviews_preview_badge_BbipjL": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
-        "badges": {
-          "type": "badges",
-          "settings": {}
+        "liquid_T9tBzF": {
+          "type": "liquid",
+          "name": "Preisblase",
+          "settings": {
+            "liquid": "{%- render 'canpan-price-bubble', product: product, variant: product.selected_or_first_available_variant -%}"
+          }
         },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "show_taxes_notice": false
+          }
         },
-        "rating": {
-          "type": "rating",
-          "settings": {}
+        "liquid_3enRgY": {
+          "type": "liquid",
+          "name": "Steuerinfo",
+          "settings": {
+            "liquid": "<p class=\"canpan-tax-shipping-notice\">\n  inkl. kostenlosem <a href=\"{{ routes.root_url }}policies/shipping-policy\" class=\"link\"> Versand</a> ab 49 €\n</p>"
+          }
         },
-        "payment_terms": {
-          "type": "payment_terms",
+        "canpan_feature_cards_ix9Xz7": {
+          "type": "canpan_feature_cards",
           "settings": {}
         },
         "separator": {
           "type": "separator",
+          "disabled": true,
           "settings": {}
         },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
+
         "variant_picker": {
           "type": "variant_picker",
-          "settings": {}
+          "settings": {
+            "hide_sold_out_variants": false,
+            "stack_blocks": true,
+            "selector_style": "block",
+            "swatch_selector_style": "swatch",
+            "variant_image_options": "Kollektion",
+            "size_chart_page": ""
+          }
         },
         "quantity_selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
+        },
+        "liquid_mPFTMh": {
+          "type": "liquid",
+          "name": "Inventarstatus",
+          "settings": {
+            "liquid": "<div class=\"canpan-inventory-status-container\">\n  {%- for variant in product.variants -%}\n    {%- assign is_hidden = true -%}\n    {%- if product.selected_or_first_available_variant.id == variant.id -%}\n      {%- assign is_hidden = false -%}\n    {%- endif -%}\n\n    {%- if variant.available -%}\n      {%- if variant.inventory_management == 'shopify' and variant.inventory_quantity <= 5 and variant.inventory_quantity > 0 -%}\n        <span class=\"canpan-inventory-status canpan-status-warning\" {% if is_hidden %}hidden{% endif %} data-variant-id=\"{{ variant.id }}\">\n          <span class=\"canpan-pulse-dot\"></span>\n          Nur {{ variant.inventory_quantity }} verfügbar! Jetzt bestellen\n        </span>\n      {%- else -%}\n        <span class=\"canpan-inventory-status canpan-status-success\" {% if is_hidden %}hidden{% endif %} data-variant-id=\"{{ variant.id }}\">\n          <span class=\"canpan-pulse-dot\"></span>\n          Sofort verfügbar! In 3-5 Tagen bei dir\n        </span>\n      {%- endif -%}\n    {%- else -%}\n      <span class=\"canpan-inventory-status canpan-status-error\" {% if is_hidden %}hidden{% endif %} data-variant-id=\"{{ variant.id }}\">\n        <span class=\"canpan-pulse-dot\"></span>\n        Nicht auf Lager\n      </span>\n    {%- endif -%}\n  {%- endfor -%}\n</div>"
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
-          "settings": {}
+          "settings": {
+            "show_payment_button": false,
+            "show_gift_card_recipient": true,
+            "atc_button_background": "rgba(0,0,0,0)",
+            "atc_button_text_color": "rgba(0,0,0,0)",
+            "payment_button_background": "",
+            "payment_button_text_color": ""
+          }
         },
-        "pickup_availability": {
-          "type": "pickup_availability",
-          "settings": {}
+        "liquid_xfH8YV": {
+          "type": "liquid",
+          "name": "Kleine Vertrauensblöcke",
+          "settings": {
+            "liquid": "{%- comment -%}\n  Canpan Trust Blocks - Rendert Metaobject-Liste aus Varianten-Metafeldern.\n  Optimiert auf null Layout-Shifts und sofortiges Laden (Above the Fold).\n{%- endcomment -%}\n\n{%- assign canpan_current_variant = product.selected_or_first_available_variant -%}\n{%- assign canpan_trust_blocks = canpan_current_variant.metafields.custom_variant.trust_blocks.value -%}\n\n{%- if canpan_trust_blocks != blank -%}\n  <canpan-trust-blocks class=\"canpan-trust-blocks-wrapper\" data-variant-id=\"{{ canpan_current_variant.id }}\">\n    <ul class=\"canpan-trust-blocks-list\" role=\"list\">\n      {%- for canpan_block in canpan_trust_blocks -%}\n        <li class=\"canpan-trust-blocks-item\">\n          {%- if canpan_block.icon != blank -%}\n            <div class=\"canpan-trust-blocks-icon\">\n              {%- comment -%}\n                Bro, merk dir: Bilder unterm Buy-Button MÜSSEN eager geladen werden. \n                Und explicit Width/Height ist Pflicht für einen sauberen CLS-Score.\n              {%- endcomment -%}\n              {{- canpan_block.icon | image_url: width: 36 | image_tag: class: 'canpan-trust-icon-img', width: 18, height: 18, loading: 'eager', fetchpriority: 'high', alt: canpan_block.title -}}\n            </div>\n          {%- endif -%}\n          \n          {%- if canpan_block.title != blank -%}\n            <span class=\"canpan-trust-blocks-title\">{{ canpan_block.title }}</span>\n          {%- endif -%}\n        </li>\n      {%- endfor -%}\n    </ul>\n  </canpan-trust-blocks>\n\n  <style>\n    /* Styling passend zur Impact-Architektur, ohne unnötigen Bloat */\n    .canpan-trust-blocks-wrapper {\n      display: block;\n      /* Wir hebeln den Flex/Grid-Gap des Impact-Themes aus. \n        -1rem (entspricht meist 16px) ist sauberer als hardcodierte Pixel-Werte.\n      */\n      margin-top: -1rem; \n      margin-bottom: 0.5rem; \n    }\n\n    .canpan-trust-blocks-list {\n      display: flex;\n      flex-wrap: wrap;\n      /* Gap etwas verkleinert, damit es kompakter wirkt, wie auf deinem Screenshot */\n      gap: 8px 16px; \n      list-style: none;\n      padding: 0;\n      margin: 0;\n    }\n\n    .canpan-trust-blocks-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .canpan-trust-blocks-icon {\n      flex-shrink: 0;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n    }\n\n    .canpan-trust-icon-img {\n      width: 18px;\n      height: 18px;\n      object-fit: contain;\n      display: block;\n    }\n\n    .canpan-trust-blocks-title {\n      font-size: 0.8125rem; /* 13px - etwas kleiner für den kompakten Look */\n      color: var(--text-color);\n      line-height: 1.2;\n      font-weight: 500;\n    }\n  </style>\n{%- endif -%}"
+          }
+        },
+        "liquid_hC7Tba": {
+          "type": "liquid",
+          "name": "Besondere Kunden",
+          "disabled": true,
+          "settings": {
+            "liquid": "{%- assign sp_name_1 = shop.metafields.custom_shop.socialproof_name_1.value | default: \"\" | strip -%}\n{%- assign sp_name_2 = shop.metafields.custom_shop.socialproof_name_2.value | default: \"\" | strip -%}\n\n{%- assign sp_img_1 = shop.metafields.custom_shop.socialproof_image_1.value -%}\n{%- assign sp_img_2 = shop.metafields.custom_shop.socialproof_image_2.value -%}\n\n{%- assign show_1 = false -%}\n{%- assign show_2 = false -%}\n\n{%- if sp_name_1 != blank and sp_img_1 != blank -%}\n  {%- assign show_1 = true -%}\n{%- endif -%}\n\n{%- if sp_name_2 != blank and sp_img_2 != blank -%}\n  {%- assign show_2 = true -%}\n{%- endif -%}\n\n{%- if show_1 or show_2 -%}\n  <div class=\"canpan-socialproof\">\n    <div class=\"canpan-socialproof-images\">\n\n      <div class=\"canpan-verified-icon\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 48 48\" aria-hidden=\"true\" focusable=\"false\">\n          <polygon class=\"canpan-svg-icon-bg\" points=\"29.62,3 33.053,8.308 39.367,8.624 39.686,14.937 44.997,18.367 42.116,23.995 45,29.62 39.692,33.053 39.376,39.367 33.063,39.686 29.633,44.997 24.005,42.116 18.38,45 14.947,39.692 8.633,39.376 8.314,33.063 3.003,29.633 5.884,24.005 3,18.38 8.308,14.947 8.624,8.633 14.937,8.314 18.367,3.003 23.995,5.884\"></polygon>\n          <polygon class=\"canpan-svg-icon-check\" points=\"21.396,31.255 14.899,24.76 17.021,22.639 21.428,27.046 30.996,17.772 33.084,19.926\"></polygon>\n        </svg>\n      </div>\n\n      {%- if show_1 -%}\n        <span class=\"canpan-socialproof-img-wrap\">\n          {{ sp_img_1 | image_url: width: 80 | image_tag: \n            class: 'canpan-socialproof-img', \n            loading: 'lazy', \n            decoding: 'async', \n            alt: sp_name_1 \n          }}\n        </span>\n      {%- endif -%}\n\n      {%- if show_2 -%}\n        <span class=\"canpan-socialproof-img-wrap\">\n          {{ sp_img_2 | image_url: width: 80 | image_tag: \n            class: 'canpan-socialproof-img', \n            loading: 'lazy', \n            decoding: 'async', \n            alt: sp_name_2 \n          }}\n        </span>\n      {%- endif -%}\n\n    </div>\n\n    <div class=\"canpan-socialproof-text\">\n      <span>\n        {%- if show_1 and show_2 -%}\n          <span class=\"canpan-highlight\">{{ sp_name_1 }}, {{ sp_name_2 }}</span>\n        {%- elsif show_1 -%}\n          <span class=\"canpan-highlight\">{{ sp_name_1 }}</span>\n        {%- elsif show_2 -%}\n          <span class=\"canpan-highlight\">{{ sp_name_2 }}</span>\n        {%- endif -%}\n        und <span class=\"canpan-highlight\">viele weitere</span> sind Kunden!\n      </span>\n    </div>\n  </div>\n{%- endif -%}"
+          }
+        },
+        "associated_products_fNATF6": {
+          "type": "associated_products",
+          "settings": {
+            "title": "Passend dazu:",
+            "stack_products": false,
+            "products_count": 5,
+            "background": "",
+            "text_color": ""
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "collapse_content": true
+          }
+        },
+        "collapsible_text_BdaWLN": {
+          "type": "collapsible_text",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "title": "Versand & Rückgabe",
+            "content": "<p>Share some content to your customers about your products.</p>",
+            "page": ""
+          }
         }
       },
       "block_order": [
-        "vendor",
+        "badges_XJNV4k",
         "title",
-        "badges",
+        "liquid_FVXzcL",
+        "judge_me_reviews_preview_badge_BbipjL",
+        "liquid_T9tBzF",
         "price",
-        "rating",
-        "payment_terms",
+        "liquid_3enRgY",
+        "canpan_feature_cards_ix9Xz7",
         "separator",
-        "description",
         "variant_picker",
         "quantity_selector",
-        "buy_buttons"
+        "liquid_mPFTMh",
+        "buy_buttons",
+        "liquid_xfH8YV",
+        "liquid_hC7Tba",
+        "associated_products_fNATF6",
+        "description",
+        "collapsible_text_BdaWLN"
       ],
-      "settings": {}
+      "custom_css": [],
+      "settings": {
+        "full_width": true,
+        "show_fixed_add_to_cart": true,
+        "desktop_media_width": 60,
+        "desktop_media_layout": "carousel_thumbnails_bottom",
+        "mobile_media_size": "expanded",
+        "mobile_carousel_control": "floating_dots",
+        "enable_video_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": false,
+        "max_image_zoom_level": 3,
+        "background": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "text_color": "rgba(0,0,0,0)",
+        "input_background": "rgba(0,0,0,0)",
+        "input_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "176891615934aa6f4e": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_mgeLhK": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "no_reviews",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_mgeLhK"
+      ],
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
     },
     "related-products": {
       "type": "related-products",
-      "settings": {}
-    }
+      "custom_css": [
+        "@media screen and (min-width: 990px) {h2, .h2 {font-size: 30px !important; line-height: 1.2; }}"
+      ],
+      "settings": {
+        "recommendations_count": 10,
+        "products": [],
+        "full_width": false,
+        "stack_products": false,
+        "show_progress_bar": true,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 5,
+        "subheading": "",
+        "title": "Passende Produkte",
+        "content": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+    "recently_viewed_products_BLgPzh": {
+      "type": "recently-viewed-products",
+      "custom_css": [
+        "@media screen and (min-width: 990px) {h2, .h2 {font-size: 30px !important; line-height: 1.2; }}"
+      ],
+      "name": "Recently viewed products",
+      "settings": {
+        "full_width": true,
+        "products_count": 24,
+        "stack_products": false,
+        "show_progress_bar": true,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 5,
+        "subheading": "",
+        "title": "Zuletzt angeschaut",
+        "content": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+
   },
   "order": [
     "main",
-    "related-products"
+    "176891615934aa6f4e",
+    "related-products",
+    "recently_viewed_products_BLgPzh",
   ]
 }

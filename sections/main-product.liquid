@@ -43,7 +43,8 @@
 
 <div {% render 'section-properties', tight: true %}>
   <product-rerender id="product-info-{{ product.id }}-{{ section.id }}" observe-form="{{ product_form_id }}" allow-partial-rerender>
-    <div class="product">
+    {%- comment -%} CANPAN QoL PRE-LAUNCH – Bereitstellen einer stabilen canpan-Produkt-Scope-Klasse, während die Root-Color-Engine auf dem html-Element liegt. {%- endcomment -%}
+    <div class="product canpan-product-theme-scope">
       {%- if product.media.size > 0 -%}
         {%- render 'product-gallery', product: product, product_form_id: product_form_id -%}
       {%- endif -%}
@@ -61,18 +62,14 @@
 {%- assign buy_buttons_block = section.blocks | where: 'type', 'buy_buttons' | first -%}
 
 {%- if section.settings.show_fixed_add_to_cart and product.available and buy_buttons_block != blank -%}
-  <product-rerender id="{{ product_form_id }}-sticky-bar" observe-form="{{ product_form_id }}">
+  <product-rerender id="{{ product_form_id }}-sticky-bar" class="canpan-product-theme-scope" observe-form="{{ product_form_id }}">
     {%- if product.selected_or_first_available_variant.available -%}
       <product-quick-add form="{{ product_form_id }}" class="product-quick-add">
         {%- assign button_label = 'product.general.add_to_cart_button' | t -%}
 
-        <buy-buttons template="{{ product.template_suffix }}" form="{{ product_form_id }}" class="sm:hidden">
-          {%- render 'button', type: 'submit', content: button_label, form: product_form_id, background: buy_buttons_block.settings.atc_button_background, text_color: buy_buttons_block.settings.atc_button_text_color, secondary: true, stretch: true, size: 'lg' -%}
-        </buy-buttons>
-
         {%- assign image = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
 
-        <div class="product-quick-add__variant {% if image == blank %}no-image{% endif %} hidden sm:grid">
+        <div class="product-quick-add__variant {% if image == blank %}no-image{% endif %} grid">
           {%- if image != blank -%}
             <variant-media widths="80,160" form="{{ product_form_id }}">
               {{- image | image_url: width: image.width | image_tag: loading: 'lazy', sizes: '80px', widths: '80,160', class: 'rounded-xs' -}}
@@ -86,8 +83,32 @@
               {%- render 'vendor' with product.vendor, class: 'text-xs' -%}
             {%- endif -%}
 
-            <a href="{{ product.url }}" class="bold truncate-text">{{ product.title }}</a>
-            {%- render 'price-list', product: product, variant: product.selected_or_first_available_variant, form_id: product_form_id -%}
+            {%- comment -%} CANPAN QoL PRE-LAUNCH – Sticky-Bar-Titel mit dem Custom-Titel der gewählten Variante synchron halten. {%- endcomment -%}
+            {%- assign canpan_sticky_variant = product.selected_or_first_available_variant -%}
+            {%- assign canpan_sticky_title = product.title -%}
+
+            {%- if canpan_sticky_variant != blank and canpan_sticky_variant.metafields.custom_variant.title.value != blank -%}
+              {%- assign canpan_sticky_title = canpan_sticky_variant.metafields.custom_variant.title.value -%}
+            {%- endif -%}
+
+            <a href="{{ product.url }}" class="bold truncate-text">{{ canpan_sticky_title }}</a>
+
+            {%- capture canpan_sticky_price_bubble_markup -%}
+              {%- render 'canpan-price-bubble', product: product, variant: canpan_sticky_variant -%}
+            {%- endcapture -%}
+
+            {%- capture canpan_sticky_inline_price_bubble_markup -%}
+              {%- if canpan_sticky_price_bubble_markup != blank -%}
+                <div class="canpan-inline-price-bubble">
+                  {{- canpan_sticky_price_bubble_markup -}}
+                </div>
+              {%- endif -%}
+            {%- endcapture -%}
+
+            <div class="canpan-quick-buy-price-wrapper h-stack align-center gap-2 flex-wrap{% if canpan_sticky_inline_price_bubble_markup != blank %} canpan-price-has-bubble{% endif %}" style="width: 100%;">
+              {%- render 'price-list', product: product, variant: canpan_sticky_variant, form_id: product_form_id, canpan_inline_bubble_markup: canpan_sticky_inline_price_bubble_markup -%}
+              {%- render 'product-badges', product: product, variant: canpan_sticky_variant, types: 'discount', context: 'product', class: 'canpan-quick-buy-discount-badge' -%}
+            </div>
           </div>
 
           <buy-buttons template="{{ product.template_suffix }}" form="{{ product_form_id }}" force-secondary-button>
@@ -798,6 +819,12 @@ quick buy information in a template, that will be extracted in JS, but ensure it
           "default": "<p>Share some content to your customers about your products.</p>"
         }
       ]
+    },
+    {
+      "type": "canpan_feature_cards",
+      "name": "CANPAN Feature Cards",
+      "limit": 1,
+      "settings": []
     },
     {
       "type": "collapsible_text",

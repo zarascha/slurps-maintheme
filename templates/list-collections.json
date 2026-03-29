@@ -11,10 +11,66 @@
   "sections": {
     "main": {
       "type": "main-list-collections",
-      "settings": {}
+      "disabled": true,
+      "settings": {
+        "collections": [],
+        "collections_per_row_mobile": "1",
+        "collections_per_row": 3,
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "image_with_text_overlay_BNrxMn": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_gqtR7j": {
+          "type": "heading",
+          "settings": {
+            "text": "Hier ist... nichts?",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_UQ6RQn": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Naja, fast nichts. Du bist auf einer Seite gelandet, die wir nicht nutzen – diese Übersicht kommt bei Shopify standardmäßig mit. Wir featuren sie nicht, da wir unseren Online-Shop bewusst so gebaut haben, dass du alles über die Startseite in 1–2 Klicks findest.</p><p>Eigentlich solltest du von hier auf unsere 404-Seite umgeleitet werden – hat bei dir nicht gegriffen, da du dich per URL selbst hierher navigiert hast. ;)</p><p>Aber wenn du schon mal hier bist und bevor du zur Startseite zurückkehrst: Wusstest du, dass Hopfen (das Zeugs für Bier) ein botanischer Verwandter von Cannabis ist? Ja, wirklich!</p>"
+          }
+        },
+        "button_VAAUq8": {
+          "type": "button",
+          "settings": {
+            "style": "fill",
+            "size": "lg",
+            "text": "Zurück zur Startseite",
+            "url": "https://www.canpan.de",
+            "background": "",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_gqtR7j",
+        "richtext_UQ6RQn",
+        "button_VAAUq8"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "enable_parallax": false,
+        "image_size": "md",
+        "image": "shopify://shop_images/password_backround.png",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "text_color": "#1a1a1a",
+        "overlay_color": "#ffffff",
+        "overlay_opacity": 74
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "image_with_text_overlay_BNrxMn"
   ]
 }

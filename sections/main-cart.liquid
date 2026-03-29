@@ -43,10 +43,17 @@
               <tbody class="order-summary__body">
                 {%- for line_item in cart.items -%}
                   {% liquid
+                    # CANPAN QoL PRE-LAUNCH – Benutzerdefinierten Varianten-Titel für Accessibility-Labels auf der Warenkorbseite wiederverwenden
+
                     assign max_quantity = nil
+                    assign canpan_line_item_title = line_item.product.title | default: line_item.title
                   
                     if line_item.variant.quantity_rule.max != nil
                       assign max_quantity = max_quantity | default: 999999 | at_most: line_item.variant.quantity_rule.max
+                    endif
+
+                    if line_item.variant != blank and line_item.variant.metafields.custom_variant.title.value != blank
+                      assign canpan_line_item_title = line_item.variant.metafields.custom_variant.title.value
                     endif
                   %}
 
@@ -58,7 +65,7 @@
                         <input class="quantity-input" type="number" is="quantity-input" inputmode="numeric" min="{{ line_item.variant.quantity_rule.min }}" step="{{ line_item.variant.quantity_rule.increment }}" {% if max_quantity != nil %}max="{{ max_quantity }}"{% endif %} data-line-key="{{ line_item.key }}" aria-label="{{ 'cart.order.change_quantity' | t | escape }}" value="{{ line_item.quantity }}">
 
                         <span class="text-xs">
-                          <a href="{{ line_item.url_to_remove }}" class="link" aria-label="{{ 'cart.order.remove_with_title' | t: title: line_item.title | escape }}">
+                          <a href="{{ line_item.url_to_remove }}" class="link" aria-label="{{ 'cart.order.remove_with_title' | t: title: canpan_line_item_title | escape }}">
                             {{- 'cart.order.remove' | t -}}
                           </a>
                         </span>
@@ -94,11 +101,12 @@
 
                   {%- when 'totals' -%}
                     <div class="cart-form__totals v-stack gap-2" {{ block.shopify_attributes }}>
-                      {%- if section.settings.allow_discount_application or cart.cart_level_discount_applications.size > 0 -%}
-                        <div class="v-stack gap-2.5">
-                          {%- if section.settings.allow_discount_application -%}
-                            {%- render 'cart-discount' -%}
-                          {%- endif -%}
+	                      {%- if section.settings.allow_discount_application or cart.cart_level_discount_applications.size > 0 -%}
+	                        <div class="v-stack gap-2.5">
+	                          {%- if section.settings.allow_discount_application -%}
+	                            {%- comment -%} CANPAN QoL PRE-LAUNCH – Bug-Fixing: uebergibt die aktuelle Section explizit an das Cart-Discount-Snippet {%- endcomment -%}
+	                            {%- render 'cart-discount', section: section -%}
+	                          {%- endif -%}
 
                           {%- if cart.cart_level_discount_applications.size > 0 -%}
                             <div class="h-stack gap-2">
@@ -163,19 +171,44 @@
                       </div>
                     {%- endif -%}
 
-                  {%- when 'offer' -%}
-                    {%- assign previous_block_index = forloop.index0 | minus: 1 -%}
-                    {%- assign next_block_index = forloop.index0 | plus: 1 -%}
+	                  {%- when 'offer' -%}
+	                    {%- comment -%} CANPAN QoL PRE-LAUNCH – Bug-Fixing: haelt Offer-Gruppen nur dann offen, wenn benachbarte Offer-Bloecke wirklich zusammengehoeren {%- endcomment -%}
+	                    {%- liquid
+	                      assign previous_block_index = forloop.index0 | minus: 1
+	                      assign next_block_index = forloop.index0 | plus: 1
+	                      assign previous_is_offer = false
+	                      assign next_is_offer = false
+	                      assign opens_offer_group = false
+	                      assign closes_offer_group = false
 
-                    {%- if section.blocks[next_block_index].type == 'offer' -%}
-                      <div class="v-stack gap-4">
-                    {%- endif -%}
+	                      if forloop.index0 > 0 and section.blocks[previous_block_index].type == 'offer'
+	                        assign previous_is_offer = true
+	                      endif
 
-                    {%- render 'offer', block: block -%}
+	                      if forloop.last == false and section.blocks[next_block_index].type == 'offer'
+	                        assign next_is_offer = true
+	                      endif
 
-                    {%- if section.blocks[previous_block_index].type == 'offer' -%}
-                      </div>
-                    {%- endif -%}
+	                      if previous_is_offer == false and next_is_offer
+	                        assign opens_offer_group = true
+	                      endif
+
+	                      if previous_is_offer and next_is_offer == false
+	                        assign closes_offer_group = true
+	                      endif
+
+	                      if opens_offer_group
+	                        echo '<div class="v-stack gap-4">'
+	                      endif
+	                    -%}
+
+	                    {%- render 'offer', block: block -%}
+
+	                    {%- liquid
+	                      if closes_offer_group
+	                        echo '</div>'
+	                      endif
+	                    -%}
 
                   {%- when 'accelerated_buttons' -%}
                     {% if additional_checkout_buttons %}

@@ -3,21 +3,25 @@
     {%- assign posted_successfully = false -%}
     {%- assign newsletter_id = 'newsletter-' | append: section.id -%}
 
-    {%- capture _temporary -%}
+    {%- comment -%}CANPAN QoL PRE-LAUNCH – Bug-Fixing: ersetzt den problematischen Unterstrich-Variablennamen fuer die Vorabpruefung des Newsletter-Status.{%- endcomment -%}
+    {%- capture newsletter_form_capture -%}
       {%- form 'customer', id: newsletter_id, class: 'form' -%}
         {%- assign posted_successfully = form.posted_successfully? -%}
       {%- endform -%}
     {%- endcapture -%}
+    {{- newsletter_form_capture -}}
 
     <newsletter-popup id="newsletter-drawer" open-from="right" class="drawer newsletter-drawer" {% if section.settings.show_only_once %}only-once{% endif %} apparition-delay="{{ section.settings.apparition_delay }}" {% if posted_successfully %}open{% endif %} handle-section-events>
       <button is="close-button" aria-label="{{ 'general.accessibility.close' | t | escape }}" class="sm-max:hidden">
         {%- render 'icon' with 'close', width: 19, height: 19 -%}
       </button>
 
+      {%- comment -%}
+        CANPAN QoL PRE-LAUNCH – Lighthouse fix
+      {%- endcomment -%}
       {%- if section.settings.image != blank -%}
-        {%- capture sizes -%}min(calc(100vw - 16px), 445px){%- endcapture -%}
-        {%- capture widths -%}{{ section.settings.image.width }}, {{ section.settings.image.width | times: 2 | at_most: section.settings.image.width }}{%- endcapture -%}
-        {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', widths: widths, sizes: sizes -}}
+        {%- capture sizes -%}(max-width: 749px) calc(100vw - 32px), 700px{%- endcapture -%}
+        {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,1000,1200' -}}
       {%- endif -%}
 
       <div class="newsletter-drawer__content v-stack gap-4 text-center">

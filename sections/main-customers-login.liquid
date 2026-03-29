@@ -9,8 +9,9 @@ LIQUID
       {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: sizes: '50vw', widths: '300,400,500,600,700,800,1000,1200,1400', class: 'customer-form__image rounded' -}}
     {%- endif -%}
 
+    {%- comment -%}CANPAN QoL PRE-LAUNCH – Bug-Fixing: ersetzt den problematischen Unterstrich-Variablennamen und behaelt das Recovery-Form-Verhalten bei.{%- endcomment -%}
     {%- liquid 
-      capture _recovery
+      capture recovery_capture
         form 'recover_customer_password'
           if form.errors or form.posted_successfully?
             assign show_recover_form = true
@@ -18,6 +19,7 @@ LIQUID
         endform
       endcapture
     -%}
+    {{- recovery_capture -}}
     
 
     <div {% render 'surface', class: 'customer-form__box', background_gradient: section.settings.background_gradient, background: section.settings.background, text_color: section.settings.text_color, background_fallback: 'bg-secondary' %}>

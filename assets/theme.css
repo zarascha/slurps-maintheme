@@ -1465,6 +1465,8 @@ scroll-carousel {
   font-size: var(--text-sm);
 }
 
+/* → canpan-theme.css: .badge:not(.badge--lg) — font-size auf 11px fixiert */
+/*
 @media screen and (min-width: 700px) {
   .badge:not(.badge--lg) {
     font-size: var(--text-xs);
@@ -1472,6 +1474,7 @@ scroll-carousel {
     padding-block-end: var(--spacing-0-5);
   }
 }
+*/
 
 .progress-bar {
   height: var(--spacing-1);
@@ -2284,9 +2287,12 @@ scroll-carousel {
     align-items: center;
   }
 
+  /* → canpan-theme.css: .line-item__actions — global (ohne Breakpoint), align-self: center ergänzt */
+  /*
   .line-item__actions {
     margin-inline-start: auto;
   }
+  */
 }
 
 video-media, model-media {
@@ -3126,6 +3132,8 @@ model-media model-viewer, model-media .shopify-model-viewer-ui {
   }
 }
 
+/* → canpan-theme.css: .product-quick-add — komplett überschrieben (CANPAN Redesign) */
+/*
 .product-quick-add {
   z-index: 2;
   visibility: hidden;
@@ -3182,6 +3190,7 @@ model-media model-viewer, model-media .shopify-model-viewer-ui {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 }
+*/
 
 .quick-buy-drawer {
   --drawer-header-padding: var(--spacing-6);
@@ -3820,6 +3829,8 @@ tfoot td {
   margin-inline-start: var(--spacing-1-5);
 }
 
+/* → canpan-theme.css: .thumbnail-swatch — border-radius auf var(--rounded-input) geändert */
+/*
 .thumbnail-swatch {
   --swatch-size: 60px;
   width: var(--swatch-size);
@@ -3829,6 +3840,7 @@ tfoot td {
   display: block;
   position: relative;
 }
+*/
 
 .thumbnail-swatch:before {
   content: "";
@@ -3886,6 +3898,8 @@ tfoot td {
   display: grid;
 }
 
+/* → canpan-theme.css: .block-swatch — border-radius auf 60px (Pill-Shape) geändert */
+/*
 .block-swatch {
   place-items: center;
   gap: var(--spacing-3);
@@ -3898,6 +3912,7 @@ tfoot td {
   display: flex;
   position: relative;
 }
+*/
 
 .block-swatch.is-disabled {
   color: rgb(var(--text-color) / .5);
@@ -6238,6 +6253,8 @@ product-rerender {
   }
 }
 
+/* → canpan-theme.css: shopify-account — CANPAN-spezifische Werte (Radii, Avatar-Farben) */
+/*
 shopify-account {
   --shopify-account-font-heading: var(--heading-font-family);
   --shopify-account-font-heading-weight: var(--heading-font-weight);
@@ -6259,6 +6276,7 @@ shopify-account::part(signed-out-avatar) {
   min-width: 0;
   min-height: 0;
 }
+*/
 
 .dropdown-menu {
   gap: var(--spacing-3);

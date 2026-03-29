@@ -1,0 +1,327 @@
+{%- render 'section-spacing-collapsing' -%}
+
+<style>
+  #shopify-section-{{ section.id }} .canpan-blocks-wrapper {
+    width: 100%;
+  }
+
+  /* ====== MOBILE FIRST & FULL BLEED ====== */
+  #shopify-section-{{ section.id }} .canpan-collection-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 75vw;
+    gap: 15px;
+    padding-bottom: 10px;
+    
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding-left: var(--container-gutter, 20px);
+    scroll-padding-inline-start: var(--container-gutter, 20px);
+    
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #shopify-section-{{ section.id }} .canpan-collection-grid::-webkit-scrollbar {
+    display: none; /* Safari/Chrome */
+  }
+
+  #shopify-section-{{ section.id }} .canpan-collection-grid::after {
+    content: "";
+    width: var(--container-gutter, 20px);
+    display: block;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .canpan-collection-grid {
+      grid-auto-columns: calc(33.333% - 10px);
+      width: 100%;
+      margin-left: 0;
+      padding-left: 0;
+    }
+    
+    #shopify-section-{{ section.id }} .canpan-collection-grid::after {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .canpan-collection-grid {
+      grid-auto-columns: calc(20% - 12px);
+    }
+  }
+
+  #shopify-section-{{ section.id }} .canpan-card {
+    scroll-snap-align: start;
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f4f4f4;
+    text-decoration: none !important;
+    transform: translateZ(0);
+    box-shadow: none !important;
+  }
+
+  #shopify-section-{{ section.id }} .canpan-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* --- BOX HOVER EFFEKT --- */
+  #shopify-section-{{ section.id }} .canpan-card__box {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    background-color: rgba(255, 255, 255, 0.75) !important;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 2;
+    text-align: left;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease;
+  }
+
+  @media (hover: hover) {
+    #shopify-section-{{ section.id }} .canpan-card:hover .canpan-card__img {
+      transform: scale(1.08);
+    }
+
+    #shopify-section-{{ section.id }} .canpan-card:hover .canpan-card__box {
+      transform: translateY(-8px);
+      background-color: rgba(255, 255, 255, 1.0) !important;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .canpan-card__title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1A1A1A;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .canpan-card__text {
+    margin: 0;
+    font-size: 13px;
+    color: #1A1A1A;
+    line-height: 1.4;
+  }
+
+  #shopify-section-{{ section.id }} .canpan-header-desc {
+    color: #4C4C4C;
+  }
+</style>
+
+<div {% render 'section-properties' %}>
+  <div class="canpan-blocks-wrapper section-stack">
+    
+    {%- capture canpan_header_content -%}
+      {%- if section.settings.canpan_content != blank -%}
+        <div class="canpan-header-desc">
+          {{ section.settings.canpan_content }}
+        </div>
+      {%- endif -%}
+    {%- endcapture -%}
+
+    {%- render 'section-header', 
+      subheading: section.settings.canpan_subheading, 
+      heading: section.settings.canpan_heading, 
+      heading_color: section.settings.heading_color,
+      content: canpan_header_content, 
+      text_alignment: section.settings.canpan_text_alignment 
+    -%}
+
+    <div class="floating-controls-container">
+      {% assign scroll_area_id = 'scroll-area-canpan-' | append: section.id %}
+
+      <scroll-carousel selector=".canpan-card" id="{{ scroll_area_id }}" class="canpan-carousel-wrapper">
+        <div class="canpan-collection-grid">
+
+          {% for block in section.blocks %}
+
+            {% assign card_title = block.settings.title %}
+            {% assign card_text  = block.settings.text %}
+            {% assign card_image = block.settings.image %}
+            {% assign final_url = block.settings.url %}
+
+            <a href="{{ final_url }}" class="canpan-card" {{ block.shopify_attributes }}>
+
+              {% if card_image != blank %}
+                {%- capture sizes -%}(max-width: 767px) 75vw, (max-width: 1023px) 33vw, 20vw{%- endcapture -%}
+  
+                {%- if section.index == 1 and forloop.first -%}
+                  {{ card_image | image_url: width: card_image.width | image_tag: fetchpriority: 'high', sizes: sizes, widths: '300,400,500,600,800,1000', class: 'canpan-card__img', alt: card_title }}
+                {%- else -%}
+                  {{ card_image | image_url: width: card_image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,800,1000', class: 'canpan-card__img', alt: card_title }}
+                {%- endif -%}
+
+              {% else %}
+                {{ 'collection-1' | placeholder_svg_tag: 'canpan-card__img placeholder' }}
+              {% endif %}
+
+              <div class="canpan-card__box">
+                <h3 class="canpan-card__title">{{ card_title }}</h3>
+                <p class="canpan-card__text">{{ card_text }}</p>
+              </div>
+
+            </a>
+
+          {% endfor %}
+
+        </div>
+      </scroll-carousel>
+
+      <button is="prev-button" class="circle-button circle-button--lg circle-button--fill border group" aria-controls="{{ scroll_area_id }}" disabled>
+        <span class="sr-only">Zurück</span>
+        <span class="animated-arrow animated-arrow--reverse"></span>
+      </button>
+
+      <button is="next-button" class="circle-button circle-button--lg circle-button--fill border group" aria-controls="{{ scroll_area_id }}">
+        <span class="sr-only">Vor</span>
+        <span class="animated-arrow"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CANPAN Collection Blocks",
+  "class": "shopify-section--canpan-collection-blocks",
+  "tag": "section",
+  "disabled_on": {
+    "templates": ["password"],
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors",
+      "info": "If left empty, global theme colors are used."
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "canpan_subheading",
+      "label": "Subheading",
+      "default": "Discover Now"
+    },
+    {
+      "type": "text",
+      "id": "canpan_heading",
+      "label": "Heading",
+      "default": "Collection Blocks"
+    },
+    {
+      "type": "richtext",
+      "id": "canpan_content",
+      "label": "Content"
+    },
+    {
+      "type": "select",
+      "id": "canpan_text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "start"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Card text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CANPAN Collection Blocks",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1685 @@
+/* ==========================================================================
+   CANPAN THEME CUSTOM CSS
+   ========================================================================== */
+
+/* CANPAN QoL PRE-LAUNCH – Barrierefreiheit Fix: Float-Label darf keine Klicks abfangen */
+.floating-label {
+  pointer-events: none;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Badge-Größe auf 11px fixiert (Desktop), unabhängig von --text-xs */
+@media screen and (min-width: 700px) {
+  .badge:not(.badge--lg) {
+    font-size: 11px;
+    padding-block-start: var(--spacing-0-5);
+    padding-block-end: var(--spacing-0-5);
+  }
+}
+
+/* CANPAN QoL PRE-LAUNCH – Bewertungs-Widget in Preiszeile vertikal zentrieren */
+.product-info__price .rating-with-text {
+  align-items: center;
+}
+
+/* CANPAN QoL PRE-LAUNCH – (line-item.liquid) */
+.line-item__actions {
+  margin-inline-start: auto;
+  align-self: center;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Quick-Add Anpassungen (main-product.liquid) */
+.product-quick-add {
+  z-index: 2;
+  visibility: hidden;
+  opacity: 0;
+  width: 100%;
+  padding: 1rem;
+  transition: visibility .15s ease-in, opacity .15s ease-in, transform .15s ease-in;
+  position: fixed;
+  bottom: 0;
+  transform: translateY(10px);
+  background: rgb(var(--dialog-background));
+  border-top-width: 1px;
+}
+
+.product-quick-add:not(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  right: 0;
+}
+
+.product-quick-add:is(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  left: 0;
+}
+
+.product-quick-add.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.product-quick-add__variant {
+  grid-template-columns: 80px minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 1rem;
+  display: grid;
+}
+
+.product-quick-add__variant.no-image {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+@media screen and (max-width: 699px) {
+  .product-quick-add__variant {
+    grid-template-columns: 60px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    row-gap: 1rem;
+  }
+
+  .product-quick-add__variant.no-image {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .product-quick-add__variant variant-media,
+  .product-quick-add__variant .v-stack {
+    grid-row: 1;
+  }
+
+  .product-quick-add__variant buy-buttons {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .product-quick-add__variant buy-buttons .button {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .product-quick-add {
+    border-radius: var(--rounded-sm);
+    border-width: 1px;
+    width: 35rem;
+    bottom: 1rem;
+    transform: translateY(0);
+  }
+
+  .product-quick-add:not(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+    right: 1rem;
+  }
+
+  .product-quick-add:is(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+    left: 1rem;
+  }
+
+  .product-quick-add__variant {
+    column-gap: 1.5rem;
+  }
+}
+
+/* CANPAN QoL PRE-LAUNCH – Formular- und Swatch-Überschreibungen */
+.thumbnail-swatch {
+  --swatch-size: 60px;
+  width: var(--swatch-size);
+  height: var(--swatch-size);
+  border-radius: var(--rounded-input);
+  flex-shrink: 0;
+  display: block;
+  position: relative;
+}
+
+.block-swatch {
+  place-items: center;
+  gap: var(--spacing-3);
+  height: var(--input-height);
+  border-radius: 60px;
+  background: rgb(var(--input-background, var(--background))) no-repeat;
+  border-width: 1px;
+  padding-inline-start: var(--spacing-5);
+  padding-inline-end: var(--spacing-5);
+  display: flex;
+  position: relative;
+}
+
+/* CANPAN QoL PRE-LAUNCH – (shopify-account Webkomponente) */
+shopify-account {
+  --shopify-account-font-heading: var(--heading-font-family);
+  --shopify-account-font-heading-weight: var(--heading-font-weight);
+  --shopify-account-font-body: var(--text-font-family);
+  --shopify-account-font-body-weight: var(--text-font-weight);
+  /*--shopify-account-radius-button: var(--rounded-button);*/
+  /*--shopify-account-radius-input: var(--rounded-input);*/
+  /*--shopify-account-radius-dialog: var(--rounded-block);*/
+  --shopify-account-color-background: rgb(var(--dialog-background));
+  --shopify-account-color-text: rgb(var(--text-primary));
+  /*--shopify-account-signed-in-avatar-color-background: rgb(var(--text-color));*/
+  /*--shopify-account-signed-in-avatar-color-text: rgb(from rgb(var(--text-color)) calc(255 - r) calc(255 - g) calc(255 - b));*/
+  --shopify-account-signed-in-avatar-size: 24px;
+  color: inherit;
+  visibility: inherit;
+  --shopify-account-radius-button-small: 60px;
+  --shopify-account-radius-input: 6px;
+  --shopify-account-radius-dialog: 6px;
+  --shopify-account-radius-base: 6px;
+  --shopify-account-signed-in-avatar-color-background: rgb(var(--text-color) / 0.25);
+  --shopify-account-signed-in-avatar-color-text: rgb(var(--text-color));
+}
+
+shopify-account::part(signed-out-avatar) {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Navigation-Drawer-Überschreibungen (Seitenmenü) */
+.navigation-drawer .panel__scroller {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.navigation-drawer .panel__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.panel-footer__social-icons-bottom {
+  display: flex;
+  align-items: center;
+  margin-inline-start: auto;
+}
+
+.panel-footer__social-icons-bottom .social-media {
+  gap: var(--spacing-3);
+}
+
+.panel-footer__social-icons-bottom .social-media svg {
+  width: 20px;
+  height: 20px;
+}
+
+.canpan-featured-slider {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding-block: var(--spacing-2);
+}
+
+.canpan-featured-heading {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--text-color) / 0.55);
+  margin: 0;
+}
+
+.canpan-section-heading {
+  margin-block-start: var(--spacing-2);
+  margin-block-end: calc(-1 * var(--spacing-4));
+}
+
+.canpan-featured-scroll {
+  grid: auto / auto-flow 75%;
+  gap: var(--spacing-3);
+  display: grid;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.canpan-featured-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.canpan-slide-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-width: 0;
+}
+
+.canpan-slide-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--rounded-sm, 8px);
+}
+
+.canpan-slide-title {
+  margin: var(--spacing-2) 0 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.canpan-featured-slider .scrollable-with-controls {
+  gap: var(--spacing-2);
+}
+
+.canpan-featured-slider .scrollbar {
+  margin-block-start: 0;
+}
+
+.canpan-featured-slider .scrollbar .circle-button {
+  width: var(--spacing-6);
+  height: var(--spacing-6);
+  min-width: var(--spacing-6);
+  min-height: var(--spacing-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Rechten Scrollbar-Button 2px nach links verschieben (Desktop), da er am Drawer-Rand abgeschnitten wird */
+@media screen and (min-width: 700px) {
+  .canpan-featured-slider .scrollbar__buttons [is="next-button"] {
+    translate: -2px 0;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .navigation-drawer {
+    --navigation-drawer-width: 680px;
+  }
+}
+
+.navigation-drawer .search-input--nav-panel [is="close-button"] {
+  width: auto;
+  height: auto;
+  min-height: auto;
+  border-radius: 0;
+  border-width: 0;
+}
+
+.navigation-drawer.drawer--lg::part(body) {
+  grid-template-rows: minmax(0, 1fr);
+  overflow-x: hidden;
+}
+
+.navigation-drawer .panel__wrapper {
+  overflow-x: hidden;
+}
+
+.navigation-drawer .predictive-search__tabs::part(tab-list) {
+  margin-inline: 0;
+  padding-inline: 0;
+  scroll-padding-inline: 0;
+}
+
+/* CANPAN price layout helpers */
+.product-info__price .canpan-price-primary-row {
+  min-width: 0;
+  align-items: center;
+  gap: var(--spacing-2);
+  display: flex;
+}
+
+.product-info__price .canpan-price-main,
+.product-info__price .canpan-inline-price-bubble {
+  min-width: 0;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – BENUTZERDEFINIERTES CSS
+   ========================================================================== */
+
+/* FOOTER OVERRIDES (footer.liquid) */
+.shopify-section--footer .footer__payment-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+@media screen and (max-width: 767px) {
+  .shopify-section--footer .footer__block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .shopify-section--footer .footer__aside-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .shopify-section--footer .footer__payment-icons svg {
+    width: 35px;
+    height: auto;
+  }
+
+  .shopify-section--footer .footer__block--text {
+    display: none;
+  }
+
+  .shopify-section--footer .canpan-footer-aside-bottom-override .footer__copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .shopify-section--footer .canpan-footer-aside-bottom-override .footer__copyright p {
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .shopify-section--footer .canpan-footer-aside-bottom-override .footer__policy-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 0px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .shopify-section--footer .canpan-footer-aside-bottom-override .footer__policy-links a {
+    font-size: 13px;
+  }
+
+  .shopify-section--footer .canpan-footer-aside-bottom-override .footer__policy-links li:has(a[href*="#shopifyReshowConsentBanner"]) {
+    display: none;
+  }
+
+  .shopify-section--footer .canpan-footer-aside-bottom-override .footer__policy-links li:has(+ li:has(a[href*="#shopifyReshowConsentBanner"]):last-child)::after {
+    content: none;
+    display: none;
+  }
+
+  .canpan-mobile-only {
+    display: inline;
+  }
+
+  .canpan-cookie-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .shopify-section--footer .canpan-tax-note {
+    text-align: center;
+    font-size: 13px;
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .canpan-mobile-only {
+    display: none;
+  }
+}
+
+/* SPLIT PRICE (price-list.liquid) */
+.canpan-custom-price-split {
+  display: inline-flex;
+  align-items: flex-start;
+  line-height: 1;
+  transform: translateY(3px);
+}
+
+.canpan-custom-price-split .canpan-price-euro {
+  line-height: 0.9;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.canpan-custom-price-split .canpan-price-separator {
+  display: none;
+  font-size: 0.75em;
+  align-self: flex-end;
+  line-height: 1;
+  padding: 0;
+}
+
+.canpan-custom-price-split .canpan-price-cent,
+.canpan-custom-price-split .canpan-price-symbol {
+  font-size: 0.65em;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 2px;
+}
+
+.canpan-custom-price-split .canpan-price-cent {
+  text-decoration: underline;
+}
+
+.canpan-custom-price-split .canpan-price-symbol {
+  margin-left: 2px;
+}
+
+/* VARIANT ADDED (variant-added.liquid) */
+.canpan-success-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  background-color: var(--canpan-bg);
+  color: var(--canpan-text);
+  font-size: 14px;
+}
+
+.canpan-success-box svg {
+  color: var(--canpan-text);
+  width: 20px;
+}
+
+.canpan-shipping-bar-wrapper {
+  margin-bottom: 4px;
+}
+
+.canpan-quick-buy-drawer-variant {
+  margin-bottom: 4px;
+  align-items: stretch;
+}
+
+.canpan-quick-buy-info-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.canpan-quick-buy-info-stack>* {
+  margin: 0;
+}
+
+.canpan-title-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
+}
+
+.canpan-price-and-quantity {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.canpan-mobile-separator {
+  opacity: 0.5;
+  font-size: 14px;
+}
+
+.canpan-quantity-text {
+  margin: 0;
+}
+
+/* Checkout Button Overrides (Scoped to form) */
+.canpan-checkout-form button[name="checkout"] {
+  background-color: var(--canpan-primary);
+  color: var(--canpan-text);
+  border-color: var(--canpan-primary);
+}
+
+.canpan-checkout-form button[name="checkout"]:hover {
+  opacity: 0.9;
+}
+
+.canpan-checkout-button-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.canpan-payment-icons {
+  margin-top: -12px;
+}
+
+.canpan-payment-icons svg {
+  width: 25px;
+  height: auto;
+}
+
+/* HORIZONTAL PRODUCT OVERRIDES (horizontal-product.liquid) */
+cart-recommendation-item {
+  display: block;
+  height: 100%;
+}
+
+.canpan-horizontal-product-override {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.canpan-horizontal-product-override .horizontal-product__info {
+  display: flex;
+  gap: var(--grid-gutter);
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.canpan-horizontal-product-override .horizontal-product__cta {
+  flex-shrink: 0;
+}
+
+/* LINE ITEM OVERRIDES (line-item.liquid) */
+.canpan-line-item-info-wrapper {
+  min-width: 0;
+}
+
+.canpan-mobile-remove-btn {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 699px) {
+  .canpan-line-item-title-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   CANPAN GLOBAL & QoL FIXES
+   ========================================================================== */
+
+/* CANPAN QoL PRE-LAUNCH – Verhindert Layout-Shifts durch Scrollbars */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Header Logo Fix */
+.canpan-logo-inline svg {
+  display: block;
+  height: var(--header-logo-height, 40px);
+  width: auto;
+  max-width: 100%;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Verhindert Flackern (FOUC) bei Produkt-Empfehlungen */
+.product-info__complementary-products:not(.is-ready) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none;
+}
+
+.product-info__complementary-products.is-ready {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – RAINBOW BADGE (Single-Span Optimized)
+   ========================================================================== */
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.canpan-rainbow-badge {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  padding: 2px;
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canpan-rainbow-badge::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from var(--gradient-angle),
+      #ff4d4d, #ff9a3d, #ffe866, #4dff88,
+      #4da3ff, #7a5cff, #c44dff, #ff4d4d);
+  animation: rotate-rainbow 3s linear infinite;
+}
+
+@keyframes rotate-rainbow {
+  0% {
+    --gradient-angle: 0deg;
+  }
+
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.canpan-rainbow-badge .badge {
+  padding: 1px calc(var(--spacing-2) - 2px);
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – CART DRAWER MOBILE OPTIMIERUNGEN
+   ========================================================================== */
+.canpan-price-quantity-wrapper .canpan-inline-quantity {
+  color: rgb(var(--text-color));
+}
+
+@media screen and (max-width: 699px) {
+  #cart-drawer .line-item {
+    --line-item-image-width: var(--spacing-16);
+    gap: var(--spacing-4);
+  }
+
+  #cart-drawer .line-item__info .bold,
+  #cart-drawer .line-item__info .canpan-price-quantity-wrapper,
+  #cart-drawer .line-item__info .canpan-quantity-label,
+  #cart-drawer .line-item__info .price-list {
+    font-size: var(--text-sm);
+  }
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – BUNDLE MOVER STYLES
+   ========================================================================== */
+.canpan-bundle-desktop {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – HORIZONTAL PRODUCT: FLYING LOADER FIX
+   ========================================================================== */
+.horizontal-product__cta .product-card__mobile-quick-buy-button {
+  position: relative !important;
+  top: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – DRAWER: ANTI-WACKEL & OVERFLOW FIX
+   ========================================================================== */
+/* Scoped zu den Drawern, damit es nicht andere Sections beeinflusst */
+.quick-buy-drawer__info {
+  overflow-x: hidden;
+  max-width: 100vw;
+  margin-block-start: 0rem;
+}
+
+/* Versteckt den Secondary Button nur im Quick Buy Drawer */
+.quick-buy-drawer__info .button--secondary {
+  display: none;
+}
+
+.quick-buy-drawer__variant {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.quick-buy-drawer__info-stack {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.quick-buy-drawer__info-stack a.bold,
+.quick-buy-drawer__info-stack p.text-sm {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
+}
+
+.canpan-price-and-quantity {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – CART DRAWER: PREIS & REMOVE-BUTTON AUF EINER LINIE
+   ========================================================================== */
+.canpan-price-remove-row {
+  align-items: baseline;
+}
+
+/* CANPAN QoL PRE-LAUNCH – line-height: 1 nur auf Mobile beschränken: Auf Desktop führt die
+   fehlende Half-Leading der price-list zu einem asymmetrischen vertikalen Abstand um die
+   Variantenoption im Cart-Drawer (mehr Abstand oben als unten). */
+@media screen and (max-width: 699px) {
+  .canpan-price-remove-row .price-list {
+    line-height: 1;
+    margin-bottom: 0;
+  }
+
+  .canpan-price-remove-row .canpan-mobile-remove-btn a {
+    line-height: 1;
+    display: inline-block;
+  }
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – SCOPED NEWSLETTER DRAWER CSS
+   ========================================================================== */
+
+   .newsletter-drawer .newsletter-drawer__content :not(.banner, .banner *, .button, .button *) {
+  color: #1a1a1a;
+}
+
+.newsletter-drawer .button.button--xl {
+  background: #72b5ff;
+  border-color: #72b5ff;
+  color: #0a2540;
+}
+
+.newsletter-drawer .fieldset {
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background: transparent;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – SCOPED CART PAGE & DRAWER CSS
+   ========================================================================== */
+/* Payment Icons im Checkout */
+.checkout__payment-icons svg {
+  width: 25px;
+  height: auto;
+}
+
+/* Versteckt den unerwünschten Text NUR im Order Recap auf der Cart Page */
+.shopify-section--main-cart .cart-order__recap>.v-stack>span.text-xs.text-subdued.text-center {
+  display: none;
+}
+
+/* Targete die Payment-Icons NUR im Recap der Cart-Page */
+.shopify-section--main-cart .cart-order__recap .h-stack img,
+.shopify-section--main-cart .cart-order__recap .h-stack svg {
+  width: 32px;
+  height: auto;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – CUSTOM CURSOR
+   ========================================================================== */
+
+/* Normaler Cursor für den ganzen Body */
+body.canpan-custom-cursor {
+  cursor: url('{{ "canpan-cursor-normal.svg" | asset_url }}') 0 0,
+  auto;
+}
+
+/* Hover-Cursor für alles, was man klicken kann */
+body.canpan-custom-cursor a,
+body.canpan-custom-cursor button,
+body.canpan-custom-cursor summary,
+body.canpan-custom-cursor [role="button"],
+body.canpan-custom-cursor input[type="submit"],
+body.canpan-custom-cursor select,
+body.canpan-custom-cursor .canpan-is-clickable {
+  cursor: url('{{ "canpan-cursor-pointer.svg" | asset_url }}') 0 0,
+  pointer !important;
+}
+
+/* Wichtig für Impact Theme: Das Theme nutzt oft Shadow DOMs oder Custom Elements
+   wie <popover-content> oder <cart-drawer>. Stelle sicher, dass du bei Bedarf
+   die spezifischen Selektoren hier ergänzt, falls der Cursor droppt. */
+
+/* --- View Transitions for Smooth Color Cross-Fades (like SPA) --- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  /* Prevent the default slide animation, ensure a clean crossfade */
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Abstand der Icons im Header (Hamburger-Menü und Warenkorb/Cart) auf Desktop zum Bildschirmrand auf 50px angepasst */
+@media screen and (min-width: 990px) {
+  .canpan-header-spacing {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
+/* CANPAN QoL PRE-LAUNCH – Globales Styling für alle Sale-Badges (Shopweit) */
+.badge.badge--on-sale.canpan-global-sale-badge {
+  display: flex;
+  align-items: center;
+  background-color: color-mix(in srgb, rgb(var(--on-sale-badge-background)) 15%, white);
+  color: rgb(var(--on-sale-badge-background));
+  /* border-radius: Reverted to theme default (var(--rounded-button)) */
+}
+
+.canpan-global-sale-badge .icon {
+  width: 12px;
+  height: 12px;
+  color: rgb(var(--on-sale-badge-background));
+}
+
+/* CANPAN QoL PRE-LAUNCH – Quick Buy Separator */
+.canpan-quick-buy-separator {
+  margin: 1.5rem 0;
+  border: none;
+  border-top: 1px solid rgb(var(--border-color));
+}
+
+.canpan-quick-buy-variants-left {
+  padding-left: 2px;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Judge.me Preview-Badge im Quick-Buy ausblenden, damit kein Leerraum bleibt */
+.quick-buy-drawer .jdgm-widget,
+.quick-buy-drawer .jdgm-prev-badge,
+.quick-buy-drawer .jdgm-preview-badge {
+  display: none !important;
+  margin: 0 !important;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Variantenoptionen linksbündig ausrichten */
+.canpan-quick-buy-variants-left .variant-picker__option-values,
+.canpan-quick-buy-variants-left .fieldset {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.canpan-quick-buy-variants-left .variant-picker__option-info {
+  justify-content: flex-start;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Textkürzung im Quick-Buy */
+.canpan-quick-buy-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+
+/* CANPAN QoL PRE-LAUNCH – Canpan-Preisblase über PDP und Quick-Buy hinweg vereinheitlichen */
+.canpan-product-theme-scope {
+  --canpan-price-bubble-tip-size: 12px;
+}
+
+.canpan-price-bubble {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+  margin: 0;
+}
+
+.canpan-price-bubble__inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 4px 8px;
+  white-space: nowrap;
+  border-radius: 0 4px 4px 0;
+  background: var(--canpan-price-bubble-bg, rgba(7, 138, 0, 0.15));
+  color: var(--canpan-price-bubble-color, #078A00);
+}
+
+.canpan-price-bubble__inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--canpan-price-bubble-tip-size) * -1);
+  width: var(--canpan-price-bubble-tip-size);
+  height: 100%;
+  background: var(--canpan-price-bubble-bg, rgba(7, 138, 0, 0.15));
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.canpan-price-bubble__text {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font-size: .75rem;
+  line-height: 1;
+  font-weight: 400;
+  white-space: inherit;
+}
+
+.canpan-product-theme-scope :is(.product-info__price, .canpan-quick-buy-price-wrapper).canpan-price-has-bubble {
+  --canpan-price-bubble-tip-size: var(--spacing-3);
+}
+
+.canpan-product-theme-scope .product-info__price.canpan-price-has-bubble .price-list--lg {
+  row-gap: var(--spacing-3);
+  column-gap: calc(var(--spacing-3) + var(--canpan-price-bubble-tip-size));
+}
+
+.canpan-product-theme-scope .canpan-inline-price-bubble {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+  margin: 0;
+}
+
+.canpan-product-theme-scope .product-info__price .canpan-inline-price-bubble .canpan-price-bubble {
+  margin: 0 0 var(--spacing-0-5);
+}
+
+.canpan-product-theme-scope .canpan-quick-buy-price-wrapper.canpan-price-has-bubble .price-list {
+  row-gap: var(--spacing-0-5);
+  column-gap: calc(var(--spacing-2) + var(--canpan-price-bubble-tip-size));
+}
+
+@media screen and (max-width: 768px) {
+  .canpan-product-theme-scope .product-info__price.canpan-price-has-bubble .rating-with-text {
+    flex-wrap: wrap;
+    row-gap: var(--spacing-2);
+  }
+
+  .canpan-product-theme-scope .product-info__price.canpan-price-has-bubble .canpan-price-primary-row {
+    width: 100%;
+  }
+
+  .canpan-product-theme-scope .product-info__price.canpan-price-has-bubble .product-info__badge-list {
+    margin-inline-start: 0;
+  }
+
+}
+
+@media screen and (min-width: 769px) {
+  .canpan-product-theme-scope .product-info__price.canpan-price-has-bubble .canpan-price-primary-row {
+    flex: 0 1 auto;
+  }
+}
+
+/* CANPAN QoL PRE-LAUNCH – Produktvorteile visuell statisch halten, indem sie auf die Impact-Theme-Text-Tokens zurückgeführt werden */
+.canpan-product-theme-scope .canpan-product-benefits-container {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 0;
+  color: rgb(var(--text-color));
+}
+
+.canpan-product-theme-scope .canpan-product-benefits-row {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  padding: 1px 0;
+  color: rgb(var(--text-color));
+  border-radius: 50px;
+  width: fit-content;
+}
+
+.canpan-product-theme-scope .canpan-product-benefits-icon {
+  width: 20px;
+  height: auto;
+  margin-right: 8px;
+  object-fit: contain;
+  display: block;
+  color: rgb(var(--text-color));
+}
+
+.canpan-product-theme-scope .canpan-product-benefits-text {
+  flex: 1;
+  font-size: 14px;
+  padding-top: 0;
+}
+
+.canpan-product-theme-scope .canpan-product-benefits-text .metafield-rich_text_field p,
+.canpan-product-theme-scope .canpan-product-benefits-text p {
+  color: inherit;
+  margin: 0;
+}
+
+.canpan-product-theme-scope .canpan-product-benefits-text a {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 2px);
+  background-size: 100% 1px;
+  transition: background-size .25s ease;
+  padding-bottom: 1px;
+}
+
+.canpan-product-theme-scope .canpan-product-benefits-text a:hover,
+.canpan-product-theme-scope .canpan-product-benefits-text a:focus-visible {
+  background-size: 0% 1px;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Bestandsstatus aus der globalen Canpan-Palette ableiten, um snippet-spezifische Farbquellen zu vermeiden */
+.canpan-product-theme-scope .canpan-inventory-status-container {
+  margin-left: 2px;
+  margin-bottom: -15px;
+  transform: translateX(-3px);
+}
+
+.canpan-product-theme-scope .canpan-inventory-status {
+  font-weight: 400;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.canpan-product-theme-scope .canpan-inventory-status[hidden] {
+  display: none !important;
+}
+
+.canpan-product-theme-scope .canpan-status-warning {
+  color: var(--canpan-status-warning-color);
+  --canpan-dot-color: var(--canpan-status-warning-color);
+  --canpan-pulse-color: color-mix(in srgb, var(--canpan-dot-color), transparent 50%);
+}
+
+.canpan-product-theme-scope .canpan-status-success {
+  color: var(--canpan-status-success-color);
+  --canpan-dot-color: var(--canpan-status-success-color);
+  --canpan-pulse-color: color-mix(in srgb, var(--canpan-dot-color), transparent 50%);
+}
+
+.canpan-product-theme-scope .canpan-status-error {
+  color: var(--canpan-status-error-color);
+  --canpan-dot-color: var(--canpan-status-error-color);
+  --canpan-pulse-color: color-mix(in srgb, var(--canpan-dot-color), transparent 50%);
+}
+
+.canpan-product-theme-scope .canpan-pulse-dot {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  background-color: var(--canpan-dot-color);
+  border-radius: 50%;
+  margin: 0 7px;
+}
+
+.canpan-product-theme-scope .canpan-pulse-dot::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: 1px solid var(--canpan-pulse-color);
+  border-radius: 50%;
+  animation: canpan-pulse-anim 4s infinite cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes canpan-pulse-anim {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* CANPAN QoL PRE-LAUNCH – Trust- und Reassurance-Blöcke auf statische Impact-Theme-Flächen und -Rahmen zurückführen */
+.canpan-product-theme-scope .canpan-trust__icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-color: rgb(var(--text-color));
+  -webkit-mask-image: var(--canpan-mask-img);
+  mask-image: var(--canpan-mask-img);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+.canpan-product-theme-scope .canpan-trust-offerlist {
+  gap: 10px;
+}
+
+.canpan-product-theme-scope .canpan-trust-offerlist .offer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: var(--rounded-sm);
+  color: rgb(var(--text-color));
+  background-color: rgb(var(--text-color) / .05);
+  border: 1px solid rgb(var(--text-color) / .12);
+}
+
+.canpan-product-theme-scope .canpan-trust-offerlist .prose p {
+  color: inherit;
+  margin: 0;
+}
+
+.canpan-product-theme-scope .canpan-trust-offerlist .text-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: inherit;
+}
+
+@media (min-width: 768px) {
+  .canpan-product-theme-scope .canpan-trust-offerlist--grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .canpan-product-theme-scope .canpan-trust-offerlist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .canpan-product-theme-scope .canpan-trust-offerlist .offer {
+    padding: 14px;
+  }
+}
+
+/* CANPAN QoL PRE-LAUNCH – Utility-Texte auf der Produktseite an die Canpan-Root-Textvariablen binden */
+.canpan-product-theme-scope .canpan-tax-shipping-notice {
+  color: inherit;
+  opacity: 0.75;
+  margin-top: -20px;
+  font-size: 14px;
+}
+
+.canpan-product-theme-scope .product-info .canpan-tax-shipping-notice {
+  margin-top: -21px;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Social-Proof-Visuals mit der gemeinsamen Canpan-Palette und transparenten Farbmischungen abstimmen */
+.canpan-product-theme-scope .canpan-highlight {
+  color: var(--canpan-cta-button-text-color);
+  font-weight: bold;
+}
+
+.canpan-product-theme-scope .canpan-socialproof {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 30px;
+  padding: 8px 0;
+  width: fit-content;
+  box-sizing: border-box;
+  margin: -15px auto 15px;
+  background-color: var(--canpan-footer-background-soft-color);
+  color: var(--canpan-cta-button-text-color);
+}
+
+.canpan-product-theme-scope .canpan-socialproof-images {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  position: relative;
+}
+
+.canpan-product-theme-scope .canpan-socialproof-img-wrap {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  overflow: hidden;
+  display: inline-block;
+  margin-left: -6px;
+  box-shadow: 0 0 4px var(--canpan-buy-button-shadow-soft-color);
+  background-color: var(--canpan-footer-background-softer-color);
+}
+
+.canpan-product-theme-scope .canpan-socialproof-img {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.canpan-product-theme-scope .canpan-verified-icon {
+  position: absolute;
+  top: -8px;
+  left: 85%;
+  width: 12px;
+  height: 12px;
+  z-index: 2;
+}
+
+.canpan-product-theme-scope .canpan-verified-icon .canpan-svg-icon-bg {
+  fill: var(--canpan-cta-button-background-color);
+}
+
+.canpan-product-theme-scope .canpan-verified-icon .canpan-svg-icon-check {
+  fill: var(--canpan-cta-button-text-color);
+}
+
+.canpan-product-theme-scope .canpan-socialproof-text {
+  font-size: 14px;
+  color: var(--canpan-buy-button-text-muted-color);
+  flex: 1;
+  line-height: 16px;
+  min-width: 0;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Akzentfarben des Add-to-Cart-Drawers auf Produktseiten mit Root-gesteuerten Canpan-Farben überschreiben */
+.quick-buy-drawer__info.canpan-variant-added-wrapper .canpan-success-box {
+  background-color: var(--canpan-cta-button-background-soft-color);
+  color: var(--canpan-cta-button-background-color);
+}
+
+.quick-buy-drawer__info.canpan-variant-added-wrapper .canpan-success-box svg {
+  color: var(--canpan-cta-button-background-color);
+}
+
+.quick-buy-drawer__info.canpan-variant-added-wrapper .canpan-checkout-form button[name="checkout"] {
+  background-color: var(--canpan-cta-button-background-color);
+  color: var(--canpan-cta-button-text-color);
+  border-color: var(--canpan-cta-button-background-color);
+}
+
+/* CANPAN QoL PRE-LAUNCH – Die gescopten Utility-Anpassungen der Produktseite innerhalb des Canpan-Produkt-Scopes beibehalten */
+.canpan-product-theme-scope .product-info__text {
+  color: inherit;
+  opacity: 0.7;
+  margin-top: -20px;
+  font-size: 15px;
+}
+
+.canpan-product-theme-scope .jdgm-widget {
+  margin-top: -18px;
+  font-size: 15px;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Haupt-Kaufbuttons auf der Produktseite aus Canpan-Root-Farben ableiten und dabei Impact-Button-Fallbacks beibehalten */
+.shopify-section--main-product .canpan-product-theme-scope .product-info__buy-buttons :is(.button, .shopify-payment-button__button:not(.shopify-payment-button__button--branded)):not([disabled]) {
+  --canpan-buy-button-background: var(--canpan-cta-button-background-color, rgb(var(--button-background, var(--button-background-primary))));
+  --canpan-buy-button-label-color: var(--canpan-cta-button-text-color, rgb(var(--button-text-color, var(--button-text-primary))));
+  --canpan-buy-button-hover-background: color-mix(in srgb, var(--canpan-buy-button-background), white 12%);
+  background-color: var(--canpan-buy-button-background) !important;
+  color: var(--canpan-buy-button-label-color) !important;
+  border-color: var(--canpan-buy-button-background) !important;
+  box-shadow: inset 0 0 0 2px var(--canpan-buy-button-background) !important;
+}
+
+@media screen and (pointer: fine) {
+  /* CANPAN QoL PRE-LAUNCH – CTA-Hover-States auf der Produktseite variantenabhängig halten und denselben Fallback-Pfad wie im Basiszustand nutzen */
+  .shopify-section--main-product .canpan-product-theme-scope .product-info__buy-buttons :is(.button, .shopify-payment-button__button:not(.shopify-payment-button__button--branded)):not([disabled]):hover {
+    background-color: var(--canpan-buy-button-hover-background) !important;
+    color: var(--canpan-buy-button-label-color) !important;
+    border-color: var(--canpan-buy-button-hover-background) !important;
+    box-shadow: inset 0 0 0 2px var(--canpan-buy-button-hover-background) !important;
+  }
+}
+
+/* CANPAN QoL PRE-LAUNCH – Dieselbe Canpan-Button-Fallback-Kette auf die Sticky-Add-to-Cart-Leiste auf Produktseiten erweitern */
+.shopify-section--main-product .product-quick-add buy-buttons .button:not([disabled]) {
+  --canpan-buy-button-background: var(--canpan-cta-button-background-color, rgb(var(--button-background, var(--button-background-primary))));
+  --canpan-buy-button-label-color: var(--canpan-cta-button-text-color, rgb(var(--button-text-color, var(--button-text-primary))));
+  --canpan-buy-button-hover-background: color-mix(in srgb, var(--canpan-buy-button-background), white 12%);
+  background-color: var(--canpan-buy-button-background) !important;
+  color: var(--canpan-buy-button-label-color) !important;
+  border-color: var(--canpan-buy-button-background) !important;
+  box-shadow: inset 0 0 0 2px var(--canpan-buy-button-background) !important;
+}
+
+@media screen and (pointer: fine) {
+  /* CANPAN QoL PRE-LAUNCH – Hover-State der Sticky-Add-to-Cart-Leiste mit dem Haupt-Canpan-CTA-Styling abstimmen */
+  .shopify-section--main-product .product-quick-add buy-buttons .button:not([disabled]):hover {
+    background-color: var(--canpan-buy-button-hover-background) !important;
+    color: var(--canpan-buy-button-label-color) !important;
+    border-color: var(--canpan-buy-button-hover-background) !important;
+    box-shadow: inset 0 0 0 2px var(--canpan-buy-button-hover-background) !important;
+  }
+}
+
+/* CANPAN QoL PRE-LAUNCH – Layout-Update: Karten vertikal flacher gestaltet für einen badgeartigen Look */
+.shopify-section--main-product .product-info__block-item[data-block-type="canpan-feature-cards"] {
+  --product-info-block-spacing: var(--spacing-4);
+}
+
+/* CANPAN QoL PRE-LAUNCH – Mobile Kartenbreite so abstimmen, dass der Ruhe-Zustand den Gutter behält, Swipe-Zustände aber weiterhin die volle Breite nutzen */
+.shopify-section--main-product .canpan-feature-cards {
+  --canpan_gap: var(--spacing-2);
+  --canpan_feature_cards_mobile_width: calc((100% + var(--grid-gutter) - (2 * var(--canpan_gap))) / 2.25);
+  --canpan_feature_cards_radius: var(--rounded-sm, 8px);
+  --canpan_feature_cards_icon_size: 24px;
+  --canpan_feature_cards_card_padding: .65rem;
+  margin: 0 calc(var(--grid-gutter) * -1);
+}
+
+/* CANPAN QoL PRE-LAUNCH – Breakout-Wrapper über die volle Breite laufen lassen, während der Scroll-Track selbst die mobilen Randabstände steuert */
+.shopify-section--main-product .canpan-feature-cards__layout {
+  width: 100%;
+  max-width: 100%;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Layout-Update: Karten vertikal flacher gestaltet für einen badgeartigen Look */
+.shopify-section--main-product .canpan-feature-cards__scroller {
+  display: block;
+  width: 100%;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Mobile Randabstände in den scrollbaren Track verschieben, damit der Swipe-Zustand beide Bildschirmränder erreichen kann */
+.shopify-section--main-product .canpan-feature-cards__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--canpan_feature_cards_mobile_width);
+  gap: var(--canpan_gap);
+  align-items: stretch;
+  padding-inline: var(--grid-gutter);
+  scroll-padding-inline: var(--grid-gutter);
+}
+
+/* CANPAN QoL PRE-LAUNCH – Layout-Update: Karten vertikal flacher gestaltet für einen badgeartigen Look */
+.shopify-section--main-product .canpan-feature-cards__item {
+  min-width: 0;
+  padding-block-start: calc(var(--canpan-feature-card-icon-space, 0px) / 2);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Benefit-Karten kompakt halten und gleichzeitig Variant-Metaobject-Farben den Vordergrundinhalt steuern lassen */
+.shopify-section--main-product .canpan-feature-cards__card {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 3 / 1;
+  min-height: 48px;
+  max-height: 72px;
+  border-radius: var(--canpan_feature_cards_radius);
+  background: rgb(var(--text-color) / .06);
+  color: var(--canpan-feature-card-foreground, rgb(var(--text-color)));
+}
+
+/* CANPAN QoL PRE-LAUNCH – Medienebene auf den Badge-Radius clippen, während das feste 24px-SVG-Icon aus der Karte herausragen darf */
+.shopify-section--main-product .canpan-feature-cards :is(.canpan-feature-cards__media, .canpan-feature-cards__placeholder, .canpan-feature-cards__placeholder svg) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Layout-Update: Karten vertikal flacher gestaltet für einen badgeartigen Look */
+.shopify-section--main-product .canpan-feature-cards__media {
+  object-fit: cover;
+  opacity: var(--canpan-feature-card-media-opacity, 1);
+}
+
+/* CANPAN QoL PRE-LAUNCH – Layout-Update: Karten vertikal flacher gestaltet für einen badgeartigen Look */
+.shopify-section--main-product .canpan-feature-cards__placeholder {
+  display: block;
+  background: linear-gradient(135deg, rgb(var(--text-color) / .08), rgb(var(--text-color) / .18));
+}
+
+/* CANPAN QoL PRE-LAUNCH – Layout-Update: Karten vertikal flacher gestaltet für einen badgeartigen Look */
+.shopify-section--main-product .canpan-feature-cards__placeholder svg {
+  color: rgb(var(--text-color) / .22);
+}
+
+/* CANPAN QoL PRE-LAUNCH – Hochgeladenes SVG-Icon so positionieren, dass es zur Hälfte außerhalb und zur Hälfte innerhalb der oberen Kante jedes Badges sitzt */
+.shopify-section--main-product .canpan-feature-cards__icon {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: var(--canpan_feature_cards_card_padding);
+  width: var(--canpan_feature_cards_icon_size);
+  height: var(--canpan_feature_cards_icon_size);
+  transform: translateY(-50%);
+  line-height: 0;
+  background-color: var(--canpan-feature-card-foreground, rgb(var(--text-color)));
+  -webkit-mask-image: var(--canpan-feature-card-icon-url);
+  mask-image: var(--canpan-feature-card-icon-url);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Text näher an die Kartenkante ziehen und dabei vertikal zentriert halten */
+.shopify-section--main-product .canpan-feature-cards__body {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 var(--canpan_feature_cards_card_padding);
+  text-align: left;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Text linksbündig am Inhaltsbereich der Karte ausrichten statt am alten iconbasierten Einzug */
+.shopify-section--main-product .canpan-feature-cards__text {
+  max-width: 100%;
+  width: 100%;
+  font-size: .68rem;
+  font-weight: 600;
+  line-height: 1.15;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Verschachtelte Rich-Text-Abstände zurücksetzen, damit die Metaobject-Ausgabe in jeder Benefit-Karte kompakt bleibt */
+.shopify-section--main-product .canpan-feature-cards__text :is(.metafield-rich_text_field, .metafield-rich_text_field > *, p) {
+  margin: 0;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Den gerenderten Rich-Text-Wrapper selbst begrenzen, damit Metaobject-Text innerhalb der kompakten Badge-Höhe bleibt */
+.shopify-section--main-product .canpan-feature-cards__text .metafield-rich_text_field {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Layout-Update: Karten vertikal flacher gestaltet für einen badgeartigen Look */
+.shopify-section--main-product .canpan-feature-cards__text a {
+  color: inherit;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Editor-Hinweis visuell konsistent halten, wenn noch keine Varianten-Benefits verbunden sind */
+.shopify-section--main-product .canpan-feature-cards__empty {
+  margin: 0;
+  color: rgb(var(--text-color) / .65);
+}
+
+@media screen and (min-width: 700px) {
+  /* CANPAN QoL PRE-LAUNCH – Nur das Karten-Padding responsiv halten, jetzt da die Icon-Größe auf 24px fixiert ist */
+  .shopify-section--main-product .canpan-feature-cards {
+    --canpan_feature_cards_card_padding: .8rem;
+  }
+
+  /* CANPAN QoL PRE-LAUNCH – Badge-Textgröße leicht erhöhen, jetzt da die Karten höher sind */
+  .shopify-section--main-product .canpan-feature-cards__text {
+    font-size: 0.80rem;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  /* CANPAN QoL PRE-LAUNCH – Layout-Update: Karten vertikal flacher gestaltet für einen badgeartigen Look */
+  .shopify-section--main-product .canpan-feature-cards {
+    margin: 0;
+  }
+
+  /* CANPAN QoL PRE-LAUNCH – Layout-Update: Feature-Karten nutzen jetzt die volle verfügbare Breite auf Desktop und Mobile */
+  .shopify-section--main-product .canpan-feature-cards__layout {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+
+  /* CANPAN QoL PRE-LAUNCH – Mobile Scroll-Insets auf Desktop entfernen, damit das Drei-Karten-Grid perfekt bündig bleibt */
+  .shopify-section--main-product .canpan-feature-cards__track {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    padding-inline: 0;
+    overflow: visible;
+    scroll-padding-inline: 0;
+    scroll-snap-type: none;
+  }
+}
+
+/* CANPAN QoL PRE_LAUNCH - Mobile/Desktop Bild-Trennung */
+@media screen and (min-width: 741px) {
+  .canpan-hide-desktop {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .canpan-hide-mobile {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – FREE SHIPPING BAR: GRÜN-FÄRBUNG & ICON BEI ERREICHTEM SCHWELLENWERT
+   ========================================================================== */
+
+/* CANPAN QoL PRE-LAUNCH – Textfarbe der Free-Shipping-Bar auf Grün setzen, sobald SVG-Icon vorhanden (= Schwellenwert erreicht) */
+free-shipping-bar:has(.canpan-shipping-reached-icon) {
+  color: #078A00;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Progressbar-Hintergrund auf helles Grün setzen (Reached State) */
+free-shipping-bar:has(.canpan-shipping-reached-icon) .progress-bar {
+  background: color-mix(in srgb, #078A00 18%, transparent);
+}
+
+/* CANPAN QoL PRE-LAUNCH – Progressbar-Füllfarbe auf Grün setzen (Reached State) */
+free-shipping-bar:has(.canpan-shipping-reached-icon) .progress-bar::before {
+  background: #078A00;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Nachrichten-Span als Flex-Container, sobald SVG-Icon vorhanden */
+free-shipping-bar > span:has(.canpan-shipping-reached-icon) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Inline-SVG-Checkmark-Icon: Dimensionen (SVG wird via Liquid als reached-message vorangestellt) */
+.canpan-shipping-reached-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – MOBILE QUICK-BUY-BUTTON: PILL-SHAPE SHOPWEIT
+   ========================================================================== */
+
+/* CANPAN QoL PRE-LAUNCH – Mobile Quick-Buy-Button shopweit auf Pill-Shape (border-radius: 50px) setzen, unabhängig von var(--rounded-button) */
+.product-card__mobile-quick-buy-button {
+  border-radius: 50px;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – CART DRAWER: GESAMTPREIS IM CHECKOUT-BUTTON INTEGRIERT
+   ========================================================================== */
+
+/* CANPAN QoL PRE-LAUNCH – Checkout-Button: Block-Level für volle Breite im Grid-Container */
+.canpan-checkout-btn {
+  display: block;
+  width: 100%;
+}
+
+/* CANPAN QoL PRE-LAUNCH – ContentElement-Wrapper (von CustomButton JS in <div> gewrappt):
+   Flex-Layout zentriert Icon+Text; position:relative als Anker für den absolut positionierten Preis */
+.canpan-checkout-btn > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Linke Seite des Checkout-Buttons: Icon + Label zentriert im Button */
+.canpan-checkout-btn-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Gesamtpreis: absolut rechts positioniert, damit Text wirklich mittig bleibt */
+.canpan-checkout-btn-price {
+  position: absolute;
+  right: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – DRAWER & MODAL: CUSTOM ECKENRADIUS AUS THEME-EINSTELLUNG
+   ========================================================================== */
+
+/* CANPAN QoL PRE-LAUNCH – Eckenradius für Drawer und Quick-Buy-Drawer über --canpan-drawer-modal-border-radius steuern */
+.drawer::part(content),
+.quick-buy-drawer::part(content) {
+  border-radius: var(--canpan-drawer-modal-border-radius, var(--rounded-sm));
+}
+
+/* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – CART DRAWER: NATIVE SPINNER-BUTTONS DER MENGENEINGABE AUSBLENDEN
+   ========================================================================== */
+
+/* CANPAN QoL PRE-LAUNCH – WebKit/Blink: Spinner-Pfeile des number-Inputs im Cart Drawer entfernen */
+#cart-drawer .quantity-input::-webkit-inner-spin-button,
+#cart-drawer .quantity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+  margin: 0;
+}
+
+/* CANPAN QoL PRE-LAUNCH – Firefox: number-Input als textfield rendern (entfernt Spinner) */
+#cart-drawer .quantity-input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

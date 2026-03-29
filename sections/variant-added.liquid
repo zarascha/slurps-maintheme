@@ -1,53 +1,116 @@
 {%- comment -%}
-----------------------------------------------------------------------------------------------------------------------
-VARIANT ADDED
-----------------------------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------------------------
+  CANPAN QoL PRE-LAUNCH – VARIANT ADDED
+  ----------------------------------------------------------------------------------------------------------------------
 
-This section is used when a product is added to the cart, to show a notification. It is therefore only used internally
-by the theme and is not meant to be included directly into a page.
+  This section is used when a product is added to the cart, to show a notification. It is therefore only used internally
+  by the theme and is not meant to be included directly into a page.
 {%- endcomment -%}
 
-<div class="quick-buy-drawer__info">
-  {%- assign added_to_cart = 'product.general.added_to_cart' | t -%}
-  {%- render 'banner', status: 'success', content: added_to_cart -%}
+{% liquid
+  assign canpan_has_variant = false
+  assign canpan_variant_added_title = product_variant.product.title
+  unless product_variant.product.has_only_default_variant
+    assign canpan_has_variant = true
+  endunless
 
-  <div class="quick-buy-drawer__variant text-start h-stack gap-6">
+  if product_variant.metafields.custom_variant.title.value != blank
+    assign canpan_variant_added_title = product_variant.metafields.custom_variant.title.value
+  endif
+
+  assign canpan_matched_line_item = cart.items | where: 'variant_id', product_variant.id | first
+  assign canpan_variant_added_cta_button_background_color = settings.primary_button_background | default: '#1A1A1A' | strip
+  assign canpan_variant_added_cta_button_text_color = settings.text_color | default: '#1A1A1A' | strip
+  assign canpan_variant_added_wrapper_id = 'canpan-variant-added-' | append: product_variant.id
+
+  if product_variant.metafields.custom_variant.page_appearance != blank
+    assign canpan_variant_added_page_appearance = product_variant.metafields.custom_variant.page_appearance.value
+    assign canpan_variant_added_cta_button_background_color = canpan_variant_added_page_appearance.cta_button_background_color.value | default: canpan_variant_added_cta_button_background_color | strip
+    assign canpan_variant_added_cta_button_text_color = canpan_variant_added_page_appearance.cta_button_text_color.value | default: canpan_variant_added_cta_button_text_color | strip
+  endif
+%}
+<style>
+  /* CANPAN QoL PRE-LAUNCH – Soft-Color direkt im Scope berechnen, da --canpan-cta-button-background-color auf :root außerhalb von Produktseiten nicht gesetzt ist */
+  #{{ canpan_variant_added_wrapper_id }} {
+    --canpan-cta-button-background-color: {{ canpan_variant_added_cta_button_background_color }};
+    --canpan-cta-button-text-color: {{ canpan_variant_added_cta_button_text_color }};
+    --canpan-cta-button-background-soft-color: color-mix(in srgb, var(--canpan-cta-button-background-color), transparent 75%);
+  }
+</style>
+
+<div id="{{ canpan_variant_added_wrapper_id }}" class="quick-buy-drawer__info canpan-variant-added-wrapper">
+  {%- assign added_to_cart = 'product.general.added_to_cart' | t -%}
+
+  <div class="canpan-success-box">
+    {%- render 'icon' with 'cart' -%}
+    <span>{{ added_to_cart }}</span>
+  </div>
+
+  <div class="canpan-shipping-bar-wrapper">
+    {%- render 'free-shipping-bar' -%}
+  </div>
+
+  <div class="quick-buy-drawer__variant text-start h-stack gap-6 canpan-quick-buy-drawer-variant">
     {%- assign image = product_variant.featured_media | default: product_variant.product.featured_media -%}
 
     {%- if image != blank -%}
-      {{- image | image_url: width: image.width | image_tag: loading: 'lazy', sizes: '80px', widths: '80,160', class: 'quick-buy-drawer__media rounded-xs' -}}
+      {{-
+        image
+        | image_url: width: image.width
+        | image_tag: loading: 'lazy', sizes: '80px', widths: '80,160', class: 'quick-buy-drawer__media rounded-xs'
+      -}}
     {%- endif -%}
 
-    <div class="v-stack gap-1">
-      <div class="v-stack gap-0.5">
-        <a href="{{ product_variant.url }}" class="bold justify-self-start">{{ product_variant.product.title }}</a>
-        {%- assign matched_line_item = cart.items | where: 'product_id', product_variant.product.id | first -%}
-        {%- render 'price-list', product: product_variant.product, line_item: matched_line_item -%}
+    <div class="canpan-quick-buy-info-stack" data-variant-price="{{ product_variant.price }}">
+      <a href="{{ product_variant.url }}" class="bold {% if canpan_has_variant %}canpan-title-truncate{% endif %}">
+        {{ canpan_variant_added_title }}
+      </a>
+
+      {%- if canpan_has_variant -%}
+        <p class="text-sm text-subdued">{{ product_variant.title }}</p>
+      {%- endif -%}
+
+      <div class="canpan-price-and-quantity">
+        <div class="canpan-price-wrapper">
+          {%- render 'price-list', product: product_variant.product, line_item: canpan_matched_line_item -%}
+        </div>
+
+        <span class="canpan-mobile-separator">/</span>
+
+        <p class="text-sm text-subdued canpan-quantity-text">
+          Anzahl: <span data-added-quantity>{{ canpan_matched_line_item.quantity }}</span>
+        </p>
       </div>
 
-      {%- if matched_line_item.line_level_discount_allocations != blank -%}
+      {%- if canpan_matched_line_item.line_level_discount_allocations != blank -%}
         <ul class="contents" role="list">
-          {%- for discount_allocation in matched_line_item.line_level_discount_allocations -%}
+          {%- for discount_allocation in canpan_matched_line_item.line_level_discount_allocations -%}
             <li class="badge">
-              {%- render 'icon' with 'discount' -%} {{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})
+              {%- render 'icon' with 'discount' -%}
+              {{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})
             </li>
           {%- endfor -%}
         </ul>
       {%- endif -%}
-
-      {%- unless product_variant.product.has_only_default_variant -%}
-        <p class="text-sm text-subdued">{{ product_variant.title }}</p>
-      {%- endunless -%}
     </div>
   </div>
 
-  <form action="{{ routes.cart_url }}" method="post" class="buy-buttons buy-buttons--compact">
+  <form action="{{ routes.cart_url }}" method="post" class="buy-buttons buy-buttons--compact canpan-checkout-form">
     {%- assign view_cart_label = 'cart.general.view_cart' | t -%}
     {%- assign checkout_label = 'cart.general.checkout' | t -%}
 
+    {%- comment -%}CANPAN QoL PRE-LAUNCH – picto-bag-Icon aus dem Checkout-Button entfernt.{%- endcomment -%}
     {%- render 'button', href: routes.cart_url, secondary: true, content: view_cart_label -%}
     {%- render 'button', type: 'submit', name: 'checkout', content: checkout_label -%}
   </form>
+
+  <ul class="checkout__payment-icons canpan-payment-icons h-stack wrap gap-2 justify-center">
+    {%- for type in shop.enabled_payment_types -%}
+      <li class="contents">
+        {{ type | payment_type_svg_tag }}
+      </li>
+    {%- endfor -%}
+  </ul>
 </div>
 
 {% schema %}
