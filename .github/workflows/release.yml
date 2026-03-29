@@ -1,0 +1,66 @@
+name: Release & Tagging
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Tag und Release erstellen
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Version und Release-Body aus VERSION.md auslesen
+        id: version
+        run: |
+          # Erste Zeile = Versionsnummer
+          VERSION=$(head -n 1 VERSION.md | tr -d '[:space:]')
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Fehler: Erste Zeile von VERSION.md enthält kein gültiges Semantic-Versioning-Format (X.X.X): '$VERSION'"
+            exit 1
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=qol-v$VERSION" >> $GITHUB_OUTPUT
+
+          # Alles ab Zeile 2 = Release-Body
+          tail -n +2 VERSION.md > /tmp/release-body.md
+
+          # Major/Minor oder Patch ermitteln
+          PATCH=$(echo "$VERSION" | cut -d. -f3)
+          if [[ "$PATCH" == "0" ]]; then
+            echo "release=true" >> $GITHUB_OUTPUT
+          else
+            echo "release=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Prüfen ob Tag bereits existiert
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+          if git ls-remote --tags origin "$TAG" | grep -q "$TAG"; then
+            echo "Fehler: Tag '$TAG' existiert bereits. Bitte VERSION.md aktualisieren."
+            exit 1
+          fi
+
+      - name: Tag setzen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "${{ steps.version.outputs.tag }}"
+          git push origin "${{ steps.version.outputs.tag }}"
+
+      - name: GitHub Release erstellen (nur bei Major/Minor)
+        if: steps.version.outputs.release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          body_path: /tmp/release-body.md

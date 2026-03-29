@@ -1,0 +1,71 @@
+name: Verbesserung vorschlagen
+description: Ein neues Feature, eine Optimierung, Wartung, Refactoring oder Dokumentation vorschlagen
+title: "<type>(<scope>): <beschreibung>"
+type: Task
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bitte fülle das Formular so vollständig wie möglich aus.
+
+  - type: dropdown
+    id: typ
+    attributes:
+      label: Art der Aufgabe (type)
+      options:
+        - "feat – Neues Feature"
+        - "chore – Wartung / Konfiguration"
+        - "perf – Performance-Optimierung"
+        - "refactor – Code-Umstrukturierung"
+        - "docs – Dokumentation"
+    validations:
+      required: true
+
+  - type: textarea
+    id: beschreibung
+    attributes:
+      label: Beschreibung
+      description: Was soll gemacht werden, und warum?
+      placeholder: "Die Komponente X sollte Y tun, weil..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: ist-zustand
+    attributes:
+      label: Aktueller Zustand
+      description: Wie verhält sich das System aktuell?
+      placeholder: "Aktuell wird X so gehandhabt..."
+
+  - type: textarea
+    id: soll-zustand
+    attributes:
+      label: Gewünschter Zustand
+      description: Wie soll es nach der Änderung aussehen oder funktionieren?
+      placeholder: "Nach der Änderung soll X so funktionieren..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: bereich
+    attributes:
+      label: Betroffener Bereich
+      description: Seitenname, direkter Link oder Komponentenname
+      placeholder: "z. B. Cart-Drawer – .canpan-line-item"
+
+  - type: dropdown
+    id: prioritaet
+    attributes:
+      label: Priorität
+      options:
+        - Hoch – Wichtig für UX oder Kernfunktion
+        - Mittel – Spürbare Verbesserung
+        - Niedrig – Nice-to-have
+    validations:
+      required: true
+
+  - type: textarea
+    id: notizen
+    attributes:
+      label: Zusätzliche Notizen
+      description: Screenshots, Referenzen, Designvorschläge etc.

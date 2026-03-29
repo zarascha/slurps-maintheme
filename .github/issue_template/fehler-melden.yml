@@ -1,0 +1,59 @@
+name: Fehler melden
+description: Einen Fehler im CANPAN™ Maintheme melden
+title: "bug: <Überbegriff> – "
+labels: ["bug"]
+type: Bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bitte fülle das Formular so vollständig wie möglich aus.
+ 
+  - type: textarea
+    id: beschreibung
+    attributes:
+      label: Beschreibung
+      description: Was ist der Fehler? Was wird erwartet, was passiert stattdessen?
+      placeholder: "Das UI-Element wird nicht korrekt dargestellt..."
+    validations:
+      required: true
+ 
+  - type: textarea
+    id: reproduktion
+    attributes:
+      label: Schritte zur Reproduktion
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+ 
+  - type: textarea
+    id: seiten
+    attributes:
+      label: Betroffene Seite(n)
+      description: Seitenname oder direkter Link zur betroffenen Seite
+      placeholder: "z. B. Kollektionsseite – https://canpan.de/collections/..."
+    validations:
+      required: true
+ 
+ 
+  - type: dropdown
+    id: schweregrad
+    attributes:
+      label: Schweregrad
+      options:
+        - Kritisch – Shop nicht nutzbar
+        - Hoch – Kernfunktion beeinträchtigt
+        - Mittel – Nebenfunktion beeinträchtigt
+        - Niedrig – Kleinigkeit
+    validations:
+      required: true
+ 
+ 
+  - type: textarea
+    id: notizen
+    attributes:
+      label: Zusätzliche Notizen
+      description: Screenshots, Kontext, mögliche Ursachen etc.
