@@ -5,6 +5,30 @@
 
 ---
 
+## [PRE-LAUNCH] – 30-03-2026
+
+**Basis**: QoL PRE-LAUNCH (29.03.2026)
+
+### Added
+- Keine
+
+
+### Changed
+- `assets/canpan-theme.css`: Radius-Override für Drawer und Modals auf die CANPAN Theme-Einstellung vereinheitlicht
+- `assets/theme.js`: Drawer- und Mobile-Modal-Animationen auf `--canpan-drawer-modal-border-radius` umgestellt und fehlerhafte `clip-path`-Strings bereinigt
+- `layout/theme.liquid`: CANPAN QoL-Versionskommentar auf gültige HTML-Kommentar-Syntax korrigiert
+
+
+### Fixed
+- Navigation-Drawer und variant-added verwenden nicht mehr parallel alte Radius-Pfade und den CANPAN Drawer-/Modal-Radius
+- Ungültiges Kommentarende im Versionshinweis von `layout/theme.liquid` bereinigt
+
+
+### Dependencies
+- Keine
+
+---
+
 ## [PRE-LAUNCH] – 29-03-2026
 
 **Basis**: Impact Theme v7.0.1 (unverändert)
@@ -16,8 +40,6 @@
 - `canpan-theme.css` als dediziertes Override-Layer über `theme.css` mit klarer Kaskadenstrategie.
 - Umfangreiche Custom-Templates für Blog, Artikel und Shop-Seiten.
 - Mehrere Lighthouse-, Accessibility- und Rendering-Fixes.
-
----
 
 ### Added
 
@@ -34,8 +56,6 @@
 - `snippets/canpan-price-bubble.liquid`
 - `snippets/canpan-feature-cards.liquid`
 - `snippets/canpan-logo-inline.liquid`
-
----
 
 ### Changed
 
@@ -90,8 +110,6 @@
 - `templates/index.json`: Startseite auf CANPAN-Sections und -Konfiguration umgestellt; Metafeld-Referenz auf Dot-Notation.
 - `templates/cart.json`, `templates/collection.json`, `templates/list-collections.json`, `templates/search.json`, `templates/password.json`: Auf CANPAN-Konfiguration und -Sektionen angepasst.
 
----
-
 ### Fixed
 
 - `sections/slideshow.liquid`: LCP/Preload-Optimierungen.
@@ -101,8 +119,6 @@
 - `assets/canpan-theme.css`: Rechter Scrollbar-Button der `.canpan-featured-slider`-Komponente auf Desktop korrekt positioniert (war am Drawer-Rand abgeschnitten).
 - `assets/canpan-theme.css`: Asymmetrischen vertikalen Abstand der Variantenoption im Cart-Drawer auf Desktop behoben (`line-height: 1` und `margin-bottom: 0` nur noch im Mobile-Breakpoint gesetzt).
 - Theme-Check/Accessibility-Fixes in Story-Komponente (Placeholder, `width`/`height`, Alt-Handling).
-
----
 
 ### Dependencies
 

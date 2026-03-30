@@ -1573,15 +1573,17 @@ var Drawer = class extends DialogElement {
     return window.matchMedia(`${window.themeVariables.breakpoints["sm-max"]}`).matches ? "bottom" : this.getAttribute("open-from") || "right";
   }
   _getClipPathProperties() {
+    /* CANPAN QoL PRE-LAUNCH – Drawer-Animation verwendet denselben Eckenradius wie die CANPAN Theme-Einstellung */
+    const canpanDrawerModalRadius = "var(--canpan-drawer-modal-border-radius)";
     switch (this.openFrom) {
       case "left":
-        return document.dir === "ltr" ? ["inset(0 100% 0 0 round var(--rounded-sm))", "inset(0 0 0 0 round var(--rounded-sm))"] : ["inset(0 0 0 100% round var(--rounded-sm))", "inset(0 0 0 0 round var(--rounded-sm))"];
+        return document.dir === "ltr" ? [`inset(0 100% 0 0 round ${canpanDrawerModalRadius})`, `inset(0 0 0 0 round ${canpanDrawerModalRadius})`] : [`inset(0 0 0 100% round ${canpanDrawerModalRadius})`, `inset(0 0 0 0 round ${canpanDrawerModalRadius})`];
       case "right":
-        return document.dir === "ltr" ? ["inset(0 0 0 100% round var(--rounded-sm))", "inset(0 0 0 0 round var(--rounded-sm)"] : ["inset(0 100% 0 0 round var(--rounded-sm))", "inset(0 0 0 0 round var(--rounded-sm))"];
+        return document.dir === "ltr" ? [`inset(0 0 0 100% round ${canpanDrawerModalRadius})`, `inset(0 0 0 0 round ${canpanDrawerModalRadius})`] : [`inset(0 100% 0 0 round ${canpanDrawerModalRadius})`, `inset(0 0 0 0 round ${canpanDrawerModalRadius})`];
       case "bottom":
-        return ["inset(100% 0 0 0 round var(--rounded-sm))", "inset(0 0 0 0 round var(--rounded-sm))"];
+        return [`inset(100% 0 0 0 round ${canpanDrawerModalRadius})`, `inset(0 0 0 0 round ${canpanDrawerModalRadius})`];
       case "top":
-        return ["inset(0 0 100% 0 round var(--rounded-sm))", "inset(0 0 0 0 round var(--rounded-sm))"];
+        return [`inset(0 0 100% 0 round ${canpanDrawerModalRadius})`, `inset(0 0 0 0 round ${canpanDrawerModalRadius})`];
     }
   }
   _setInitialPosition() {
@@ -1669,6 +1671,8 @@ var Popover = class extends DialogElement {
   }
   _showTransition(animate19 = true) {
     let animationControls, content = this.shadowRoot.querySelector('[part="content"]'), closeButton = this.shadowRoot.querySelector('[part="outside-close-button"]');
+    /* CANPAN QoL PRE-LAUNCH – Mobile Modals verwenden in der Animation denselben Eckenradius wie die CANPAN Theme-Einstellung */
+    const canpanDrawerModalRadius = "var(--canpan-drawer-modal-border-radius)";
     this.style.display = "block";
     if (window.matchMedia("screen and (max-width: 999px)").matches) {
       this.style.insetInlineStart = "0px";
@@ -1677,7 +1681,7 @@ var Popover = class extends DialogElement {
       this.style.insetBlockStart = null;
       animationControls = motionTimeline2([
         [this, { opacity: [0, 1], visibility: ["hidden", "visible"] }, { duration: 0.15 }],
-        [content, { clipPath: ["inset(100% 0 0 0 round 8px)", "inset(0 0 0 0 round 8px"] }, { duration: 0.4, easing: [0.86, 0, 0.07, 1] }],
+        [content, { clipPath: [`inset(100% 0 0 0 round ${canpanDrawerModalRadius})`, `inset(0 0 0 0 round ${canpanDrawerModalRadius})`] }, { duration: 0.4, easing: [0.86, 0, 0.07, 1] }],
         [content.children, { opacity: [0, 1] }, { duration: 0.15 }],
         [closeButton, { opacity: [0, 1] }, { at: "<", duration: 0.15 }]
       ]);
@@ -1703,12 +1707,14 @@ var Popover = class extends DialogElement {
   }
   _hideTransition() {
     let animationControls;
+    /* CANPAN QoL PRE-LAUNCH – Mobile Modals verwenden in der Ausblend-Animation denselben Eckenradius wie die CANPAN Theme-Einstellung */
+    const canpanDrawerModalRadius = "var(--canpan-drawer-modal-border-radius)";
     if (window.matchMedia("screen and (max-width: 999px)").matches) {
       let content = this.shadowRoot.querySelector('[part="content"]'), closeButton = this.shadowRoot.querySelector('[part="outside-close-button"]');
       animationControls = motionTimeline2([
         [closeButton, { opacity: [null, 0] }, { duration: 0.15 }],
         [content.children, { opacity: [null, 0] }, { at: "<", duration: 0.15 }],
-        [content, { clipPath: [null, "inset(100% 0 0 0 round 8px)"] }, { duration: 0.4, easing: [0.86, 0, 0.07, 1] }],
+        [content, { clipPath: [null, `inset(100% 0 0 0 round ${canpanDrawerModalRadius})`] }, { duration: 0.4, easing: [0.86, 0, 0.07, 1] }],
         [this, { opacity: [null, 0], visibility: ["visible", "hidden"] }, { duration: 0.15 }]
       ]);
     } else {

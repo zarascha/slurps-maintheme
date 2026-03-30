@@ -1659,10 +1659,10 @@ free-shipping-bar > span:has(.canpan-shipping-reached-icon) {
    CANPAN QoL PRE-LAUNCH – DRAWER & MODAL: CUSTOM ECKENRADIUS AUS THEME-EINSTELLUNG
    ========================================================================== */
 
-/* CANPAN QoL PRE-LAUNCH – Eckenradius für Drawer und Quick-Buy-Drawer über --canpan-drawer-modal-border-radius steuern */
+/* CANPAN QoL PRE-LAUNCH – Eckenradius für Drawer und Modals konsistent über die CANPAN Theme-Einstellung steuern */
 .drawer::part(content),
-.quick-buy-drawer::part(content) {
-  border-radius: var(--canpan-drawer-modal-border-radius, var(--rounded-sm));
+.popover::part(content) {
+  border-radius: var(--canpan-drawer-modal-border-radius);
 }
 
 /* ==========================================================================
