@@ -1,6 +1,6 @@
 name: Fehler melden
 description: Einen Fehler im CANPAN™ Maintheme melden
-title: "bug: <Überbegriff> – "
+title: "bug(<scope>): <beschreibung>"
 labels: ["bug"]
 type: Bug
 body:

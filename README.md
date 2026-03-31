@@ -14,14 +14,14 @@ ist sicherzustellen, dass kritische Metriken wie der LCP (Largest Contentful
 Paint) nicht beeinträchtigt werden.
 
 > Für das lokale Setup und die Einrichtung der Entwicklungsumgebung 
-> siehe [Getting Started im CANPAN Notion-Space](notion-link).
+> siehe [Dokumentation](https://www.notion.so/canpan/Erste-Schritte-Lokales-Setup-Entwicklungsumgebung-334bbe3c026f8030a399e68f21fdac44?pvs=26) in unserem Notion-Workspace.
 
 ## Branching-Strategie & Deployments
 
 Der Entwicklungsprozess folgt einem strikten Workflow. Direkte Commits 
 in den `main`-Branch sind untersagt.
 
-![CANPAN™ Maintheme – Deployment & Branching-Strategie](.github/29-03-2026_CANPAN_Maintheme_Deployment_und_Branching_Strategie.png)
+![CANPAN™ Maintheme – Branching-Strategie & Deployments](.github/31-03-2026_CANPAN_Maintheme_Branching_Strategie_und_Deployments.png)
 
 * **core**: **Absolutes Sperrgebiet.** Enthält das unveränderte 
   Original-Theme als Basis für manuelle Updates. Keine 
@@ -41,9 +41,10 @@ in den `main`-Branch sind untersagt.
   Auto-Commits.
 * **theme-live**: Der **Shopify-Branch für den Live-Store** – wird ab 
   Launch aktiv. Automatische Commits des Shopify Online-Editors landen 
-  hier. Hält `main` sauber und frei von unkontrollierten Auto-Commits.
+  hier. Hält `main` sauber und frei von unkontrollierten Auto-Commits. 
+  Shopify-Auto-Commits werden per Squash Merge in `main` übernommen.
 * **Feature-Branches**: Für jedes Feature ist ein eigener Branch nach 
-  dem Muster `feature/canpan-[name]` zu erstellen. Ein PR erfolgt 
+  dem Muster `feat/canpan-[name]` zu erstellen. Ein PR erfolgt 
   immer zuerst in den `pre-launch`-Branch (vor Launch) bzw. 
   `staging`-Branch (ab Launch).
 
@@ -56,7 +57,7 @@ in den `main`-Branch sind untersagt.
    Dateien sich zwischen dem alten und neuen Original unterscheiden
 5. Konflikte identifizieren – also Stellen, an denen `canpan-`-Anpassungen 
    mit den neuen Theme-Dateien kollidieren
-6. `update/impact-vX.X.X`-Branch aus `theme-live` erstellen und 
+6. `chore/impact-vX.X.X`-Branch aus `main` erstellen und 
    relevante Änderungen gezielt übernehmen
 7. Per PR in `staging` mergen
 
@@ -194,4 +195,4 @@ Der `.github/`-Ordner enthält neben GitHub-Konfigurationsdateien auch interne R
 
 | Datei | Beschreibung |
 |---|---|
-| `29-03-2026_CANPAN_Maintheme_Deployment_und_Branching_Strategie.png` | Visuelles Diagramm der Branching-Strategie und Deployment-Flows |
+| `31-03-2026_CANPAN_Maintheme_Branching_Strategie_und_Deployments.png` | Visuelles Diagramm der Branching-Strategie und Deployment-Flows |
