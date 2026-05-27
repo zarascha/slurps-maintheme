@@ -7,6 +7,11 @@
   pointer-events: none;
 }
 
+/* CANPAN QoL PRE-LAUNCH – Themeweite Bold Utility auf Semi-Bold-Stärke setzen */
+.bold {
+  font-weight: 600;
+}
+
 /* CANPAN QoL PRE-LAUNCH – Badge-Größe auf 11px fixiert (Desktop), unabhängig von --text-xs */
 @media screen and (min-width: 700px) {
   .badge:not(.badge--lg) {
@@ -200,9 +205,10 @@ shopify-account::part(signed-out-avatar) {
   padding-block: var(--spacing-2);
 }
 
+/* CANPAN QoL PRE-LAUNCH – Featured-Überschrift mit Semi-Bold statt Bold auszeichnen */
 .canpan-featured-heading {
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgb(var(--text-color) / 0.55);
@@ -798,9 +804,9 @@ html {
 }
 
 .newsletter-drawer .button.button--xl {
-  background: #72b5ff;
-  border-color: #72b5ff;
-  color: #0a2540;
+  background: #0174DF;
+  border-color: #0174DF;
+  color: #ffffff;
 }
 
 .newsletter-drawer .fieldset {

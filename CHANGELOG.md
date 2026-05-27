@@ -3,11 +3,31 @@
 > [!IMPORTANT]
 > Hinweis: Dieses CHANGELOG wird mithilfe von KI erstellt. Trotz sorgfältiger Prüfung können Fehler enthalten sein oder einzelne Änderungen fehlen.
 
+## [PRE-LAUNCH] – 27-05-2026
+
+### Added
+- `assets/canpan-theme.css`: Themeweite `.bold`-Utility mit `font-weight: 600` ergänzt
+
+### Changed
+- `assets/canpan-theme.css`: `.canpan-featured-heading` von `font-weight: 700` auf `600` reduziert und mit CANPAN-Kommentar dokumentiert
+- `assets/canpan-theme.css`: Newsletter-Drawer-Buttonfarben von `#72b5ff`/`#0a2540` auf `#0174DF`/`#ffffff` geändert
+- `assets/theme.css`: Button-`font-weight` von `bold` auf `600` geändert
+- `assets/theme.css`: Originale `.bold`-Definition auskommentiert und auf `canpan-theme.css` verwiesen
+- `layout/theme.liquid`: Console-Badge-Hintergrundfarbe von `#72b5ff` auf `#0174DF` geändert
+- `sections/canpan-collection-blocks.liquid`: `.canpan-card__title` von `font-weight: 700` auf `600` reduziert und mit CANPAN-Kommentar dokumentiert
+- `sections/header.liquid`: Inline-Logo-ID von `new_adjusted` auf `standard` umgestellt
+- `snippets/canpan-logo-inline.liquid`: Inline-SVG-Logo auf die `standard`-Variante mit größerem `viewBox` ersetzt
+- `snippets/product-card.liquid`: Datei-Ende mit Newline normalisiert; Produkttitel bleiben bei der themeweiten `bold`-Utility
+
+### Fixed
+- Keine
+
+### Dependencies
+- Keine
+
 ---
 
 ## [PRE-LAUNCH] – 30-03-2026
-
-**Basis**: QoL PRE-LAUNCH (29.03.2026)
 
 ### Added
 - Keine
