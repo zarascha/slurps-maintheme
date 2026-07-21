@@ -22,8 +22,8 @@
         "image_C89gbi": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/vvnn.jpg",
-            "mobile_image": "shopify://shop_images/about_us.jpg",
+            "image": "shopify://shop_images/about_us_banner.jpg",
+            "mobile_image": "shopify://shop_images/about_us_banner_mobile.jpg",
             "content_max_width": 780,
             "mobile_text_position": "place-self-center text-center",
             "desktop_text_position": "sm:place-self-center sm:text-center",
@@ -65,7 +65,7 @@
         "item_ea73fk": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/about_us.jpg",
+            "image": "shopify://shop_images/about_us_banner_mobile.jpg",
             "image_rotation_degrees": -2,
             "subheading": "",
             "title": "Wir sind CANPAN™",
@@ -77,7 +77,7 @@
         "item_p9tmX4": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/about_us.jpg",
+            "image": "shopify://shop_images/about_us_banner_mobile.jpg",
             "image_rotation_degrees": 1.5,
             "subheading": "",
             "title": "Unser Versprechen",
@@ -89,7 +89,7 @@
         "item_3pzX7E": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/about_us.jpg",
+            "image": "shopify://shop_images/about_us_banner_mobile.jpg",
             "image_rotation_degrees": 0,
             "subheading": "",
             "title": "Mission und Vision",
@@ -157,7 +157,7 @@
         "item_Uj3XEM": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/1.jpg",
+            "image": "shopify://shop_images/about_us_cart_1.jpg",
             "show_controls": false,
             "column_size": "2",
             "title": "",
@@ -171,7 +171,7 @@
         "item_CReFUE": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/2.jpg",
+            "image": "shopify://shop_images/about_us_cart_2.jpg",
             "show_controls": false,
             "column_size": "2",
             "title": "",
@@ -185,7 +185,7 @@
         "item_fTqXY4": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/3.jpg",
+            "image": "shopify://shop_images/about_us_cart_3.jpg",
             "show_controls": false,
             "column_size": "2",
             "title": "",
@@ -199,7 +199,7 @@
         "item_4bT4aa": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/4.jpg",
+            "image": "shopify://shop_images/about_us_cart_4.jpg",
             "show_controls": false,
             "column_size": "2",
             "title": "",
@@ -213,7 +213,7 @@
         "item_DCAieT": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/5.jpg",
+            "image": "shopify://shop_images/about_us_cart_5.jpg",
             "show_controls": false,
             "column_size": "2",
             "title": "",
@@ -227,7 +227,7 @@
         "item_M6WGmC": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/6.jpg",
+            "image": "shopify://shop_images/about_us_cart_6.jpg",
             "show_controls": false,
             "column_size": "2",
             "title": "",
