@@ -1,0 +1,70 @@
+{%- comment -%} CANPAN QoL PRE-LAUNCH – Neuer visueller Abschlussbereich unterhalb des Footers {%- endcomment -%}
+
+{%- assign canpan_bottom_text_image = section.settings.wordmark_image -%}
+{%- assign canpan_bottom_text_aspect_ratio = canpan_bottom_text_image.aspect_ratio | default: 4.7 -%}
+
+<style>
+  #shopify-section-{{ section.id }} .canpan-bottom-text {
+    {%- comment -%} CANPAN QoL PRE-LAUNCH – Nutzt dieselbe "-soft"-Hintergrundvariable wie der reguläre Footer, damit die Fläche farblich exakt zu den übrigen Footer-Elementen passt {%- endcomment -%}
+    background: var(--canpan-footer-background-color-soft, rgb(var(--footer-background)));
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .canpan-bottom-text__container {
+    box-sizing: border-box;
+    padding-block: 0;
+  }
+
+  #shopify-section-{{ section.id }} .canpan-bottom-text__wordmark {
+    width: 100%;
+    aspect-ratio: {{ canpan_bottom_text_aspect_ratio }};
+    {%- comment -%} CANPAN QoL PRE-LAUNCH – Grafik wird als Maske eingebunden, dadurch bleibt sie ueber die austauschbare Datei hinaus per Variant Theme Engine einfärbbar {%- endcomment -%}
+    background-color: var(--canpan-footer-text-color, rgb(var(--footer-text)));
+    -webkit-mask-image: var(--canpan-bottom-text-wordmark-url);
+    mask-image: var(--canpan-bottom-text-wordmark-url);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+</style>
+
+<div class="canpan-bottom-text">
+  {%- comment -%} CANPAN QoL PRE-LAUNCH – "container" ist die originale Impact-Theme-Klasse fuer die Page Width, dadurch schliesst der Abschnitt buendig mit den uebrigen Sektionen ab {%- endcomment -%}
+  <div class="canpan-bottom-text__container container">
+    {%- if canpan_bottom_text_image != blank -%}
+      <div
+        class="canpan-bottom-text__wordmark"
+        role="img"
+        aria-label="{{ section.settings.wordmark_alt | default: 'canpan' | escape }}"
+        style="--canpan-bottom-text-wordmark-url: url('{{ canpan_bottom_text_image | image_url: width: 1600 }}');"
+      ></div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CANPAN Bottom Text",
+  "class": "shopify-section--canpan-bottom-text",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Großflächige, jederzeit im Theme-Editor austauschbare Grafik unterhalb des Footers. Die Datei wird als einfarbige CSS-Maske eingebunden. Hintergrund- und Schriftfarbe kommen automatisch von der CANPAN Variant Theme Engine. Am besten geeignet: eine einfarbige, transparente SVG mit Schriftzug und Canny in einer Silhouette."
+    },
+    {
+      "type": "image_picker",
+      "id": "wordmark_image",
+      "label": "SVG-Datei"
+    },
+    {
+      "type": "text",
+      "id": "wordmark_alt",
+      "label": "Alt text",
+      "default": "canpan"
+    }
+  ]
+}
+{% endschema %}

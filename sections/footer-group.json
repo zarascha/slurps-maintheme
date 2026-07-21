@@ -79,10 +79,15 @@
         "show_country_name": true,
         "show_locale_selector": true
       }
+    },
+    "canpan_bottom_text": {
+      "type": "canpan-bottom-text",
+      "settings": {}
     }
   },
   "order": [
     "custom_liquid_GrR3Gj",
-    "footer"
+    "footer",
+    "canpan_bottom_text"
   ]
 }

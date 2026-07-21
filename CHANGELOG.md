@@ -3,6 +3,21 @@
 > [!IMPORTANT]
 > Hinweis: Dieses CHANGELOG wird mithilfe von KI erstellt. Trotz sorgfältiger Prüfung können Fehler enthalten sein oder einzelne Änderungen fehlen.
 
+## [PRE-LAUNCH] – 21-07-2026
+
+### Added
+- `sections/canpan-bottom-text.liquid`: Neue Section für einen großflächigen visuellen Abschlussbereich unterhalb des Footers mit austauschbarer canpan+Canny-Grafik (Setting `wordmark_image`, `image_picker`, im Theme-Editor pflegbar)
+- `sections/footer-group.json`: Neue Section `canpan-bottom-text` nach `footer` in die Reihenfolge aufgenommen, damit der Abschlussbereich auf allen Seiten erscheint
+
+### Changed
+- Keine
+
+### Fixed
+- Keine
+
+### Dependencies
+- Keine
+
 ## [PRE-LAUNCH] – 27-05-2026
 
 ### Added
