@@ -268,7 +268,6 @@
         "quote_mg9zM7": {
           "type": "quote",
           "settings": {
-            "logo": "shopify://shop_images/Unbenanntes_Projekt_0edf2324-d999-40ea-a89f-0b5809c11a44.png",
             "logo_width": 70,
             "author": "Maximilian Peters, Founder CEO",
             "content": "Cooles Zeug machen. Darum geht es eigentlich.",
@@ -279,10 +278,9 @@
         "quote_4NQicQ": {
           "type": "quote",
           "settings": {
-            "logo": "shopify://shop_images/Unbenanntes_Projekt_0edf2324-d999-40ea-a89f-0b5809c11a44.png",
             "logo_width": 70,
             "author": "Martin Leleta, Founder CEO",
-            "content": "Ähm ja das fehlt.",
+            "content": "Produkte die nicht nur einen Zweck erfüllen, sondern sich richtig anfühlen.",
             "show_rating": false,
             "rating": 4
           }
@@ -290,10 +288,9 @@
         "quote_AXCWep": {
           "type": "quote",
           "settings": {
-            "logo": "shopify://shop_images/Unbenanntes_Projekt_0edf2324-d999-40ea-a89f-0b5809c11a44.png",
             "logo_width": 70,
-            "author": "Canny, The mascot",
-            "content": "Hier ist es so... erwachsen...",
+            "author": "Canny, the mascot",
+            "content": "Ich bin Fan von mir selbst, mehr braucht es nicht.",
             "show_rating": false,
             "rating": 4
           }
