@@ -338,9 +338,18 @@ shopify-account::part(signed-out-avatar) {
 /* FOOTER OVERRIDES (footer.liquid) */
 .shopify-section--footer .footer__payment-icons {
   display: flex;
+  flex-wrap: nowrap; /* CANPAN QoL PRE-LAUNCH – Payment Icons bleiben immer einzeilig */
   justify-content: center;
   align-items: center;
   gap: 10px;
+  min-width: 0; /* CANPAN QoL PRE-LAUNCH – erlaubt Schrumpfen als Flex-Item im Footer-Aside */
+}
+
+/* CANPAN QoL PRE-LAUNCH – Payment Icons skalieren gemeinsam herunter, statt umzubrechen oder ueberzulaufen */
+.shopify-section--footer .footer__payment-icons svg {
+  flex-shrink: 1;
+  min-width: 0;
+  height: auto;
 }
 
 @media screen and (max-width: 767px) {
@@ -359,7 +368,7 @@ shopify-account::part(signed-out-avatar) {
   }
 
   .shopify-section--footer .footer__payment-icons svg {
-    width: 35px;
+    max-width: 35px; /* CANPAN QoL PRE-LAUNCH – Obergrenze statt fixer Breite, damit weiteres Schrumpfen moeglich bleibt */
     height: auto;
   }
 

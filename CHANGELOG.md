@@ -3,6 +3,21 @@
 > [!IMPORTANT]
 > Hinweis: Dieses CHANGELOG wird mithilfe von KI erstellt. Trotz sorgfältiger Prüfung können Fehler enthalten sein oder einzelne Änderungen fehlen.
 
+## [TEMP] – 21-07-2026
+
+### Added
+- Keine
+
+### Changed
+- Keine
+
+### Fixed
+- `assets/canpan-theme.css`: `.footer__payment-icons` bleibt jetzt immer einzeilig (`flex-wrap: nowrap`); die Icons skalieren als Gruppe herunter (`flex-shrink`, `min-width: 0`, `height: auto`), statt umzubrechen oder den Footer zu überlaufen
+- `assets/canpan-theme.css`: Mobile-Override von fixer `width: 35px` auf `max-width: 35px` geändert, damit die Icons bei Bedarf auch unterhalb dieser Größe weiter schrumpfen können
+
+### Dependencies
+- Keine
+
 ## [PRE-LAUNCH] – 21-07-2026
 
 ### Added
