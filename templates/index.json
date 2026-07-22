@@ -12,6 +12,28 @@
     "slideshow": {
       "type": "slideshow",
       "blocks": {
+        "slide-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/9FF7C407-216B-4D9A-B551-C26C75799207.png",
+            "mobile_image": "shopify://shop_images/2026_01_22_0h7_Kleki.png",
+            "content_max_width": 780,
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "subheading": "",
+            "title": "HEATED out now",
+            "heading_tag": "h1",
+            "button_text": "Jetzt entdecken",
+            "button_link": "",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20,
+            "background": "rgba(0,0,0,0)",
+            "background_gradient": ""
+          }
+        },
         "image_yE7JDh": {
           "type": "image",
           "settings": {
@@ -31,29 +53,6 @@
             "overlay_color": "#000000",
             "overlay_opacity": 15,
             "background": "",
-            "background_gradient": ""
-          }
-        },
-        "slide-1": {
-          "type": "image",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/2026_01_22_0gu_Kleki_1.png",
-            "mobile_image": "shopify://shop_images/2026_01_22_0h7_Kleki.png",
-            "content_max_width": 780,
-            "mobile_text_position": "place-self-end-start text-start",
-            "desktop_text_position": "sm:place-self-end-start sm:text-start",
-            "subheading": "",
-            "title": "",
-            "heading_tag": "h3",
-            "button_text": "",
-            "button_link": "",
-            "text_color": "#ffffff",
-            "button_background": "#ffffff",
-            "button_text_color": "#000000",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0,
-            "background": "rgba(0,0,0,0)",
             "background_gradient": ""
           }
         },
@@ -105,8 +104,8 @@
         }
       },
       "block_order": [
-        "image_yE7JDh",
         "slide-1",
+        "image_yE7JDh",
         "image_zciB6p",
         "image_LXNR4J"
       ],
