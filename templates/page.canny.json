@@ -15,8 +15,8 @@
         "image_Amdf6G": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/1_2b7a811e-e3f9-4d36-bc55-412461ce8236.jpg",
-            "mobile_image": "shopify://shop_images/fgfg.png",
+            "image": "shopify://shop_images/cannys_page_banner.jpg",
+            "mobile_image": "shopify://shop_images/cannys_page_banner_mobile.jpg",
             "content_max_width": 780,
             "mobile_text_position": "place-self-center text-center",
             "desktop_text_position": "sm:place-self-center sm:text-center",
