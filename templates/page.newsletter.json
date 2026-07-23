@@ -31,16 +31,17 @@
       "name": "Newsletter",
       "settings": {
         "full_width": true,
+        "image": "shopify://shop_images/newsletter_site_image.jpg",
         "show_icon": false,
         "title": "Werde Teil von Cannys Freundesliste!",
         "content": "<p>Erhalte von Canny regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops. Für deine erste Anmeldung erhältst du außerdem 10 % Rabatt auf deine nächste Bestellung!</p>",
         "button_text": "Trag mich ein",
         "subtext": "Du erhältst eine Bestätigungs-E-Mail. Mit deiner anschließenden Bestätigung erklärst du dich mit unserer Datenschutzerklärung und den AGB einverstanden. Du kannst dich jederzeit bei unserem Newsletter abmelden.",
-        "background": "#0174df",
+        "background": "#FFFFFF",
         "background_gradient": "",
-        "text_color": "#ffffff",
-        "button_background": "#ffffff",
-        "button_text_color": "#0174df"
+        "text_color": "#0174DF",
+        "button_background": "#0174DF",
+        "button_text_color": "#FFFFFF"
       }
     },
     "main": {
