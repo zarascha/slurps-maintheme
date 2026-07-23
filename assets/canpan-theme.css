@@ -714,6 +714,19 @@ html {
 }
 
 /* ==========================================================================
+   CANPAN QoL PRE-LAUNCH – CART DRAWER: CLOSE-ICON-ANIMATION VOM NAVIGATION-DRAWER ÜBERNEHMEN
+   ========================================================================== */
+@media screen and (min-width: 1150px) {
+  .cart-drawer [is="close-button"] {
+    transition: transform .2s ease-in-out;
+  }
+
+  .cart-drawer [is="close-button"]:hover {
+    transform: rotate(90deg);
+  }
+}
+
+/* ==========================================================================
    CANPAN QoL PRE-LAUNCH – BUNDLE MOVER STYLES
    ========================================================================== */
 .canpan-bundle-desktop {
