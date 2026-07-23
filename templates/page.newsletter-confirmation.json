@@ -9,21 +9,22 @@
  */
 {
   "sections": {
-    "image_with_text_overlay_HpNLdw": {
-      "type": "image-with-text-overlay",
-      "name": "Image with text overlay",
+    "newsletter_NRbrrh": {
+      "type": "newsletter",
+      "name": "Newsletter",
       "settings": {
         "full_width": true,
-        "allow_transparent_header": true,
-        "enable_parallax": false,
-        "image_size": "auto",
-        "image": "shopify://shop_images/transparent_header_newsletter.jpg",
-        "mobile_image": "shopify://shop_images/transparent_header_newsletter_mobile.jpg",
-        "mobile_text_position": "place-self-center text-center",
-        "desktop_text_position": "sm:place-self-center sm:text-center",
-        "text_color": "#ffffff",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0
+        "image": "shopify://shop_images/newsletter_confirmation_image.jpg",
+        "show_icon": false,
+        "title": "Du bist nun angemeldet!",
+        "content": "<p>Erhalte von canny regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops. Für deine erste Anmeldung erhältst du außerdem 10 % Rabatt auf deine nächste Bestellung!</p>",
+        "button_text": "",
+        "subtext": "",
+        "background": "#FFFFFF",
+        "background_gradient": "",
+        "text_color": "#0174DF",
+        "button_background": "#0174DF",
+        "button_text_color": "#ffffff"
       }
     },
     "custom_liquid_TdjH93": {
@@ -39,22 +40,22 @@
         "text_color": ""
       }
     },
-    "newsletter_NRbrrh": {
-      "type": "newsletter",
-      "name": "Newsletter",
+    "image_with_text_overlay_HpNLdw": {
+      "type": "image-with-text-overlay",
+      "disabled": true,
+      "name": "Image with text overlay",
       "settings": {
         "full_width": true,
-        "image": "shopify://shop_images/Unbenanntes_Projekt_d2a5ed51-4776-4c8c-b586-36739579ef00.png",
-        "show_icon": false,
-        "title": "Du bist nun angemeldet!",
-        "content": "<p>Erhalte von canny regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops. Für deine erste Anmeldung erhältst du außerdem 10 % Rabatt auf deine nächste Bestellung!</p>",
-        "button_text": "",
-        "subtext": "",
-        "background": "#122127",
-        "background_gradient": "",
+        "allow_transparent_header": true,
+        "enable_parallax": false,
+        "image_size": "auto",
+        "image": "shopify://shop_images/transparent_header_newsletter.jpg",
+        "mobile_image": "shopify://shop_images/transparent_header_newsletter_mobile.jpg",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
         "text_color": "#ffffff",
-        "button_background": "#6ca42d",
-        "button_text_color": "#ffffff"
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
       }
     },
     "main": {
@@ -66,9 +67,9 @@
     }
   },
   "order": [
-    "image_with_text_overlay_HpNLdw",
-    "custom_liquid_TdjH93",
     "newsletter_NRbrrh",
+    "custom_liquid_TdjH93",
+    "image_with_text_overlay_HpNLdw",
     "main"
   ]
 }

@@ -9,9 +9,26 @@
  */
 {
   "sections": {
+    "newsletter_NRbrrh": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "full_width": true,
+        "image": "shopify://shop_images/newsletter_site_image.jpg",
+        "show_icon": false,
+        "title": "Werde Teil von Cannys Freundesliste!",
+        "content": "<p>Erhalte von Canny regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops. Für deine erste Anmeldung erhältst du außerdem 10 % Rabatt auf deine nächste Bestellung!</p>",
+        "button_text": "Trag mich ein",
+        "subtext": "Du erhältst eine Bestätigungs-E-Mail. Mit deiner anschließenden Bestätigung erklärst du dich mit unserer Datenschutzerklärung und den AGB einverstanden. Du kannst dich jederzeit bei unserem Newsletter abmelden.",
+        "background": "#ffffff",
+        "background_gradient": "",
+        "text_color": "#0174df",
+        "button_background": "#0174df",
+        "button_text_color": "#ffffff"
+      }
+    },
     "image_with_text_overlay_HpNLdw": {
       "type": "image-with-text-overlay",
-      "disabled": true,
       "name": "Image with text overlay",
       "settings": {
         "full_width": true,
@@ -25,24 +42,6 @@
         "text_color": "#ffffff",
         "overlay_color": "#000000",
         "overlay_opacity": 0
-      }
-    },
-    "newsletter_NRbrrh": {
-      "type": "newsletter",
-      "name": "Newsletter",
-      "settings": {
-        "full_width": true,
-        "image": "shopify://shop_images/newsletter_site_image.jpg",
-        "show_icon": false,
-        "title": "Werde Teil von Cannys Freundesliste!",
-        "content": "<p>Erhalte von Canny regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops. Für deine erste Anmeldung erhältst du außerdem 10 % Rabatt auf deine nächste Bestellung!</p>",
-        "button_text": "Trag mich ein",
-        "subtext": "Du erhältst eine Bestätigungs-E-Mail. Mit deiner anschließenden Bestätigung erklärst du dich mit unserer Datenschutzerklärung und den AGB einverstanden. Du kannst dich jederzeit bei unserem Newsletter abmelden.",
-        "background": "#FFFFFF",
-        "background_gradient": "",
-        "text_color": "#0174DF",
-        "button_background": "#0174DF",
-        "button_text_color": "#FFFFFF"
       }
     },
     "main": {
