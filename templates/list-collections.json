@@ -34,7 +34,7 @@
         "richtext_UQ6RQn": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Naja, fast nichts. Du bist auf einer Seite gelandet, die wir nicht nutzen – diese Übersicht kommt bei Shopify standardmäßig mit. Wir featuren sie nicht, da wir unseren Online-Shop bewusst so gebaut haben, dass du alles über die Startseite in 1–2 Klicks findest.</p><p>Eigentlich solltest du von hier auf unsere 404-Seite umgeleitet werden – hat bei dir nicht gegriffen, da du dich per URL selbst hierher navigiert hast. ;)</p><p>Aber wenn du schon mal hier bist und bevor du zur Startseite zurückkehrst: Wusstest du, dass Hopfen (das Zeugs für Bier) ein botanischer Verwandter von Cannabis ist? Ja, wirklich!</p>"
+            "content": "<p>Naja, fast nichts. Du bist auf einer Seite gelandet, die wir nicht nutzen – diese Übersicht kommt bei Shopify standardmäßig mit. Wir featuren sie nicht, da wir unseren Online-Shop bewusst so gebaut haben, dass du alles über die Startseite in 1–2 Klicks findest.</p><p>Eigentlich solltest du von hier auf unsere 404-Seite umgeleitet werden – hat bei dir nicht gegriffen, da du dich per URL selbst hierher navigiert hast. ;)</p><p>Aber wenn du schon mal hier bist: Wusstest du, dass Hopfen (das Zeugs für Bier) ein botanischer Verwandter von Cannabis ist? Ja, wirklich!</p>"
           }
         },
         "button_VAAUq8": {
@@ -60,12 +60,11 @@
         "allow_transparent_header": false,
         "enable_parallax": false,
         "image_size": "md",
-        "image": "shopify://shop_images/password_backround.png",
         "mobile_text_position": "place-self-center text-center",
         "desktop_text_position": "sm:place-self-center sm:text-center",
         "text_color": "#1a1a1a",
         "overlay_color": "#ffffff",
-        "overlay_opacity": 74
+        "overlay_opacity": 100
       }
     }
   },
