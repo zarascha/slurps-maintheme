@@ -15,7 +15,7 @@
         "image_yE7JDh": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/simply_better..png",
+            "image": "shopify://shop_images/simply_better._0865481a-3656-48c5-accc-b005c1cc1cb2.png",
             "mobile_image": "shopify://shop_images/Design_ohne_Titel_bcfc2866-c545-4e51-acd4-b4791183b62e.png",
             "content_max_width": 780,
             "mobile_text_position": "place-self-center text-center",
@@ -29,7 +29,7 @@
             "button_background": "#ffffff",
             "button_text_color": "#101827",
             "overlay_color": "#000000",
-            "overlay_opacity": 15,
+            "overlay_opacity": 0,
             "background": "",
             "background_gradient": ""
           }
