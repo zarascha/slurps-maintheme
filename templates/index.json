@@ -527,93 +527,6 @@
         "drag_cursor_color": "#000000"
       }
     },
-    "image_link_blocks_c8nHE8": {
-      "type": "image-link-blocks",
-      "blocks": {
-        "item_RWQJJn": {
-          "type": "item",
-          "settings": {
-            "stretch_image": true,
-            "link_text": "",
-            "link_url": "",
-            "background": "",
-            "text_color": "#ffffff",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0
-          }
-        },
-        "item_GemFdU": {
-          "type": "item",
-          "settings": {
-            "stretch_image": true,
-            "link_text": "",
-            "link_url": "",
-            "background": "",
-            "text_color": "#ffffff",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0
-          }
-        },
-        "item_TDJepM": {
-          "type": "item",
-          "settings": {
-            "stretch_image": true,
-            "link_text": "",
-            "link_url": "",
-            "background": "",
-            "text_color": "#ffffff",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0
-          }
-        },
-        "item_TKq4c8": {
-          "type": "item",
-          "settings": {
-            "stretch_image": true,
-            "link_text": "",
-            "link_url": "",
-            "background": "",
-            "text_color": "#ffffff",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0
-          }
-        },
-        "item_c8VPER": {
-          "type": "item",
-          "settings": {
-            "stretch_image": true,
-            "link_text": "",
-            "link_url": "",
-            "background": "",
-            "text_color": "#ffffff",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0
-          }
-        }
-      },
-      "block_order": [
-        "item_RWQJJn",
-        "item_GemFdU",
-        "item_TDJepM",
-        "item_TKq4c8",
-        "item_c8VPER"
-      ],
-      "disabled": true,
-      "settings": {
-        "full_width": false,
-        "block_size": "large",
-        "subheading": "",
-        "title": "",
-        "content": "",
-        "link_url": "",
-        "link_text": "",
-        "background": "",
-        "background_gradient": "",
-        "text_color": "",
-        "heading_color": "",
-        "heading_gradient": ""
-      }
-    },
     "featured_collection_X4aPzx": {
       "type": "featured-collection",
       "disabled": true,
@@ -659,20 +572,6 @@
         "text_color": "#00a341",
         "text_gradient": ""
       }
-    },
-    "custom_liquid_A78bjh": {
-      "type": "custom-liquid",
-      "disabled": true,
-      "name": "Custom Liquid",
-      "settings": {
-        "full_width": true,
-        "remove_vertical_spacing": true,
-        "remove_horizontal_spacing": true,
-        "liquid": "{% assign partners = shop.metafields.custom_shop.featured_partners.value %}\n\n<div class=\"canpan-partner-strip\">\n  <div class=\"canpan-partner-strip__inner\">\n    <div class=\"canpan-partner-list\">\n\n      {% for partner in partners %}\n        {% assign logo = partner.logo.value %}\n        {% assign url = partner.url | strip %}\n        {% assign alt_text = partner.alt_text | strip %}\n\n        <div class=\"canpan-partner-list__item\">\n          <a href=\"{{ url }}\" target=\"_blank\" rel=\"nofollow noopener\">\n            <img src=\"{{ logo | image_url: width: 600 }}\" alt=\"{{ alt_text }}\" loading=\"lazy\">\n          </a>\n        </div>\n      {% endfor %}\n\n    </div>\n  </div>\n</div>\n\n<style>\n  .canpan-partner-strip{\n    padding: 50px 0 0 0;\n    border-radius: 24px 24px 0 0;\n    width: calc(100% - 40px) !important;\n  }\n\n  .canpan-partner-list{\n    display: flex;\n    align-items: center;\n    justify-content: start;\n    gap: 13px;\n  }\n\n  .canpan-partner-list__item{\n    flex: 0 0 auto;\n    display: flex;\n    align-items: center;\n  }\n\n  .canpan-partner-list__item img{\n    height: 44px;\n    width: auto;\n    object-fit: contain;\n    display: block;\n  }\n  \n  @media (max-width: 768px){\n    .canpan-partner-list{\n      flex-wrap: nowrap;\n      justify-content: center;\n      gap: 12px;\n    }\n\n    .canpan-partner-list__item img{\n      height: 34px;\n      max-width: 100%;\n    }\n  }\n</style>",
-        "background": "#00a341",
-        "background_gradient": "",
-        "text_color": ""
-      }
     }
   },
   "order": [
@@ -685,9 +584,7 @@
     "featured_collection_MjYBGw",
     "faq_kUjjPe",
     "before_after_image_De3P38",
-    "image_link_blocks_c8nHE8",
     "featured_collection_X4aPzx",
-    "scrolling_text_gGxzmN",
-    "custom_liquid_A78bjh"
+    "scrolling_text_gGxzmN"
   ]
 }
