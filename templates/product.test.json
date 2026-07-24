@@ -228,6 +228,114 @@
         "product_card_text_color": ""
       }
     },
+    "media_with_text_RjpYKP": {
+      "type": "media-with-text",
+      "blocks": {
+        "image_NPB8NM": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/canny_plueschtier_image_e551b8dc-3e19-4c8d-9ce5-660ea179a576.jpg",
+            "media_width": 40,
+            "media_position": "end",
+            "text_position": "place-self-center text-center",
+            "icon": "none",
+            "icon_width": 48,
+            "subheading": "",
+            "title": "Heading",
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "link_text": "",
+            "link_url": "",
+            "background": "#FFFFFF",
+            "background_gradient": "",
+            "text_color": "#1A1A1A",
+            "text_gradient": "",
+            "button_background": "",
+            "button_text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_NPB8NM"
+      ],
+      "name": "Media with text",
+      "settings": {
+        "full_width": false,
+        "alternate_media_position": false,
+        "spacing": "small"
+      }
+    },
+    "media_with_text_XCpPpJ": {
+      "type": "media-with-text",
+      "blocks": {
+        "image_gijz3a": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/canny_plueschtier_image_e551b8dc-3e19-4c8d-9ce5-660ea179a576.jpg",
+            "media_width": 40,
+            "media_position": "start",
+            "text_position": "place-self-center text-center",
+            "icon": "none",
+            "icon_width": 48,
+            "subheading": "",
+            "title": "Heading",
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "link_text": "",
+            "link_url": "",
+            "background": "#FFFFFF",
+            "background_gradient": "",
+            "text_color": "#1A1A1A",
+            "text_gradient": "",
+            "button_background": "",
+            "button_text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_gijz3a"
+      ],
+      "name": "Media with text",
+      "settings": {
+        "full_width": false,
+        "alternate_media_position": false,
+        "spacing": "small"
+      }
+    },
+    "media_with_text_NA3p8a": {
+      "type": "media-with-text",
+      "blocks": {
+        "image_BTx7hd": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/canny_plueschtier_image_e551b8dc-3e19-4c8d-9ce5-660ea179a576.jpg",
+            "media_width": 40,
+            "media_position": "end",
+            "text_position": "place-self-center text-center",
+            "icon": "none",
+            "icon_width": 48,
+            "subheading": "",
+            "title": "Heading",
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "link_text": "",
+            "link_url": "",
+            "background": "#FFFFFF",
+            "background_gradient": "",
+            "text_color": "#1A1A1A",
+            "text_gradient": "",
+            "button_background": "",
+            "button_text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_BTx7hd"
+      ],
+      "name": "Media with text",
+      "settings": {
+        "full_width": false,
+        "alternate_media_position": false,
+        "spacing": "small"
+      }
+    },
     "recently_viewed_products_BLgPzh": {
       "type": "recently-viewed-products",
       "custom_css": [
@@ -258,6 +366,9 @@
     "main",
     "176891615934aa6f4e",
     "related-products",
+    "media_with_text_RjpYKP",
+    "media_with_text_XCpPpJ",
+    "media_with_text_NA3p8a",
     "recently_viewed_products_BLgPzh"
   ]
 }
