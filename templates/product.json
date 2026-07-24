@@ -9,6 +9,34 @@
  */
 {
   "sections": {
+    "announcement_bar_p6UxQe": {
+      "type": "announcement-bar",
+      "blocks": {
+        "message_ergdTx": {
+          "type": "message",
+          "settings": {
+            "text": "{{ metaobjects.announcement_bar[\"kostenfreier-versand-ab-49\"].text.value }}",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "message_ergdTx"
+      ],
+      "name": "Announcement bar",
+      "settings": {
+        "enable_sticky": false,
+        "show_on_homepage_only": false,
+        "navigation_mode": "scrolling",
+        "autoplay": false,
+        "cycle_speed": 6,
+        "scrolling_speed": 30,
+        "text_size": "text-xs",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -61,7 +89,6 @@
           "disabled": true,
           "settings": {}
         },
-
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -253,13 +280,13 @@
         "product_card_background": "",
         "product_card_text_color": ""
       }
-    },
-
+    }
   },
   "order": [
+    "announcement_bar_p6UxQe",
     "main",
     "176891615934aa6f4e",
     "related-products",
-    "recently_viewed_products_BLgPzh",
+    "recently_viewed_products_BLgPzh"
   ]
 }
