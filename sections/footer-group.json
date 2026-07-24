@@ -90,19 +90,6 @@
         "text_color": ""
       }
     },
-    "custom_liquid_GrR3Gj": {
-      "type": "custom-liquid",
-      "name": "Partnerpromotion",
-      "settings": {
-        "full_width": true,
-        "remove_vertical_spacing": true,
-        "remove_horizontal_spacing": false,
-        "liquid": "{% assign partners = shop.metafields.custom_shop.featured_partners.value %}\n\n<div class=\"canpan-partner-strip\">\n  <div class=\"canpan-partner-strip__inner\">\n    <div class=\"canpan-partner-list\">\n\n      {% for partner in partners %}\n        {% assign logo = partner.logo %}\n        {% assign url = partner.url | strip %}\n        {% assign alt_text = partner.alt_text | strip %}\n\n        <div class=\"canpan-partner-list__item\">\n          <a href=\"{{ url }}\" target=\"_blank\" rel=\"nofollow noopener\">\n            <img src=\"{{ logo | image_url: width: 600 }}\" alt=\"{{ alt_text }}\" loading=\"lazy\">\n          </a>\n        </div>\n      {% endfor %}\n\n    </div>\n  </div>\n</div>\n\n<style>\n  .canpan-partner-strip{\n    padding: 50px 0 0 0;\n  }\n\n  .canpan-partner-list{\n    display: flex;\n    align-items: center;\n    justify-content: start;\n    gap: 13px;\n  }\n\n  .canpan-partner-list__item{\n    flex: 0 0 auto;\n    display: flex;\n    align-items: center;\n  }\n\n  .canpan-partner-list__item img{\n    height: 44px;\n    width: auto;\n    object-fit: contain;\n    display: block;\n  }\n  \n  @media (max-width: 768px){\n    .canpan-partner-list{\n      flex-wrap: nowrap;\n      justify-content: center;\n      gap: 12px;\n    }\n\n    .canpan-partner-list__item img{\n      height: 34px;\n      max-width: 100%;\n    }\n  }\n</style>",
-        "background": "#0174DF",
-        "background_gradient": "",
-        "text_color": ""
-      }
-    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -158,6 +145,19 @@
         "show_locale_selector": true
       }
     },
+    "custom_liquid_GrR3Gj": {
+      "type": "custom-liquid",
+      "name": "Partnerpromotion",
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": true,
+        "remove_horizontal_spacing": false,
+        "liquid": "{% assign partners = shop.metafields.custom_shop.featured_partners.value %}\n\n<div class=\"canpan-partner-strip\">\n  <div class=\"canpan-partner-strip__inner\">\n    <div class=\"canpan-partner-list\">\n\n      {% for partner in partners %}\n        {% assign logo = partner.logo %}\n        {% assign url = partner.url | strip %}\n        {% assign alt_text = partner.alt_text | strip %}\n\n        <div class=\"canpan-partner-list__item\">\n          <a href=\"{{ url }}\" target=\"_blank\" rel=\"nofollow noopener\">\n            <img src=\"{{ logo | image_url: width: 600 }}\" alt=\"{{ alt_text }}\" loading=\"lazy\">\n          </a>\n        </div>\n      {% endfor %}\n\n    </div>\n  </div>\n</div>\n\n<style>\n  .canpan-partner-strip{\n    padding: 50px 0 0 0;\n  }\n\n  .canpan-partner-list{\n    display: flex;\n    align-items: center;\n    justify-content: start;\n    gap: 13px;\n  }\n\n  .canpan-partner-list__item{\n    flex: 0 0 auto;\n    display: flex;\n    align-items: center;\n  }\n\n  .canpan-partner-list__item img{\n    height: 44px;\n    width: auto;\n    object-fit: contain;\n    display: block;\n  }\n  \n  @media (max-width: 768px){\n    .canpan-partner-list{\n      flex-wrap: nowrap;\n      justify-content: center;\n      gap: 12px;\n    }\n\n    .canpan-partner-list__item img{\n      height: 34px;\n      max-width: 100%;\n    }\n  }\n</style>",
+        "background": "#0174DF",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
     "canpan_bottom_text": {
       "type": "canpan-bottom-text",
       "settings": {
@@ -168,8 +168,8 @@
   },
   "order": [
     "text_with_icons_KwYBQB",
-    "custom_liquid_GrR3Gj",
     "footer",
+    "custom_liquid_GrR3Gj",
     "canpan_bottom_text"
   ]
 }
