@@ -77,7 +77,7 @@
         "item_pMLLNt",
         "item_cdHNbm"
       ],
-      "name": "Text with icons",
+      "name": "Shop-Vertrauensblöcke",
       "settings": {
         "full_width": true,
         "stack_on_mobile": false,
@@ -93,7 +93,7 @@
     "custom_liquid_GrR3Gj": {
       "type": "custom-liquid",
       "disabled": true,
-      "name": "Partnerpromotion",
+      "name": "Partnerpromotion (Custom)",
       "settings": {
         "full_width": true,
         "remove_vertical_spacing": true,
