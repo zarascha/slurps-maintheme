@@ -135,22 +135,22 @@
             "collapse_content": true
           }
         },
-        "collapsible_text_BdaWLN": {
-          "type": "collapsible_text",
-          "settings": {
-            "icon": "none",
-            "icon_width": 20,
-            "title": "Versand & Rückgabe",
-            "content": "<p>Share some content to your customers about your products.</p>",
-            "page": ""
-          }
-        },
         "collapsible_text_ygzrUE": {
           "type": "collapsible_text",
           "settings": {
             "icon": "none",
             "icon_width": 20,
             "title": "Technische Daten",
+            "content": "<p>Share some content to your customers about your products.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_text_BdaWLN": {
+          "type": "collapsible_text",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "title": "Versand & Rückgabe",
             "content": "<p>Share some content to your customers about your products.</p>",
             "page": ""
           }
@@ -182,8 +182,8 @@
         "liquid_hC7Tba",
         "associated_products_fNATF6",
         "description",
-        "collapsible_text_BdaWLN",
         "collapsible_text_ygzrUE",
+        "collapsible_text_BdaWLN",
         "liquid_GMqxUq"
       ],
       "custom_css": [],
