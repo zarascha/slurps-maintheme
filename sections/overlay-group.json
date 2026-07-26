@@ -13,6 +13,7 @@
   "sections": {
     "newsletter-popup": {
       "type": "newsletter-popup",
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "apparition_delay": 7,
