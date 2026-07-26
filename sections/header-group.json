@@ -74,7 +74,7 @@
       "settings": {
         "enable_sticky": true,
         "hide_on_scroll": true,
-        "logo": "shopify://shop_images/slurps_logo_concept_transparent.png",
+        "logo": "shopify://shop_images/slurps_logo_shop_black.svg",
         "logo_max_width": 45,
         "logo_mobile_max_width": 35,
         "menu": "main-menu",
@@ -90,6 +90,7 @@
         "show_country_flag": false,
         "show_country_name": false,
         "transparent_header_text_color": "#ffffff",
+        "transparent_logo": "shopify://shop_images/slurps_logo_shop_white.svg",
         "reduce_padding": true,
         "background_opacity": 0,
         "background_blur_radius": 2
