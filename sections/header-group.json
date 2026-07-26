@@ -43,18 +43,9 @@
     "header": {
       "type": "header",
       "blocks": {
-        "canpan_featured_PP9tNd": {
-          "type": "canpan_featured",
-          "settings": {
-            "image": "shopify://shop_images/5_228f6fbc-836e-4795-8185-f09d1b351dbf.jpg",
-            "title": "Hallo Martin",
-            "link": "shopify://collections"
-          }
-        },
         "canpan_featured_e6yCdK": {
           "type": "canpan_featured",
           "settings": {
-            "image": "shopify://shop_images/Medusafilters_Header_Flow_Launch_2800x1000_1.png",
             "title": "Featured",
             "link": ""
           }
@@ -69,14 +60,12 @@
         "canpan_featured_GVXxjh": {
           "type": "canpan_featured",
           "settings": {
-            "image": "shopify://shop_images/Papers_c3a8d8c4-0c12-46ed-9db1-b33b74ad1218.jpg",
             "title": "Featured",
             "link": ""
           }
         }
       },
       "block_order": [
-        "canpan_featured_PP9tNd",
         "canpan_featured_e6yCdK",
         "canpan_featured_DwB8yh",
         "canpan_featured_GVXxjh"
@@ -90,7 +79,7 @@
         "logo_mobile_max_width": 35,
         "menu": "main-menu",
         "sidebar_menu": "",
-        "secondary_menu": "secondary-menu",
+        "secondary_menu": "",
         "customer_account_menu": "customer-account-main-menu",
         "menu_open_trigger": "hover",
         "opening_from": "left",
@@ -101,7 +90,6 @@
         "show_country_flag": false,
         "show_country_name": false,
         "transparent_header_text_color": "#ffffff",
-        "transparent_logo": "shopify://shop_images/download_1.png",
         "reduce_padding": true,
         "background_opacity": 0,
         "background_blur_radius": 2
