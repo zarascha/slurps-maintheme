@@ -5,6 +5,25 @@
 
 ## [PRE-LAUNCH SLURPS] – 26-07-2026
 
+
+### Added
+- Keine
+
+### Changed
+- `sections/header.liquid`: Logo-Rendering im `logo_content`-Capture von statischem Inline-SVG (`canpan-logo-inline`) auf reguläres, responsives Theme-Bild (`section.settings.logo`) umgestellt – inkl. `sizes`/`widths`-Attributen via `image_tag`, Alt-Text-Fallback (`section.settings.logo.alt | default: shop.name`) und separatem `transparent_logo`-Bild für den transparenten Header-Zustand; Fallback auf reinen Shopnamen (`header__logo-text`), falls kein Logo hinterlegt ist
+- `snippets/canpan-logo-inline.liquid`: Nicht mehr benötigtes Inline-SVG-Logo-Snippet gelöscht (durch Bild-basiertes Logo in `sections/header.liquid` ersetzt)
+
+### Fixed
+- Keine
+
+### Dependencies
+- Keine
+
+### Hinweis (nicht automatisch behoben)
+- `sections/header.liquid`: Nach dem Entfernen der SVG-Logo-Nutzung referenzieren die Liquid-Variablen `canpan_logo_id`, `canpan_logo_color`, `canpan_accent_1`, `canpan_accent_2` (Zeilen 60–63) sowie der zugehörige CSS-Block für `.canpan-logo-inline` (Zeilen 280–289) keine Elemente mehr im gerenderten Markup – potenziell toter Code, der bei Gelegenheit geprüft/entfernt werden sollte
+
+## [PRE-LAUNCH SLURPS] – 26-07-2026
+
 ### Added
 - Keine
 

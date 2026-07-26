@@ -402,21 +402,19 @@ JS-Sync-Ablauf (`variant:change`)
       </div>
 
       {%- capture logo_content -%}
-        <span class="sr-only">{{ shop.name }}</span>
+        {%- if section.settings.logo -%}
+          {%- capture sizes -%}{{ section.settings.logo_max_width }}px{%- endcapture -%}
+          {%- capture widths -%}{{ section.settings.logo_max_width | times: 2 | at_most: section.settings.logo.width }}, {{ section.settings.logo_max_width | times: 3 | at_most: section.settings.logo.width }}{%- endcapture -%}
+          <span class="sr-only">{{ shop.name }}</span>
+          {%- assign alt_text = section.settings.logo.alt | default: shop.name -%}
+          {{- section.settings.logo | image_url: width: section.settings.logo.width | image_tag: sizes: sizes, alt: alt_text, widths: widths, class: 'header__logo-image' -}}
 
-        <span
-          class="canpan-logo-inline header__logo-image"
-          style="color: {{ canpan_logo_color }}; --canpan-logo-accent-1: {{ canpan_accent_1 }}; --canpan-logo-accent-2: {{ canpan_accent_2 }};"
-        >
-          {% render 'canpan-logo-inline' %}
-        </span>
-
-        <span
-          class="canpan-logo-inline header__logo-image header__logo-image--transparent"
-          style="color: rgb(var(--header-transparent-text-color)); --canpan-logo-accent-1: {{ canpan_accent_1 }}; --canpan-logo-accent-2: {{ canpan_accent_2 }};"
-        >
-          {% render 'canpan-logo-inline' %}
-        </span>
+          {%- if section.settings.transparent_logo -%}
+            {{- section.settings.transparent_logo | image_url: width: section.settings.transparent_logo.width | image_tag: sizes: sizes, widths: widths, class: 'header__logo-image header__logo-image--transparent' -}}
+          {%- endif -%}
+        {%- else -%}
+          <span class="header__logo-text h4">{{ shop.name }}</span>
+        {%- endif -%}
       {%- endcapture -%}
 
       {%- if request.page_type == 'index' -%}
