@@ -3,7 +3,28 @@
 > [!IMPORTANT]
 > Hinweis: Dieses CHANGELOG wird mithilfe von KI erstellt. Trotz sorgfältiger Prüfung können Fehler enthalten sein oder einzelne Änderungen fehlen.
 
-## [TEMP] – 21-07-2026
+## [PRE-LAUNCH SLURPS] – 26-07-2026
+
+### Added
+- Keine
+
+### Changed
+- `templates/index.json`: Blöcke entfernt, die auf noch nicht existierende Metaobjekt-Einträge verweisen (`announcement_bar["kostenfreier-versand-ab-49"]`, 6× `mini_faq.*` in `faq_kUjjPe`, 4× `company_trust_block.*` in `text_with_icons_gC9Y4i`); zusätzlich `title`/`content` der Section `faq_kUjjPe` geleert, da diese direkt auf `mini_faq["mini-faq"]` verwiesen
+- `templates/page.about-us.json`: 4 Blöcke mit `company_trust_block.*`-Referenzen aus `text_with_icons_n9JyFG` entfernt
+- `templates/page.canny.json`: 4 Blöcke mit `company_trust_block.*`-Referenzen aus `text_with_icons_TDez69` entfernt
+- `templates/page.servicedesk.json`: 6 Blöcke mit `mini_faq.*`-Referenzen aus `faq_Bkaiba` entfernt; `title` der Section geleert, da diese direkt auf `mini_faq["mini-faq"]` verwies
+- `templates/product.json`: 4 Blöcke mit `company_trust_block.*`-Referenzen aus `text_with_icons_KfUELP` entfernt
+- `templates/product.test.json`: 4 Blöcke mit `company_trust_block.*`-Referenzen aus `text_with_icons_dDTtJA` entfernt
+- `templates/product.json`: Drittanbieter-App-Blöcke von Judge.me entfernt, da die App im neuen Shop nicht installiert ist – `judge_me_reviews_preview_badge_BbipjL` (App-Block `shopify://apps/judge-me-reviews/blocks/preview_badge/...`) aus Section `main` sowie `judge_me_reviews_review_widget_mgeLhK` (App-Block `.../blocks/review_widget/...`) aus der eigenständigen Apps-Section `176891615934aa6f4e`
+- `templates/product.test.json`: Dieselben zwei Judge.me-App-Blöcke entfernt (identische Struktur wie `product.json`)
+
+### Fixed
+- Keine
+
+### Dependencies
+- Keine
+
+## [PRE-LAUNCH] – 21-07-2026
 
 ### Added
 - Keine
