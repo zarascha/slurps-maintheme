@@ -175,8 +175,6 @@
     },
     "176891615934aa6f4e": {
       "type": "apps",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "full_width": true,
         "remove_vertical_spacing": false,
@@ -238,8 +236,6 @@
     },
     "text_with_icons_KfUELP": {
       "type": "text-with-icons",
-      "blocks": {},
-      "block_order": [],
       "name": "Shop-Vertrauensblöcke",
       "settings": {
         "full_width": true,

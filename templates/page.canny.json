@@ -258,8 +258,6 @@
     },
     "text_with_icons_TDez69": {
       "type": "text-with-icons",
-      "blocks": {},
-      "block_order": [],
       "name": "Shop-Vertrauensblöcke",
       "settings": {
         "full_width": true,
