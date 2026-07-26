@@ -168,8 +168,8 @@
       ],
       "name": "Story Bubbles",
       "settings": {
-        "tight": true,
-        "remove_top_spacing": false,
+        "tight": false,
+        "remove_top_spacing": true,
         "background": "rgba(0,0,0,0)",
         "text_color": "rgba(0,0,0,0)",
         "title": ""
