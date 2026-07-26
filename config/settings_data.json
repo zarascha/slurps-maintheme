@@ -29,7 +29,7 @@
     "error_color": "#e60722",
     "header_background": "#ffffff",
     "header_text_color": "#1a1a1a",
-    "footer_background": "#0174DF",
+    "footer_background": "#7B2FF7",
     "footer_text_color": "#FFFFFF",
     "dialog_background": "#ffffff",
     "primary_button_background": "#1A1A1A",
@@ -87,24 +87,7 @@
         }
       }
     },
-    "content_for_index": [],
-    "blocks": {
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "855628211100114053": {
-        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
-        "disabled": true,
-        "settings": {}
-      },
-      "9365423049038898845": {
-        "type": "shopify://apps/tawk-to-live-chat/blocks/widget-embed-code/91169e75-f163-40ce-90e0-9059f3c9b772",
-        "disabled": false,
-        "settings": {}
-      }
-    }
+    "content_for_index": []
   },
   "presets": {
     "Impact": {

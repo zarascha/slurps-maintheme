@@ -34,7 +34,7 @@
             "image_width": 300,
             "heading_size": "h3",
             "title": "10 % Rabatt & nichts mehr verpassen!",
-            "content": "<p>Werde Teil von Cannys Freundesliste und erhalte regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops.</p>"
+            "content": "<p>Werde Teil von Slurpys Freundesliste und erhalte regelmäßig Updates zu exklusiven Rabatten und den neuesten Drops.</p>"
           }
         },
         "links_hT37YY": {
@@ -48,7 +48,7 @@
         "links_UzPWiP": {
           "type": "links",
           "settings": {
-            "menu": "other-menu",
+            "menu": "",
             "show_menu_title": true,
             "menu_title": ""
           }
@@ -83,7 +83,6 @@
     "canpan_bottom_text": {
       "type": "canpan-bottom-text",
       "settings": {
-        "wordmark_image": "shopify://shop_images/canpan_bottom_text.svg",
         "wordmark_alt": "canpan"
       }
     }
