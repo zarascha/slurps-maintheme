@@ -8,6 +8,80 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "slideshow_9eWQi4": {
+      "type": "slideshow",
+      "blocks": {
+        "image_KL6TJG": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/passwordpage_backround.jpg",
+            "content_max_width": 780,
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "subheading": "",
+            "title": "meet the upgrade.",
+            "heading_tag": "h1",
+            "button_text": "Jetzt entdecken",
+            "button_link": "shopify://products/twisted-glasfilter-8mm-heated-eidtion",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#101827",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "background": "",
+            "background_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_KL6TJG"
+      ],
+      "custom_css": [],
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": true,
+        "show_initial_transition": true,
+        "image_size": "auto",
+        "controls_type": "numbers",
+        "transition_type": "fade_with_text",
+        "autoplay": true,
+        "cycle_speed": 6,
+        "background": "#ffffff",
+        "background_gradient": ""
+      }
+    },
+    "announcement_bar_9xP9YU": {
+      "type": "announcement-bar",
+      "blocks": {
+        "message_JDD6cU": {
+          "type": "message",
+          "settings": {
+            "text": "{{ metaobjects.announcement_bar[\"kostenfreier-versand-ab-49\"].text.value }}",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "message_JDD6cU"
+      ],
+      "name": "Announcement bar",
+      "settings": {
+        "enable_sticky": false,
+        "show_on_homepage_only": false,
+        "navigation_mode": "scrolling",
+        "autoplay": true,
+        "cycle_speed": 6,
+        "scrolling_speed": 30,
+        "text_size": "text-xs",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    }
+  },
+  "order": [
+    "slideshow_9eWQi4",
+    "announcement_bar_9xP9YU"
+  ]
 }
