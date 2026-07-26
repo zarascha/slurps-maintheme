@@ -16,6 +16,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/passwordpage_backround.jpg",
+            "mobile_image": "shopify://shop_images/slurps_logo_slurpy_glass_version.png",
             "content_max_width": 780,
             "mobile_text_position": "place-self-center text-center",
             "desktop_text_position": "sm:place-self-center sm:text-center",
@@ -28,7 +29,7 @@
             "button_background": "#ffffff",
             "button_text_color": "#101827",
             "overlay_color": "#000000",
-            "overlay_opacity": 0,
+            "overlay_opacity": 35,
             "background": "",
             "background_gradient": ""
           }
