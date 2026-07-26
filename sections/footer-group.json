@@ -83,6 +83,7 @@
     "canpan_bottom_text": {
       "type": "canpan-bottom-text",
       "settings": {
+        "wordmark_image": "shopify://shop_images/slurps_footer_bottom.svg",
         "wordmark_alt": "canpan"
       }
     }
