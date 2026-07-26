@@ -78,10 +78,136 @@
         "background_gradient": "",
         "text_color": ""
       }
+    },
+    "canpan_story_bubble_eLwEni": {
+      "type": "canpan-story-bubble",
+      "blocks": {
+        "story_bubble_XUiNAk": {
+          "type": "story_bubble",
+          "settings": {
+            "preview_alt": "",
+            "title": "Story Title",
+            "image_1_button_text": "",
+            "image_1_button_link": "",
+            "image_2_button_text": "",
+            "image_2_button_link": "",
+            "image_3_button_text": "",
+            "image_3_button_link": "",
+            "video_1_button_text": "",
+            "video_1_button_link": "",
+            "video_2_button_text": "",
+            "video_2_button_link": "",
+            "video_3_button_text": "",
+            "video_3_button_link": ""
+          }
+        },
+        "story_bubble_XWJcM7": {
+          "type": "story_bubble",
+          "settings": {
+            "preview_alt": "",
+            "title": "Story Title",
+            "image_1_button_text": "",
+            "image_1_button_link": "",
+            "image_2_button_text": "",
+            "image_2_button_link": "",
+            "image_3_button_text": "",
+            "image_3_button_link": "",
+            "video_1_button_text": "",
+            "video_1_button_link": "",
+            "video_2_button_text": "",
+            "video_2_button_link": "",
+            "video_3_button_text": "",
+            "video_3_button_link": ""
+          }
+        },
+        "story_bubble_mGihqN": {
+          "type": "story_bubble",
+          "settings": {
+            "preview_alt": "",
+            "title": "Story Title",
+            "image_1_button_text": "",
+            "image_1_button_link": "",
+            "image_2_button_text": "",
+            "image_2_button_link": "",
+            "image_3_button_text": "",
+            "image_3_button_link": "",
+            "video_1_button_text": "",
+            "video_1_button_link": "",
+            "video_2_button_text": "",
+            "video_2_button_link": "",
+            "video_3_button_text": "",
+            "video_3_button_link": ""
+          }
+        },
+        "story_bubble_hg7pxP": {
+          "type": "story_bubble",
+          "settings": {
+            "preview_alt": "",
+            "title": "Story Title",
+            "image_1_button_text": "",
+            "image_1_button_link": "",
+            "image_2_button_text": "",
+            "image_2_button_link": "",
+            "image_3_button_text": "",
+            "image_3_button_link": "",
+            "video_1_button_text": "",
+            "video_1_button_link": "",
+            "video_2_button_text": "",
+            "video_2_button_link": "",
+            "video_3_button_text": "",
+            "video_3_button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "story_bubble_XUiNAk",
+        "story_bubble_XWJcM7",
+        "story_bubble_mGihqN",
+        "story_bubble_hg7pxP"
+      ],
+      "name": "Story Bubbles",
+      "settings": {
+        "tight": true,
+        "remove_top_spacing": false,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "title": ""
+      }
+    },
+    "featured_collection_ihJaaL": {
+      "type": "featured-collection",
+      "custom_css": [
+        ".prose p:not(.h6) {color: #4c4c4c;}"
+      ],
+      "name": "Featured collection",
+      "settings": {
+        "collection": "neu-im-sortiment",
+        "products": [],
+        "full_width": false,
+        "stack_products": false,
+        "show_progress_bar": true,
+        "products_count": 5,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 5,
+        "subheading": "",
+        "title": "Neu bei uns",
+        "content": "<p>Unsere neuesten Produkte nun verfügbar!</p>",
+        "link_url": "",
+        "link_text": "View all",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
     }
   },
   "order": [
     "slideshow_9eWQi4",
-    "announcement_bar_9xP9YU"
+    "announcement_bar_9xP9YU",
+    "canpan_story_bubble_eLwEni",
+    "featured_collection_ihJaaL"
   ]
 }
